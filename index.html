@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>出单激励进展看板</title>
+  <style>
+    :root {
+      --bg: #f7f8ff;
+      --panel: rgba(255, 255, 255, 0.72);
+      --text: #1d1d1f;
+      --muted: #686872;
+      --line: rgba(62, 64, 89, 0.10);
+      --blue: #1688ff;
+      --green: #17a76b;
+      --amber: #d07012;
+      --red: #c52727;
+      --teal: #16a0ff;
+      --pink: #ff7aa8;
+      --mint: #67d8b9;
+      --cream: #fff0c8;
+      --shadow: 0 28px 80px rgba(56, 72, 130, 0.13);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        linear-gradient(135deg, rgba(255, 122, 168, 0.16), rgba(255, 255, 255, 0) 32%),
+        linear-gradient(215deg, rgba(103, 216, 185, 0.20), rgba(255, 255, 255, 0) 38%),
+        linear-gradient(180deg, #fffafd 0%, var(--bg) 46%, #eef7ff 100%);
+      color: var(--text);
+      letter-spacing: 0;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(120deg, rgba(255, 255, 255, 0.34) 0 1px, transparent 1px 16px),
+        linear-gradient(30deg, rgba(255, 255, 255, 0.22) 0 1px, transparent 1px 18px);
+      mask-image: linear-gradient(180deg, #000 0%, transparent 68%);
+      opacity: 0.55;
+    }
+
+    header {
+      color: var(--text);
+      padding: 56px clamp(20px, 5vw, 72px) 28px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      max-width: 1440px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(40px, 6vw, 72px);
+      line-height: 0.98;
+      font-weight: 760;
+      letter-spacing: -0.02em;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 21px);
+      line-height: 1.45;
+      max-width: 780px;
+    }
+
+    .hero-metric {
+      min-width: 240px;
+      padding-top: 8px;
+      text-align: right;
+    }
+
+    .hero-metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .hero-metric strong {
+      display: block;
+      font-size: clamp(44px, 5vw, 76px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-metric em {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-style: normal;
+      font-size: 14px;
+    }
+
+    .sweet-decor {
+      position: absolute;
+      right: min(31vw, 360px);
+      top: 6px;
+      width: 122px;
+      height: 122px;
+      transform: rotate(-9deg);
+      filter: drop-shadow(0 18px 24px rgba(255, 122, 168, 0.18));
+      pointer-events: none;
+    }
+
+    .sweet-decor .face,
+    .ice-buddy .face {
+      position: absolute;
+      width: 26px;
+      height: 12px;
+      left: 42px;
+      top: 30px;
+      z-index: 2;
+    }
+
+    .sweet-decor .face::before,
+    .sweet-decor .face::after,
+    .ice-buddy .face::before,
+    .ice-buddy .face::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(36, 29, 42, 0.72);
+      box-shadow: 0 6px 0 -2px rgba(255, 255, 255, 0.65);
+    }
+
+    .sweet-decor .face::before,
+    .ice-buddy .face::before { left: 2px; }
+
+    .sweet-decor .face::after,
+    .ice-buddy .face::after { right: 2px; }
+
+    .sweet-decor .smile,
+    .ice-buddy .smile {
+      position: absolute;
+      left: 9px;
+      top: 4px;
+      width: 8px;
+      height: 5px;
+      border-bottom: 2px solid rgba(36, 29, 42, 0.62);
+      border-radius: 0 0 999px 999px;
+      z-index: 2;
+    }
+
+    .sweet-decor::before,
+    .sweet-decor::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .sweet-decor::before {
+      width: 52px;
+      height: 52px;
+      left: 29px;
+      top: 8px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.88), rgba(255, 122, 168, 0.64));
+      box-shadow:
+        -24px 26px 0 rgba(103, 216, 185, 0.72),
+        24px 28px 0 rgba(255, 240, 200, 0.82);
+    }
+
+    .sweet-decor::after {
+      left: 34px;
+      top: 63px;
+      width: 54px;
+      height: 64px;
+      border-radius: 8px 8px 28px 28px;
+      background:
+        linear-gradient(135deg, rgba(153, 103, 52, 0.28) 0 2px, transparent 2px 11px),
+        linear-gradient(45deg, rgba(153, 103, 52, 0.22) 0 2px, transparent 2px 11px),
+        linear-gradient(180deg, #ffd88f, #e3a95d);
+      clip-path: polygon(8% 0, 92% 0, 58% 100%, 42% 100%);
+    }
+
+    .ice-buddy {
+      position: absolute;
+      width: 86px;
+      height: 104px;
+      pointer-events: none;
+      filter: drop-shadow(0 14px 22px rgba(83, 91, 150, 0.14));
+      opacity: 0.42;
+      z-index: 1;
+    }
+
+    .ice-buddy::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 4px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50% 50% 44% 44%;
+      background: linear-gradient(145deg, rgba(255,255,255,0.95), var(--scoop, #ff9ec4));
+      box-shadow:
+        -15px 24px 0 -7px rgba(255, 255, 255, 0.75),
+        15px 24px 0 -7px rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+    }
+
+    .ice-buddy::after {
+      content: "";
+      position: absolute;
+      left: 27px;
+      top: 53px;
+      width: 32px;
+      height: 42px;
+      border-radius: 6px 6px 18px 18px;
+      background:
+        linear-gradient(135deg, rgba(151, 91, 34, 0.22) 0 2px, transparent 2px 10px),
+        linear-gradient(45deg, rgba(151, 91, 34, 0.18) 0 2px, transparent 2px 10px),
+        linear-gradient(180deg, #ffe0a3, #eab468);
+      clip-path: polygon(7% 0, 93% 0, 58% 100%, 42% 100%);
+    }
+
+    .ice-buddy .face {
+      left: 30px;
+      top: 23px;
+      transform: scale(0.86);
+    }
+
+    .ice-buddy.one {
+      right: 18px;
+      top: 22px;
+      --scoop: #b8f1df;
+      transform: rotate(8deg) scale(0.86);
+    }
+
+    .ice-buddy.two {
+      right: 18px;
+      bottom: 24px;
+      --scoop: #ffc9dd;
+      transform: rotate(-7deg) scale(0.72);
+    }
+
+    .ice-buddy.three {
+      left: 24px;
+      bottom: 12px;
+      --scoop: #c9ddff;
+      transform: rotate(9deg) scale(0.78);
+    }
+
+    main {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 72px) 56px;
+    }
+
+    .status-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(28px) saturate(1.18);
+      -webkit-backdrop-filter: blur(28px) saturate(1.18);
+      position: relative;
+    }
+
+    section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.08) 42%, rgba(255, 255, 255, 0));
+    }
+
+    section.full { grid-column: 1 / -1; }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 20px 22px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.12));
+      position: relative;
+      z-index: 3;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      height: 30px;
+      border-radius: 999px;
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(0, 0, 0, 0.06);
+      color: var(--muted);
+    }
+
+    .pill.green { background: rgba(36, 138, 61, 0.12); color: var(--green); }
+    .pill.amber { background: rgba(255, 190, 105, 0.26); color: var(--amber); }
+
+    .table-wrap {
+      overflow: auto;
+      max-height: 560px;
+      position: relative;
+      z-index: 3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 13px 16px;
+      text-align: left;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      z-index: 1;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    td.num, th.num { text-align: right; }
+
+    .bar {
+      width: 110px;
+      height: 7px;
+      background: rgba(0, 0, 0, 0.09);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar > i {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--teal), #8f7bff, var(--pink));
+    }
+
+    .name-list {
+      max-width: 420px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--muted);
+    }
+
+    .empty {
+      padding: 24px 18px;
+      color: var(--muted);
+    }
+
+    .error {
+      display: none;
+      margin-bottom: 16px;
+      padding: 12px 14px;
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      background: #fff1f2;
+      color: var(--red);
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .topbar { display: grid; }
+      .hero-metric { text-align: left; }
+      .grid { grid-template-columns: 1fr; }
+      .sweet-decor {
+        right: 20px;
+        top: 108px;
+        transform: rotate(-9deg) scale(0.72);
+        opacity: 0.72;
+      }
+      .ice-buddy { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topbar">
+      <div class="sweet-decor" aria-hidden="true">
+        <span class="face"><span class="smile"></span></span>
+      </div>
+      <div>
+        <h1>出单激励进展看板</h1>
+        <p class="subtitle">精品班学部-学习规划部活动期出单进展，按伙伴去重统计，聚焦大组推进、小组冲刺和最新破蛋动态。</p>
+      </div>
+      <div class="hero-metric">
+        <span>累计破蛋伙伴</span>
+        <strong id="heroPeople">-</strong>
+        <em id="heroDate">数据加载中</em>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div id="error" class="error"></div>
+    <div class="status-line">
+      <span id="source">等待加载数据</span>
+      <span id="updatedAt"></span>
+    </div>
+
+    <div class="grid">
+      <section>
+        <div class="ice-buddy one" aria-hidden="true"><span class="face"><span class="smile"></span></span></div>
+        <div class="section-head">
+          <h2>大组进展</h2>
+          <span class="pill">按差距排序</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>大组长</th><th class="num">目标</th><th class="num">已破蛋</th><th class="num">还差</th><th>进度</th><th>状态</th></tr></thead>
+            <tbody id="bigBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <div class="ice-buddy two" aria-hidden="true"><span class="face"><span class="smile"></span></span></div>
+        <div class="section-head">
+          <h2>小组冲刺优先级</h2>
+          <span id="nearPill" class="pill green">即将得奖</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>小组长</th><th class="num">目标</th><th class="num">已破蛋</th><th class="num">还差</th><th>状态</th></tr></thead>
+            <tbody id="nearBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="full">
+        <div class="ice-buddy three" aria-hidden="true"><span class="face"><span class="smile"></span></span></div>
+        <div class="section-head">
+          <h2>小组全量明细</h2>
+          <span class="pill">含未出单小组</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>小组长</th><th class="num">目标</th><th class="num">已破蛋</th><th class="num">还差</th><th>进度</th><th>状态</th><th>出单伙伴</th></tr></thead>
+            <tbody id="smallBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>按日期去重</h2>
+          <span class="pill">支付日期</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>日期</th><th class="num">去重人数</th></tr></thead>
+            <tbody id="dateBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>最新支付日伙伴</h2>
+          <span id="latestPill" class="pill green">最新</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>伙伴</th><th>大组长</th><th>小组长</th><th>首单时间</th></tr></thead>
+            <tbody id="latestBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const defaultFile = "/Users/gaoxiangliao/Desktop/工作簿8.xlsx";
+    const $ = (id) => document.getElementById(id);
+
+    function text(value) {
+      return value === null || value === undefined || value === "" ? "-" : value;
+    }
+
+    function statusPill(status) {
+      return status === "达标"
+        ? '<span class="pill green">达标</span>'
+        : '<span class="pill amber">努力中</span>';
+    }
+
+    function smallStatusPill(row, highlightNear = false) {
+      if (row.status === "达标") {
+        return '<span class="pill green">达标</span>';
+      }
+      if (highlightNear && row.gap !== null && row.gap <= 2) {
+        return '<span class="pill green">即将得奖</span>';
+      }
+      return '<span class="pill amber">努力中</span>';
+    }
+
+    function progressBar(value) {
+      const width = Math.max(0, Math.min(100, Number(value) || 0));
+      return `<div class="bar"><i style="width:${width}%"></i></div>`;
+    }
+
+    function renderRows(rows, bodyId, options = {}) {
+      const body = $(bodyId);
+      if (!rows.length) {
+        body.innerHTML = `<tr><td colspan="7" class="empty">${options.empty || "暂无数据"}</td></tr>`;
+        return;
+      }
+      body.innerHTML = rows.map((row) => {
+        const members = row.members && row.members.length ? row.members.join("、") : "-";
+        if (options.kind === "small") {
+          return `<tr>
+            <td>${row.name}</td><td class="num">${row.target}</td><td class="num">${row.current}</td>
+            <td class="num">${text(row.gap)}</td><td>${progressBar(row.progress)}</td>
+            <td>${smallStatusPill(row, options.highlightNear)}</td><td class="name-list" title="${members}">${members}</td>
+          </tr>`;
+        }
+        return `<tr>
+          <td>${row.name}</td><td class="num">${row.target}</td><td class="num">${row.current}</td>
+          <td class="num">${text(row.gap)}</td><td>${progressBar(row.progress)}</td><td>${smallStatusPill(row, options.highlightNear)}</td>
+        </tr>`;
+      }).join("");
+    }
+
+    function render(data) {
+      $("source").textContent = "活动周期 2026-05-22 至 2026-05-31 · 按业绩归属人去重";
+      $("updatedAt").textContent = `刷新时间 ${data.updatedAt}`;
+      $("heroPeople").textContent = data.summary.uniquePeople;
+      $("heroDate").textContent = `${data.summary.latestDate || "-"} 最新日 ${data.summary.latestDatePeople} 人`;
+      $("nearPill").textContent = `${data.summary.smallNear} 个小组即将得奖`;
+      $("latestPill").textContent = data.summary.latestDate || "最新";
+
+      renderRows(data.bigRows, "bigBody");
+      renderRows(data.nearSmall, "nearBody", { empty: "暂无即将得奖小组", highlightNear: true });
+      renderRows(data.smallRows, "smallBody", { kind: "small" });
+
+      $("dateBody").innerHTML = data.byDate.map((row) =>
+        `<tr><td>${row.date}</td><td class="num">${row.people}</td></tr>`
+      ).join("");
+
+      $("latestBody").innerHTML = data.latestPeople.map((row) =>
+        `<tr><td>${row.name}</td><td>${row.bigLeader}</td><td>${row.smallLeader}</td><td>${row.payTime}</td></tr>`
+      ).join("") || '<tr><td colspan="4" class="empty">暂无最新支付日伙伴</td></tr>';
+    }
+
+    async function loadData() {
+      const file = defaultFile;
+      $("error").style.display = "none";
+      try {
+        const isLocalServer = location.hostname === "127.0.0.1" || location.hostname === "localhost";
+        const urls = isLocalServer
+          ? [`/api/progress?file=${encodeURIComponent(file)}`, "data.json"]
+          : ["data.json"];
+
+        let payload = null;
+        let lastError = null;
+        for (const url of urls) {
+          try {
+            const response = await fetch(url, { cache: "no-store" });
+            if (!response.ok) {
+              throw new Error(`${url} 返回 ${response.status}`);
+            }
+            const raw = await response.text();
+            if (raw.trim().startsWith("<")) {
+              throw new Error(`${url} 返回了网页内容，不是 JSON 数据`);
+            }
+            payload = JSON.parse(raw);
+            break;
+          } catch (error) {
+            lastError = error;
+          }
+        }
+        if (!payload) {
+          throw lastError || new Error("未找到数据文件 data.json，请先生成并上传。");
+        }
+        if (!payload.ok) throw new Error(payload.error || "加载失败");
+        render(payload.data);
+      } catch (error) {
+        $("error").textContent = error.message;
+        $("error").style.display = "block";
+      }
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
