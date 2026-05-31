@@ -3,7 +3,7 @@
   "data": {
     "file": "/Users/gaoxiangliao/Desktop/工作簿8.xlsx",
     "sheet": "Sheet1",
-    "updatedAt": "2026-05-30 13:10:16",
+    "updatedAt": "2026-05-31 10:55:26",
     "criteria": {
       "activityIds": [
         "10227",
@@ -14,14 +14,14 @@
       "department": "精品班学部-学习规划部"
     },
     "summary": {
-      "totalRows": 244,
-      "matchedRows": 243,
-      "uniquePeople": 75,
-      "latestDate": "2026-05-29",
-      "latestDatePeople": 7,
+      "totalRows": 291,
+      "matchedRows": 290,
+      "uniquePeople": 89,
+      "latestDate": "2026-05-30",
+      "latestDatePeople": 16,
       "bigAchieved": 0,
-      "smallAchieved": 1,
-      "smallNear": 39
+      "smallAchieved": 4,
+      "smallNear": 42
     },
     "byDate": [
       {
@@ -51,9 +51,32 @@
       {
         "date": "2026-05-29",
         "people": 7
+      },
+      {
+        "date": "2026-05-30",
+        "people": 16
       }
     ],
     "bigRows": [
+      {
+        "name": "刘文欢",
+        "target": 13,
+        "current": 9,
+        "gap": 4,
+        "status": "未达标",
+        "members": [
+          "刘安",
+          "唐永晴",
+          "房家秀",
+          "王妍妍10",
+          "王思瑶02",
+          "王甜27",
+          "王红敏01",
+          "田叶叶01",
+          "邵秀林"
+        ],
+        "progress": 69.2
+      },
       {
         "name": "陈科羽",
         "target": 5,
@@ -64,24 +87,6 @@
           "钱隆01"
         ],
         "progress": 20.0
-      },
-      {
-        "name": "刘文欢",
-        "target": 13,
-        "current": 8,
-        "gap": 5,
-        "status": "未达标",
-        "members": [
-          "刘安",
-          "唐永晴",
-          "房家秀",
-          "王妍妍10",
-          "王思瑶02",
-          "王红敏01",
-          "田叶叶01",
-          "邵秀林"
-        ],
-        "progress": 61.5
       },
       {
         "name": "王利花",
@@ -113,6 +118,21 @@
         "progress": 45.5
       },
       {
+        "name": "郑银苹",
+        "target": 13,
+        "current": 5,
+        "gap": 8,
+        "status": "未达标",
+        "members": [
+          "李旭04",
+          "李逸松",
+          "王骞14",
+          "魏曙环",
+          "黄丽蓉"
+        ],
+        "progress": 38.5
+      },
+      {
         "name": "檀沚恒",
         "target": 9,
         "current": 0,
@@ -120,19 +140,6 @@
         "status": "未达标",
         "members": [],
         "progress": 0.0
-      },
-      {
-        "name": "郑银苹",
-        "target": 13,
-        "current": 3,
-        "gap": 10,
-        "status": "未达标",
-        "members": [
-          "王骞14",
-          "魏曙环",
-          "黄丽蓉"
-        ],
-        "progress": 23.1
       },
       {
         "name": "朱楠",
@@ -145,6 +152,18 @@
           "李鹏涛01"
         ],
         "progress": 15.4
+      },
+      {
+        "name": "王思桥01",
+        "target": 14,
+        "current": 2,
+        "gap": 12,
+        "status": "未达标",
+        "members": [
+          "康旭东",
+          "龙丹01"
+        ],
+        "progress": 14.3
       },
       {
         "name": "张崔霞",
@@ -160,17 +179,6 @@
         "progress": 18.8
       },
       {
-        "name": "王思桥01",
-        "target": 14,
-        "current": 1,
-        "gap": 13,
-        "status": "未达标",
-        "members": [
-          "康旭东"
-        ],
-        "progress": 7.1
-      },
-      {
         "name": "蒲凌海",
         "target": 14,
         "current": 1,
@@ -184,18 +192,20 @@
       {
         "name": "孙仲辉",
         "target": 22,
-        "current": 6,
-        "gap": 16,
+        "current": 8,
+        "gap": 14,
         "status": "未达标",
         "members": [
+          "刘杰45",
           "张慧茹03",
           "张苗苗02",
           "沈云龙",
           "王梦晓",
+          "王萌44",
           "董明伟",
           "赵心怡01"
         ],
-        "progress": 27.3
+        "progress": 36.4
       },
       {
         "name": "舒鑫01",
@@ -213,39 +223,24 @@
         "progress": 22.7
       },
       {
-        "name": "李世通",
-        "target": 33,
-        "current": 9,
-        "gap": 24,
-        "status": "未达标",
-        "members": [
-          "宋时雨",
-          "干进粮",
-          "李鑫29",
-          "王佳燕",
-          "田晓媛",
-          "郗凯嫚",
-          "郭浩振",
-          "高思雨01",
-          "高梓浩"
-        ],
-        "progress": 27.3
-      },
-      {
         "name": "付丹丹",
         "target": 41,
-        "current": 15,
-        "gap": 26,
+        "current": 19,
+        "gap": 22,
         "status": "未达标",
         "members": [
+          "何怡丹",
           "刘亚华",
           "刘宸铭",
           "吕志雄",
           "周浩然",
+          "娄肖辉",
           "孙楠05",
           "宋星",
           "崔盼盼01",
+          "席义行",
           "李二伟",
+          "杨艳会",
           "楚玉慧",
           "潘怡欣02",
           "王佳奇28",
@@ -254,20 +249,43 @@
           "陈丽05",
           "黄子婷"
         ],
-        "progress": 36.6
+        "progress": 46.3
+      },
+      {
+        "name": "李世通",
+        "target": 33,
+        "current": 10,
+        "gap": 23,
+        "status": "未达标",
+        "members": [
+          "宋时雨",
+          "干进粮",
+          "李鑫29",
+          "王佳燕",
+          "田晓媛",
+          "赵爽13",
+          "郗凯嫚",
+          "郭浩振",
+          "高思雨01",
+          "高梓浩"
+        ],
+        "progress": 30.3
       },
       {
         "name": "吴辉01",
         "target": 39,
-        "current": 12,
-        "gap": 27,
+        "current": 15,
+        "gap": 24,
         "status": "未达标",
         "members": [
           "任玉洁03",
+          "候伟峰",
           "夏春雨",
           "曾静07",
           "李双双08",
           "李炜增",
+          "李瑞敏01",
+          "李靖一06",
           "杜亚娟01",
           "王惠芳01",
           "王振宇",
@@ -276,10 +294,50 @@
           "邢夏青",
           "郑佳敏02"
         ],
-        "progress": 30.8
+        "progress": 38.5
       }
     ],
     "smallRows": [
+      {
+        "name": "齐建国",
+        "target": 4,
+        "current": 4,
+        "gap": 0,
+        "status": "达标",
+        "members": [
+          "任玉洁03",
+          "曾静07",
+          "李靖一06",
+          "王振宇"
+        ],
+        "progress": 100.0
+      },
+      {
+        "name": "李旭04",
+        "target": 3,
+        "current": 3,
+        "gap": 0,
+        "status": "达标",
+        "members": [
+          "李旭04",
+          "李逸松",
+          "魏曙环"
+        ],
+        "progress": 100.0
+      },
+      {
+        "name": "郗凯嫚",
+        "target": 3,
+        "current": 3,
+        "gap": 0,
+        "status": "达标",
+        "members": [
+          "赵爽13",
+          "郗凯嫚",
+          "郭浩振"
+        ],
+        "progress": 100.0
+      },
       {
         "name": "王纯燕10",
         "target": 2,
@@ -291,6 +349,20 @@
           "赵艳芳01"
         ],
         "progress": 100.0
+      },
+      {
+        "name": "李二伟",
+        "target": 5,
+        "current": 4,
+        "gap": 1,
+        "status": "未达标",
+        "members": [
+          "刘宸铭",
+          "周浩然",
+          "娄肖辉",
+          "李二伟"
+        ],
+        "progress": 80.0
       },
       {
         "name": "张帅21",
@@ -345,17 +417,28 @@
         "progress": 75.0
       },
       {
-        "name": "齐建国",
-        "target": 4,
-        "current": 3,
+        "name": "侯雪婷",
+        "target": 3,
+        "current": 2,
         "gap": 1,
         "status": "未达标",
         "members": [
-          "任玉洁03",
-          "曾静07",
-          "王振宇"
+          "刘杰45",
+          "赵心怡01"
         ],
-        "progress": 75.0
+        "progress": 66.7
+      },
+      {
+        "name": "卢梦迪",
+        "target": 3,
+        "current": 2,
+        "gap": 1,
+        "status": "未达标",
+        "members": [
+          "何怡丹",
+          "崔盼盼01"
+        ],
+        "progress": 66.7
       },
       {
         "name": "朱京运",
@@ -382,14 +465,14 @@
         "progress": 66.7
       },
       {
-        "name": "郗凯嫚",
+        "name": "贺磊04",
         "target": 3,
         "current": 2,
         "gap": 1,
         "status": "未达标",
         "members": [
-          "郗凯嫚",
-          "郭浩振"
+          "席义行",
+          "楚玉慧"
         ],
         "progress": 66.7
       },
@@ -438,6 +521,17 @@
         "progress": 50.0
       },
       {
+        "name": "王博鑫",
+        "target": 2,
+        "current": 1,
+        "gap": 1,
+        "status": "未达标",
+        "members": [
+          "廖世刚01"
+        ],
+        "progress": 50.0
+      },
+      {
         "name": "王时炳",
         "target": 2,
         "current": 1,
@@ -445,6 +539,17 @@
         "status": "未达标",
         "members": [
           "王传阳"
+        ],
+        "progress": 50.0
+      },
+      {
+        "name": "葛伟涛",
+        "target": 2,
+        "current": 1,
+        "gap": 1,
+        "status": "未达标",
+        "members": [
+          "王甜27"
         ],
         "progress": 50.0
       },
@@ -460,17 +565,28 @@
         "progress": 50.0
       },
       {
-        "name": "李二伟",
-        "target": 5,
-        "current": 3,
+        "name": "候伟峰",
+        "target": 4,
+        "current": 2,
         "gap": 2,
         "status": "未达标",
         "members": [
-          "刘宸铭",
-          "周浩然",
-          "李二伟"
+          "候伟峰",
+          "赵珂04"
         ],
-        "progress": 60.0
+        "progress": 50.0
+      },
+      {
+        "name": "牛洋洋",
+        "target": 4,
+        "current": 2,
+        "gap": 2,
+        "status": "未达标",
+        "members": [
+          "刘亚华",
+          "杨艳会"
+        ],
+        "progress": 50.0
       },
       {
         "name": "祁清阳",
@@ -497,26 +613,16 @@
         "progress": 50.0
       },
       {
-        "name": "侯雪婷",
-        "target": 3,
-        "current": 1,
+        "name": "裴小玉",
+        "target": 4,
+        "current": 2,
         "gap": 2,
         "status": "未达标",
         "members": [
-          "赵心怡01"
+          "张慧茹03",
+          "王萌44"
         ],
-        "progress": 33.3
-      },
-      {
-        "name": "卢梦迪",
-        "target": 3,
-        "current": 1,
-        "gap": 2,
-        "status": "未达标",
-        "members": [
-          "崔盼盼01"
-        ],
-        "progress": 33.3
+        "progress": 50.0
       },
       {
         "name": "周琦02",
@@ -548,6 +654,17 @@
         "status": "未达标",
         "members": [
           "王家慧06"
+        ],
+        "progress": 33.3
+      },
+      {
+        "name": "杨艳12",
+        "target": 3,
+        "current": 1,
+        "gap": 2,
+        "status": "未达标",
+        "members": [
+          "龙丹01"
         ],
         "progress": 33.3
       },
@@ -618,17 +735,6 @@
         "progress": 33.3
       },
       {
-        "name": "贺磊04",
-        "target": 3,
-        "current": 1,
-        "gap": 2,
-        "status": "未达标",
-        "members": [
-          "楚玉慧"
-        ],
-        "progress": 33.3
-      },
-      {
         "name": "黄金磊",
         "target": 3,
         "current": 1,
@@ -687,15 +793,6 @@
         "progress": 0.0
       },
       {
-        "name": "葛伟涛",
-        "target": 2,
-        "current": 0,
-        "gap": 2,
-        "status": "未达标",
-        "members": [],
-        "progress": 0.0
-      },
-      {
         "name": "谭宇01",
         "target": 2,
         "current": 0,
@@ -735,6 +832,18 @@
         "progress": 40.0
       },
       {
+        "name": "李浩冉03",
+        "target": 5,
+        "current": 2,
+        "gap": 3,
+        "status": "未达标",
+        "members": [
+          "李瑞敏01",
+          "杜亚娟01"
+        ],
+        "progress": 40.0
+      },
+      {
         "name": "沈云龙",
         "target": 5,
         "current": 2,
@@ -754,17 +863,6 @@
         "status": "未达标",
         "members": [
           "高思雨01"
-        ],
-        "progress": 25.0
-      },
-      {
-        "name": "候伟峰",
-        "target": 4,
-        "current": 1,
-        "gap": 3,
-        "status": "未达标",
-        "members": [
-          "赵珂04"
         ],
         "progress": 25.0
       },
@@ -868,17 +966,6 @@
         "progress": 25.0
       },
       {
-        "name": "牛洋洋",
-        "target": 4,
-        "current": 1,
-        "gap": 3,
-        "status": "未达标",
-        "members": [
-          "刘亚华"
-        ],
-        "progress": 25.0
-      },
-      {
         "name": "王智超03",
         "target": 4,
         "current": 1,
@@ -886,17 +973,6 @@
         "status": "未达标",
         "members": [
           "黄丽蓉"
-        ],
-        "progress": 25.0
-      },
-      {
-        "name": "裴小玉",
-        "target": 4,
-        "current": 1,
-        "gap": 3,
-        "status": "未达标",
-        "members": [
-          "张慧茹03"
         ],
         "progress": 25.0
       },
@@ -1015,15 +1091,6 @@
         "progress": 0.0
       },
       {
-        "name": "杨艳12",
-        "target": 3,
-        "current": 0,
-        "gap": 3,
-        "status": "未达标",
-        "members": [],
-        "progress": 0.0
-      },
-      {
         "name": "梁爽01",
         "target": 3,
         "current": 0,
@@ -1058,17 +1125,6 @@
         "status": "未达标",
         "members": [
           "刘婷04"
-        ],
-        "progress": 20.0
-      },
-      {
-        "name": "李浩冉03",
-        "target": 5,
-        "current": 1,
-        "gap": 4,
-        "status": "未达标",
-        "members": [
-          "杜亚娟01"
         ],
         "progress": 20.0
       },
@@ -1224,31 +1280,23 @@
         "status": "未达标",
         "members": [],
         "progress": 0.0
-      },
-      {
-        "name": "李旭04",
-        "target": 0,
-        "current": 1,
-        "gap": null,
-        "status": "未达标",
-        "members": [
-          "魏曙环"
-        ],
-        "progress": 0
-      },
-      {
-        "name": "王博鑫",
-        "target": 0,
-        "current": 1,
-        "gap": null,
-        "status": "未达标",
-        "members": [
-          "廖世刚01"
-        ],
-        "progress": 0
       }
     ],
     "nearSmall": [
+      {
+        "name": "李二伟",
+        "target": 5,
+        "current": 4,
+        "gap": 1,
+        "status": "未达标",
+        "members": [
+          "刘宸铭",
+          "周浩然",
+          "娄肖辉",
+          "李二伟"
+        ],
+        "progress": 80.0
+      },
       {
         "name": "张帅21",
         "target": 4,
@@ -1302,17 +1350,28 @@
         "progress": 75.0
       },
       {
-        "name": "齐建国",
-        "target": 4,
-        "current": 3,
+        "name": "侯雪婷",
+        "target": 3,
+        "current": 2,
         "gap": 1,
         "status": "未达标",
         "members": [
-          "任玉洁03",
-          "曾静07",
-          "王振宇"
+          "刘杰45",
+          "赵心怡01"
         ],
-        "progress": 75.0
+        "progress": 66.7
+      },
+      {
+        "name": "卢梦迪",
+        "target": 3,
+        "current": 2,
+        "gap": 1,
+        "status": "未达标",
+        "members": [
+          "何怡丹",
+          "崔盼盼01"
+        ],
+        "progress": 66.7
       },
       {
         "name": "朱京运",
@@ -1339,14 +1398,14 @@
         "progress": 66.7
       },
       {
-        "name": "郗凯嫚",
+        "name": "贺磊04",
         "target": 3,
         "current": 2,
         "gap": 1,
         "status": "未达标",
         "members": [
-          "郗凯嫚",
-          "郭浩振"
+          "席义行",
+          "楚玉慧"
         ],
         "progress": 66.7
       },
@@ -1395,6 +1454,17 @@
         "progress": 50.0
       },
       {
+        "name": "王博鑫",
+        "target": 2,
+        "current": 1,
+        "gap": 1,
+        "status": "未达标",
+        "members": [
+          "廖世刚01"
+        ],
+        "progress": 50.0
+      },
+      {
         "name": "王时炳",
         "target": 2,
         "current": 1,
@@ -1402,6 +1472,17 @@
         "status": "未达标",
         "members": [
           "王传阳"
+        ],
+        "progress": 50.0
+      },
+      {
+        "name": "葛伟涛",
+        "target": 2,
+        "current": 1,
+        "gap": 1,
+        "status": "未达标",
+        "members": [
+          "王甜27"
         ],
         "progress": 50.0
       },
@@ -1417,17 +1498,28 @@
         "progress": 50.0
       },
       {
-        "name": "李二伟",
-        "target": 5,
-        "current": 3,
+        "name": "候伟峰",
+        "target": 4,
+        "current": 2,
         "gap": 2,
         "status": "未达标",
         "members": [
-          "刘宸铭",
-          "周浩然",
-          "李二伟"
+          "候伟峰",
+          "赵珂04"
         ],
-        "progress": 60.0
+        "progress": 50.0
+      },
+      {
+        "name": "牛洋洋",
+        "target": 4,
+        "current": 2,
+        "gap": 2,
+        "status": "未达标",
+        "members": [
+          "刘亚华",
+          "杨艳会"
+        ],
+        "progress": 50.0
       },
       {
         "name": "祁清阳",
@@ -1454,26 +1546,16 @@
         "progress": 50.0
       },
       {
-        "name": "侯雪婷",
-        "target": 3,
-        "current": 1,
+        "name": "裴小玉",
+        "target": 4,
+        "current": 2,
         "gap": 2,
         "status": "未达标",
         "members": [
-          "赵心怡01"
+          "张慧茹03",
+          "王萌44"
         ],
-        "progress": 33.3
-      },
-      {
-        "name": "卢梦迪",
-        "target": 3,
-        "current": 1,
-        "gap": 2,
-        "status": "未达标",
-        "members": [
-          "崔盼盼01"
-        ],
-        "progress": 33.3
+        "progress": 50.0
       },
       {
         "name": "周琦02",
@@ -1485,94 +1567,104 @@
           "王红敏01"
         ],
         "progress": 33.3
-      },
-      {
-        "name": "张昕怡01",
-        "target": 3,
-        "current": 1,
-        "gap": 2,
-        "status": "未达标",
-        "members": [
-          "郭鑫杰"
-        ],
-        "progress": 33.3
-      },
-      {
-        "name": "李闯01",
-        "target": 3,
-        "current": 1,
-        "gap": 2,
-        "status": "未达标",
-        "members": [
-          "王家慧06"
-        ],
-        "progress": 33.3
-      },
-      {
-        "name": "段博文",
-        "target": 3,
-        "current": 1,
-        "gap": 2,
-        "status": "未达标",
-        "members": [
-          "陈丽05"
-        ],
-        "progress": 33.3
-      },
-      {
-        "name": "段晓伟",
-        "target": 3,
-        "current": 1,
-        "gap": 2,
-        "status": "未达标",
-        "members": [
-          "黄子婷"
-        ],
-        "progress": 33.3
       }
     ],
     "latestPeople": [
       {
-        "name": "陈丽05",
+        "name": "何怡丹",
         "bigLeader": "付丹丹",
-        "smallLeader": "段博文",
-        "payTime": "2026-05-29 21:11"
+        "smallLeader": "卢梦迪",
+        "payTime": "2026-05-30 19:05"
       },
       {
-        "name": "潘怡欣02",
+        "name": "周浩然",
         "bigLeader": "付丹丹",
-        "smallLeader": "许鹏辉01",
-        "payTime": "2026-05-29 19:40"
+        "smallLeader": "李二伟",
+        "payTime": "2026-05-30 22:31"
       },
       {
-        "name": "刘安",
+        "name": "娄肖辉",
+        "bigLeader": "付丹丹",
+        "smallLeader": "李二伟",
+        "payTime": "2026-05-30 23:14"
+      },
+      {
+        "name": "杨艳会",
+        "bigLeader": "付丹丹",
+        "smallLeader": "牛洋洋",
+        "payTime": "2026-05-30 20:40"
+      },
+      {
+        "name": "席义行",
+        "bigLeader": "付丹丹",
+        "smallLeader": "贺磊04",
+        "payTime": "2026-05-30 22:31"
+      },
+      {
+        "name": "王甜27",
         "bigLeader": "刘文欢",
-        "smallLeader": "刘安",
-        "payTime": "2026-05-29 22:53"
+        "smallLeader": "葛伟涛",
+        "payTime": "2026-05-30 18:20"
       },
       {
-        "name": "李双双08",
+        "name": "候伟峰",
         "bigLeader": "吴辉01",
-        "smallLeader": "祁清阳",
-        "payTime": "2026-05-29 22:51"
+        "smallLeader": "候伟峰",
+        "payTime": "2026-05-30 20:04"
       },
       {
-        "name": "李薇56",
-        "bigLeader": "张崔霞",
-        "smallLeader": "邓志豪",
-        "payTime": "2026-05-29 18:59"
+        "name": "李瑞敏01",
+        "bigLeader": "吴辉01",
+        "smallLeader": "李浩冉03",
+        "payTime": "2026-05-30 18:36"
       },
       {
-        "name": "赵艳芳01",
-        "bigLeader": "王利花",
-        "smallLeader": "王纯燕10",
-        "payTime": "2026-05-29 20:33"
+        "name": "李靖一06",
+        "bigLeader": "吴辉01",
+        "smallLeader": "齐建国",
+        "payTime": "2026-05-30 22:08"
       },
       {
-        "name": "魏曙环",
+        "name": "刘杰45",
+        "bigLeader": "孙仲辉",
+        "smallLeader": "侯雪婷",
+        "payTime": "2026-05-30 21:12"
+      },
+      {
+        "name": "王萌44",
+        "bigLeader": "孙仲辉",
+        "smallLeader": "裴小玉",
+        "payTime": "2026-05-30 20:41"
+      },
+      {
+        "name": "宋时雨",
+        "bigLeader": "李世通",
+        "smallLeader": "刘露汗",
+        "payTime": "2026-05-30 19:29"
+      },
+      {
+        "name": "赵爽13",
+        "bigLeader": "李世通",
+        "smallLeader": "郗凯嫚",
+        "payTime": "2026-05-30 19:53"
+      },
+      {
+        "name": "龙丹01",
+        "bigLeader": "王思桥01",
+        "smallLeader": "杨艳12",
+        "payTime": "2026-05-30 15:49"
+      },
+      {
+        "name": "李旭04",
         "bigLeader": "郑银苹",
         "smallLeader": "李旭04",
-        "payTime": "2026-05-29 21:43"
+        "payTime": "2026-05-30 15:45"
+      },
+      {
+        "name": "李逸松",
+        "bigLeader": "郑银苹",
+        "smallLeader": "李旭04",
+        "payTime": "2026-05-30 20:36"
       }
     ],
     "excluded": {
