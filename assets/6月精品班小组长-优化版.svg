@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1500" viewBox="0 0 2000 1500">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#100805"/>
+      <stop offset=".5" stop-color="#241309"/>
+      <stop offset="1" stop-color="#0D0705"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="0%" r="85%">
+      <stop offset="0" stop-color="#D8792A" stop-opacity=".48"/>
+      <stop offset=".35" stop-color="#A6471A" stop-opacity=".18"/>
+      <stop offset=".75" stop-color="#311307" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#140A06" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="table" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#352014"/>
+      <stop offset="1" stop-color="#21120C"/>
+    </linearGradient>
+    <linearGradient id="header" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6D2417"/>
+      <stop offset=".58" stop-color="#B94E27"/>
+      <stop offset="1" stop-color="#662015"/>
+    </linearGradient>
+    <linearGradient id="topTier" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#43231A"/>
+      <stop offset=".5" stop-color="#65301E"/>
+      <stop offset="1" stop-color="#43231A"/>
+    </linearGradient>
+    <linearGradient id="goldLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#F7C86B" stop-opacity="0"/>
+      <stop offset=".18" stop-color="#F7C86B" stop-opacity=".9"/>
+      <stop offset=".82" stop-color="#F7C86B" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#F7C86B" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="softGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+    <filter id="lineGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <style>
+      .cn { font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+      .num { font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif; font-variant-numeric: tabular-nums; }
+      .ink { fill: #FFF9EA; }
+      .gold { fill: #F7C86B; }
+      .muted { fill: #DFC99D; }
+      .grid { stroke: #F7C86B; stroke-opacity: .28; stroke-width: 2; }
+      .rowText { font-size: 41px; font-weight: 650; }
+      .rowNum { font-size: 43px; font-weight: 700; letter-spacing: 1px; }
+      .headerText { font-size: 38px; font-weight: 700; letter-spacing: 2px; }
+    </style>
+  </defs>
+
+  <rect width="2000" height="1500" fill="url(#bg)"/>
+  <rect width="2000" height="720" fill="url(#sun)"/>
+
+  <ellipse cx="1000" cy="260" rx="720" ry="430" fill="none" stroke="#E69742" stroke-opacity=".15" stroke-width="3"/>
+  <ellipse cx="1000" cy="260" rx="600" ry="350" fill="none" stroke="#F7C86B" stroke-opacity=".12" stroke-width="2"/>
+  <path d="M1000 55 L760 412 M1000 55 L1240 412 M1000 55 L540 435 M1000 55 L1460 435" stroke="#F7C86B" stroke-opacity=".11" stroke-width="4"/>
+  <circle cx="1000" cy="58" r="38" fill="#F7C86B" fill-opacity=".8" filter="url(#softGlow)"/>
+  <path d="M1000 26 L1014 51 L1041 58 L1014 65 L1000 93 L986 65 L959 58 L986 51Z" fill="#FFE9B5"/>
+
+  <g opacity=".28">
+    <path d="M128 414 L224 312 L218 377 L310 289" fill="none" stroke="#F7C86B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1674 289 L1766 377 L1760 312 L1856 414" fill="none" stroke="#F7C86B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <g transform="translate(48 34)">
+    <rect width="334" height="86" rx="14" fill="#FFF"/>
+    <rect x="16" y="14" width="104" height="58" rx="9" fill="#F4362C"/>
+    <text x="68" y="58" class="cn" text-anchor="middle" fill="#FFF" font-size="39" font-weight="800">高途</text>
+    <rect x="143" y="20" width="2" height="46" fill="#D9D9D9"/>
+    <text x="166" y="59" class="cn" fill="#2C2C2C" font-size="36" font-weight="650">高途高中</text>
+  </g>
+
+  <g transform="translate(1740 44)">
+    <rect width="210" height="58" rx="29" fill="#1B100B" stroke="#DFC99D" stroke-width="2"/>
+    <text x="105" y="40" class="cn" text-anchor="middle" fill="#FFF9EA" font-size="27" font-weight="650">管理激励</text>
+  </g>
+
+  <text x="1000" y="239" class="cn ink" text-anchor="middle" font-size="164" font-weight="900" letter-spacing="4">转介绍百万激励</text>
+  <rect x="640" y="279" width="720" height="4" rx="2" fill="url(#goldLine)"/>
+  <text x="1000" y="342" class="cn muted" text-anchor="middle" font-size="40" font-weight="650" letter-spacing="10">转介绍6月激励</text>
+
+  <g transform="translate(100 414)">
+    <rect width="1800" height="900" rx="20" fill="#130B08" stroke="#F7C86B" stroke-opacity=".68" stroke-width="3"/>
+    <rect x="14" y="14" width="1772" height="872" rx="14" fill="url(#table)" stroke="#F7C86B" stroke-opacity=".22" stroke-width="2"/>
+
+    <g transform="translate(570 -34)">
+      <rect width="660" height="76" rx="38" fill="#FFF2D6" stroke="#EBAA50" stroke-width="3"/>
+      <text x="330" y="52" class="cn" text-anchor="middle" fill="#752B19" font-size="38" font-weight="800" letter-spacing="2">精品班小组长百万分红</text>
+    </g>
+
+    <rect x="15" y="54" width="1770" height="94" fill="url(#header)"/>
+    <text x="178" y="115" class="cn ink headerText">阶梯等级</text>
+    <text x="698" y="115" class="cn ink headerText" text-anchor="middle">GMV净收</text>
+    <text x="1128" y="115" class="cn ink headerText" text-anchor="middle">净收款分红</text>
+    <text x="1534" y="115" class="cn ink headerText" text-anchor="middle">参考奖金区间</text>
+
+    <rect x="15" y="148" width="1770" height="93" fill="url(#topTier)"/>
+    <rect x="15" y="241" width="1770" height="93" fill="#28170F"/>
+    <rect x="15" y="334" width="1770" height="93" fill="#2F1B11"/>
+    <rect x="15" y="427" width="1770" height="93" fill="#28170F"/>
+    <rect x="15" y="520" width="1770" height="93" fill="#2F1B11"/>
+    <rect x="15" y="613" width="1770" height="93" fill="#28170F"/>
+    <rect x="15" y="706" width="1770" height="93" fill="#2F1B11"/>
+    <rect x="15" y="799" width="1770" height="27" fill="#28170F"/>
+
+    <path d="M476 54V892 M980 54V892 M1300 54V892" class="grid"/>
+    <path d="M15 148H1785 M15 241H1785 M15 334H1785 M15 427H1785 M15 520H1785 M15 613H1785 M15 706H1785 M15 799H1785" class="grid"/>
+
+    <g class="cn">
+      <g transform="translate(66 167)">
+        <rect width="92" height="56" rx="14" fill="#7E3DC6"/>
+        <text x="46" y="42" text-anchor="middle" fill="#FFF" font-size="42" font-weight="850">7</text>
+      </g>
+      <text x="188" y="208" class="ink rowText">第7阶</text>
+      <text x="698" y="209" class="ink num rowNum" text-anchor="middle">280,000+</text>
+      <text x="1128" y="210" fill="#D8A1FF" class="num" text-anchor="middle" font-size="56" font-weight="850">4.5%</text>
+      <text x="1534" y="209" fill="#E5BCFF" text-anchor="middle" font-size="43" font-weight="750">上不封顶</text>
+
+      <g transform="translate(66 260)">
+        <rect width="92" height="56" rx="14" fill="#3477D4"/>
+        <text x="46" y="42" text-anchor="middle" fill="#FFF" font-size="42" font-weight="850">6</text>
+      </g>
+      <text x="188" y="301" class="ink rowText">第6阶</text>
+      <text x="698" y="302" class="ink num rowNum" text-anchor="middle">230,000 - 280,000</text>
+      <text x="1128" y="303" fill="#79B8FF" class="num" text-anchor="middle" font-size="56" font-weight="850">4.3%</text>
+      <text x="1534" y="302" fill="#9AC7FF" class="num rowNum" text-anchor="middle">9,890 - 12,040</text>
+
+      <g transform="translate(66 353)">
+        <rect width="92" height="56" rx="14" fill="#2D9FA4"/>
+        <text x="46" y="42" text-anchor="middle" fill="#FFF" font-size="42" font-weight="850">5</text>
+      </g>
+      <text x="188" y="394" class="ink rowText">第5阶</text>
+      <text x="698" y="395" class="ink num rowNum" text-anchor="middle">180,000 - 230,000</text>
+      <text x="1128" y="396" fill="#77E3E0" class="num" text-anchor="middle" font-size="56" font-weight="850">4.1%</text>
+      <text x="1534" y="395" fill="#8BDBD8" class="num rowNum" text-anchor="middle">7,380 - 9,430</text>
+
+      <g transform="translate(66 446)">
+        <rect width="92" height="56" rx="14" fill="#58973C"/>
+        <text x="46" y="42" text-anchor="middle" fill="#FFF" font-size="42" font-weight="850">4</text>
+      </g>
+      <text x="188" y="487" class="ink rowText">第4阶</text>
+      <text x="698" y="488" class="ink num rowNum" text-anchor="middle">130,000 - 180,000</text>
+      <text x="1128" y="489" fill="#B8E58C" class="num" text-anchor="middle" font-size="56" font-weight="850">3.8%</text>
+      <text x="1534" y="488" fill="#C2E59E" class="num rowNum" text-anchor="middle">4,940 - 6,840</text>
+
+      <g transform="translate(66 539)">
+        <rect width="92" height="56" rx="14" fill="#C68A25"/>
+        <text x="46" y="42" text-anchor="middle" fill="#FFF" font-size="42" font-weight="850">3</text>
+      </g>
+      <text x="188" y="580" class="ink rowText">第3阶</text>
+      <text x="698" y="581" class="ink num rowNum" text-anchor="middle">100,000 - 130,000</text>
+      <text x="1128" y="582" fill="#F4D485" class="num" text-anchor="middle" font-size="56" font-weight="850">3.4%</text>
+      <text x="1534" y="581" fill="#F4D485" class="num rowNum" text-anchor="middle">3,400 - 4,420</text>
+
+      <g transform="translate(66 632)">
+        <rect width="92" height="56" rx="14" fill="#C56C28"/>
+        <text x="46" y="42" text-anchor="middle" fill="#FFF" font-size="42" font-weight="850">2</text>
+      </g>
+      <text x="188" y="673" class="ink rowText">第2阶</text>
+      <text x="698" y="674" class="ink num rowNum" text-anchor="middle">80,000 - 100,000</text>
+      <text x="1128" y="675" fill="#F3B66B" class="num" text-anchor="middle" font-size="56" font-weight="850">3.1%</text>
+      <text x="1534" y="674" fill="#F3B66B" class="num rowNum" text-anchor="middle">2,480 - 3,100</text>
+
+      <g transform="translate(66 725)">
+        <rect width="92" height="56" rx="14" fill="#C84432"/>
+        <text x="46" y="42" text-anchor="middle" fill="#FFF" font-size="42" font-weight="850">1</text>
+      </g>
+      <text x="188" y="766" class="ink rowText">第1阶</text>
+      <text x="698" y="767" class="ink num rowNum" text-anchor="middle">60,000 - 80,000</text>
+      <text x="1128" y="768" fill="#FF907A" class="num" text-anchor="middle" font-size="56" font-weight="850">2.8%</text>
+      <text x="1534" y="767" fill="#FF907A" class="num rowNum" text-anchor="middle">1,680 - 2,240</text>
+
+      <g transform="translate(66 811)">
+        <rect width="92" height="56" rx="14" fill="#706A67"/>
+        <text x="46" y="41" text-anchor="middle" fill="#FFF" font-size="36" font-weight="850">-</text>
+      </g>
+      <text x="188" y="852" class="ink rowText">未达阶梯</text>
+      <text x="698" y="853" class="ink num rowNum" text-anchor="middle">&lt; 60,000</text>
+      <text x="1128" y="853" class="muted num rowNum" text-anchor="middle">-</text>
+      <text x="1534" y="853" class="muted num rowNum" text-anchor="middle">-</text>
+    </g>
+  </g>
+
+  <rect x="188" y="1334" width="1624" height="2" fill="url(#goldLine)"/>
+  <text x="1000" y="1378" class="cn muted" text-anchor="middle" font-size="29" font-weight="600">若GMV净收【40000-60000）得800元定额奖金；GMV刚好处于档位划分处时取高档</text>
+
+  <g transform="translate(648 1404)">
+    <rect width="704" height="74" rx="37" fill="#2E180F" stroke="#F7C86B" stroke-opacity=".8" stroke-width="3"/>
+    <text x="352" y="51" class="cn ink" text-anchor="middle" font-size="36" font-weight="750">统计时间：2026年6月自然月</text>
+  </g>
+</svg>

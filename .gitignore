@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.DS_Store
+preview/
+input/
+.agents/
+.impeccable/
+PRODUCT.md
+DESIGN.md

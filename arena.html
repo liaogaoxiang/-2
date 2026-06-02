@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>6月转介绍荣耀战报</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body class="moba-theme">
+    <canvas id="arenaCanvas" aria-hidden="true"></canvas>
+    <main class="arena-shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">REFERRAL GLORY / JUNE SEASON</p>
+          <h1>6月转介绍荣耀战报</h1>
+          <p id="reportMeta" class="subline">正在装载擂台数据...</p>
+        </div>
+        <div class="status-strip" aria-label="赛况状态">
+          <a class="home-return" href="index.html">返回激励主页</a>
+          <span>LIVE</span>
+          <span id="syncTime">SYNC</span>
+        </div>
+      </section>
+
+      <section class="command-grid">
+        <article class="champion-stage">
+          <div class="stage-glow"></div>
+          <div class="stage-copy">
+            <p class="eyebrow">CURRENT MVP / 荣耀英雄</p>
+            <h2 id="championName">擂主加载中</h2>
+            <p id="championLine" class="subline">正在计算战力值</p>
+          </div>
+          <div class="power-core">
+            <span id="championPower">0.0</span>
+            <small>英雄战力</small>
+          </div>
+        </article>
+
+        <section class="kpi-grid" id="kpiGrid" aria-label="核心战况"></section>
+      </section>
+
+      <section class="live-grid">
+        <article class="panel leaderboard-panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">HERO RANK</p>
+              <h2>英雄战力排行榜</h2>
+            </div>
+            <span class="chip">Top 12</span>
+          </div>
+          <div id="playerRankList" class="rank-list compact-rank"></div>
+        </article>
+
+        <article class="panel live-arena-panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">BATTLE FEED</p>
+              <h2>峡谷全量攻防战</h2>
+            </div>
+            <div class="table-tools">
+              <div class="mode-switch" aria-label="排行口径">
+                <button type="button" class="is-active" data-mode="net">净收</button>
+                <button type="button" data-mode="orders">订单</button>
+                <button type="button" data-mode="margin">分差</button>
+              </div>
+              <select id="moduleFilter" aria-label="模块筛选"></select>
+              <input id="searchInput" type="search" placeholder="搜索小组长 / 擂台" aria-label="搜索小组长或擂台" />
+            </div>
+          </div>
+          <div id="arenaCards" class="duel-feed"></div>
+        </article>
+      </section>
+
+      <section class="arena-board lower-board">
+        <article class="panel main-ring">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">FEATURED BATTLE</p>
+              <h2>焦点攻防战</h2>
+            </div>
+            <span class="chip">Featured</span>
+          </div>
+          <div id="featuredArena" class="featured-arena"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">RED / BLUE BATTLE</p>
+              <h2>红蓝攻防局势</h2>
+            </div>
+          </div>
+          <div id="battleSplit" class="battle-split"></div>
+          <div id="moduleStatus" class="module-status"></div>
+        </article>
+      </section>
+
+      <section class="tabs" aria-label="战报榜单">
+        <button type="button" class="tab is-active" data-tab="arenas">战局榜</button>
+        <button type="button" class="tab" data-tab="members">英雄战力</button>
+        <button type="button" class="tab" data-tab="modules">阵营榜</button>
+        <button type="button" class="tab" data-tab="commanders">N2战队</button>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel leaderboard-panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">LEADERBOARD</p>
+              <h2 id="rankTitle">擂台净收榜</h2>
+            </div>
+            <span class="chip" id="rankScope">Top 10</span>
+          </div>
+          <div id="rankList" class="rank-list"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">DAILY ECONOMY</p>
+              <h2>赛季经济曲线</h2>
+            </div>
+            <span class="chip" id="trendPeak">峰值计算中</span>
+          </div>
+          <div id="dailyChart" class="line-chart" role="img" aria-label="每日净收趋势"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">SUBJECT LOADOUT</p>
+              <h2>科目火力</h2>
+            </div>
+          </div>
+          <div id="subjectBars" class="bar-stack"></div>
+        </article>
+      </section>
+
+      <p id="dataNotes" class="data-notes"></p>
+    </main>
+
+    <script src="data/report-data.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>

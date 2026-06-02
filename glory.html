@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#050608" />
+    <title>转介绍荣耀擂台战</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="stylesheet" href="assets/glory.css" />
+  </head>
+  <body class="moba-theme glory-theme">
+    <div class="arena-architecture" aria-hidden="true">
+      <div class="arena-crown">
+        <span></span><i></i><b></b><i></i><span></span>
+      </div>
+      <div class="base-standard blue-standard"><i></i><b>BLUE DEFENSE</b></div>
+      <div class="base-standard red-standard"><i></i><b>RED ATTACK</b></div>
+      <div class="bottom-battlement"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <svg class="canyon-backdrop" viewBox="0 0 1600 720" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="riverStroke" x1="0" x2="1">
+          <stop stop-color="#1769a4" stop-opacity=".08"></stop>
+          <stop offset=".5" stop-color="#63cfff" stop-opacity=".26"></stop>
+          <stop offset="1" stop-color="#ff9f38" stop-opacity=".08"></stop>
+        </linearGradient>
+        <linearGradient id="laneStroke" x1="0" x2="1">
+          <stop stop-color="#63cfff" stop-opacity=".2"></stop>
+          <stop offset=".5" stop-color="#ffe0a4" stop-opacity=".12"></stop>
+          <stop offset="1" stop-color="#ff6657" stop-opacity=".2"></stop>
+        </linearGradient>
+      </defs>
+      <path class="canyon-river" d="M68 694C352 550 490 636 746 458c253-175 391-90 786-344"></path>
+      <path class="canyon-lane" d="M85 650C376 498 611 384 800 360c202-25 443-144 710-284"></path>
+      <path class="canyon-lane" d="M86 650C430 596 628 512 800 360c180-159 380-212 710-284"></path>
+      <path class="canyon-lane" d="M85 650C325 412 554 336 800 360c253 24 476-48 710-284"></path>
+      <g class="blue-base">
+        <path d="m86 618 34 20 0 40-34 20-34-20 0-40Z"></path>
+        <path d="m86 632 20 12 0 25-20 12-20-12 0-25Z"></path>
+      </g>
+      <g class="red-base">
+        <path d="m1511 43 34 20 0 40-34 20-34-20 0-40Z"></path>
+        <path d="m1511 57 20 12 0 25-20 12-20-12 0-25Z"></path>
+      </g>
+      <g class="tower blue-towers">
+        <path d="m289 520 13 8v18l-13 8-13-8v-18Z"></path>
+        <path d="m520 434 13 8v18l-13 8-13-8v-18Z"></path>
+        <path d="m698 368 13 8v18l-13 8-13-8v-18Z"></path>
+      </g>
+      <g class="tower red-towers">
+        <path d="m1314 169 13 8v18l-13 8-13-8v-18Z"></path>
+        <path d="m1086 258 13 8v18l-13 8-13-8v-18Z"></path>
+        <path d="m902 327 13 8v18l-13 8-13-8v-18Z"></path>
+      </g>
+      <g class="brush">
+        <path d="M392 579c-19-41 32-53 42-12 5-47 61-33 40 9 33-26 65 17 23 36H384c-23-10-20-26 8-33Z"></path>
+        <path d="M1100 224c-19-41 32-53 42-12 5-47 61-33 40 9 33-26 65 17 23 36h-113c-23-10-20-26 8-33Z"></path>
+        <path d="M699 535c-19-41 32-53 42-12 5-47 61-33 40 9 33-26 65 17 23 36H691c-23-10-20-26 8-33Z"></path>
+      </g>
+      <g class="jungle-mark">
+        <circle cx="573" cy="580" r="31"></circle><path d="m573 561 15 12-6 18h-18l-6-18Z"></path>
+        <circle cx="1013" cy="154" r="31"></circle><path d="m1013 135 15 12-6 18h-18l-6-18Z"></path>
+      </g>
+      <text x="72" y="714">BLUE CRYSTAL / DEFENSE BASE</text>
+      <text x="1304" y="58">RED CRYSTAL / ATTACK BASE</text>
+    </svg>
+
+    <main class="arena-shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">REFERRAL FORCE / HONOR CANYON</p>
+          <h1>转介绍荣耀<span>擂台战</span></h1>
+          <p id="reportMeta" class="subline">正在装载峡谷战局...</p>
+        </div>
+        <div class="status-strip" aria-label="赛况状态">
+          <a class="home-return" href="index.html">返回激励主页</a>
+          <a class="poster-link" href="poster.html">查看宣发海报</a>
+          <span>LIVE</span>
+          <span id="syncTime">SYNC</span>
+        </div>
+      </section>
+
+      <section class="command-grid">
+        <article class="champion-stage">
+          <div class="stage-glow"></div>
+          <div class="mvp-crest" aria-hidden="true"><i></i><b>◆</b><i></i></div>
+          <div class="stage-copy">
+            <p class="eyebrow">TOP TEAM / 荣耀战队</p>
+            <h2 id="championName">战队加载中</h2>
+            <p id="championLine" class="subline">正在计算团队战力</p>
+          </div>
+          <div class="power-core">
+            <span id="championPower">0.0</span>
+            <small>团队战力</small>
+          </div>
+        </article>
+
+        <section class="kpi-grid" id="kpiGrid" aria-label="峡谷核心战况"></section>
+      </section>
+
+      <section class="live-grid">
+        <article class="panel leaderboard-panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">TEAM RANK</p>
+              <h2>团队战力排行榜</h2>
+            </div>
+            <span class="chip">Top 12</span>
+          </div>
+          <div id="playerRankList" class="rank-list compact-rank"></div>
+        </article>
+
+        <article class="panel live-arena-panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">CANYON BATTLE FEED</p>
+              <h2>荣耀峡谷实时对战</h2>
+            </div>
+            <div class="table-tools">
+              <div class="mode-switch" aria-label="排行口径">
+                <button type="button" class="is-active" data-mode="net">GMV</button>
+                <button type="button" data-mode="orders">火力</button>
+                <button type="button" data-mode="margin">分差</button>
+              </div>
+              <select id="moduleFilter" aria-label="模块筛选"></select>
+              <input id="searchInput" type="search" placeholder="搜索小组长 / 战场" aria-label="搜索小组长或战场" />
+            </div>
+          </div>
+          <div id="arenaCards" class="duel-feed"></div>
+        </article>
+      </section>
+
+      <section class="arena-board lower-board">
+        <article class="panel main-ring">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">FEATURED BATTLE</p>
+              <h2>焦点峡谷战局</h2>
+            </div>
+            <span class="chip signal-chip">ON AIR</span>
+          </div>
+          <div id="featuredArena" class="featured-arena"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">RED / BLUE SCORE</p>
+              <h2>红蓝攻防局势</h2>
+            </div>
+          </div>
+          <div id="battleSplit" class="battle-split"></div>
+          <div id="moduleStatus" class="module-status"></div>
+        </article>
+      </section>
+
+      <section class="tabs" aria-label="荣耀榜单">
+        <button type="button" class="tab is-active" data-tab="arenas">战局榜</button>
+        <button type="button" class="tab" data-tab="members">团队战力</button>
+        <button type="button" class="tab" data-tab="modules">阵营榜</button>
+        <button type="button" class="tab" data-tab="commanders">N2 战队</button>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel leaderboard-panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">HONOR BOARD</p>
+              <h2 id="rankTitle">战局经济榜</h2>
+            </div>
+            <span class="chip" id="rankScope">Top 10</span>
+          </div>
+          <div id="rankList" class="rank-list"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">DAILY ECONOMY</p>
+              <h2>赛季经济曲线</h2>
+            </div>
+            <span class="chip" id="trendPeak">峰值计算中</span>
+          </div>
+          <div id="dailyChart" class="line-chart" role="img" aria-label="每日净收趋势"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">SUBJECT LOADOUT</p>
+              <h2>科目火力</h2>
+            </div>
+          </div>
+          <div id="subjectBars" class="bar-stack"></div>
+        </article>
+      </section>
+
+      <p id="dataNotes" class="data-notes"></p>
+      <footer class="canyon-footer" aria-label="峡谷战场图例">
+        <span class="footer-title">HONOR CANYON / 荣耀峡谷</span>
+        <div class="footer-legend">
+          <span><i class="legend-crystal"></i> 基地水晶</span>
+          <span><i class="legend-tower"></i> 防御塔</span>
+          <span><i class="legend-lane"></i> 三路兵线</span>
+          <span><i class="legend-jungle"></i> 野区资源</span>
+        </div>
+      </footer>
+    </main>
+
+    <script src="data/report-data.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
