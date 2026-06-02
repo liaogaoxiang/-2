@@ -1,4 +1,4 @@
-const report = window.PK_ARENA_DATA;
+let report;
 const initialQuery = new URLSearchParams(window.location.search).get("search")?.trim().toLowerCase() || "";
 
 const state = {
@@ -6,7 +6,7 @@ const state = {
   tab: "arenas",
   module: "全部模块",
   query: initialQuery,
-  focusedArenaId: report.topArenas[0]?.id
+  focusedArenaId: null
 };
 
 const money = new Intl.NumberFormat("zh-CN", {
@@ -519,6 +519,15 @@ function renderAll() {
     `数据说明：当前战报按《${report.meta.groupingFile}》生成，仅保留学习顾问部与学习规划部。数据源为《${report.meta.sourceFile}》，更新至${report.meta.dateRange.end}。三人PK场独立展示三队，按GMV前二判定胜利组；未归属明细${number.format(report.summary.unassignedRows)}条计入总盘，但不计入具体战局。`;
 }
 
-setupInteractions();
-renderAll();
-drawArenaCanvas();
+async function boot() {
+  report = window.PK_ARENA_DATA || await window.PK_ARENA_DATA_READY;
+  state.focusedArenaId = report.topArenas[0]?.id;
+  setupInteractions();
+  renderAll();
+  drawArenaCanvas();
+}
+
+boot().catch((error) => {
+  console.error("Unable to load arena report", error);
+  document.querySelector("#dataNotes").textContent = "战报数据加载失败，请刷新页面重试。";
+});

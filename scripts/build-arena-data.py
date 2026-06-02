@@ -1,4 +1,6 @@
 import csv
+import base64
+import gzip
 import json
 from collections import defaultdict
 from collections import Counter
@@ -431,6 +433,19 @@ def build_report():
 
 report = build_report()
 OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-OUTPUT_PATH.write_text("window.PK_ARENA_DATA = " + json.dumps(report, ensure_ascii=False, indent=2) + ";\n", encoding="utf-8")
+report_json = json.dumps(report, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+report_payload = base64.b64encode(gzip.compress(report_json, compresslevel=9, mtime=0)).decode("ascii")
+OUTPUT_PATH.write_text(
+    """window.PK_ARENA_DATA_READY = (async () => {
+  const binary = atob("%s");
+  const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+  const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
+  window.PK_ARENA_DATA = JSON.parse(await new Response(stream).text());
+  return window.PK_ARENA_DATA;
+})();
+"""
+    % report_payload,
+    encoding="utf-8",
+)
 print(f"Wrote {OUTPUT_PATH}")
 print(f"{report['summary']['arenas']} arenas, champion {report['champion']['name']}, matched {report['summary']['matchedMembers']}/{report['summary']['pkMembers']}, three-way {report['summary']['threeWayArenas']}")
