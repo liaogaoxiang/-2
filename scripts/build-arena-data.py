@@ -26,11 +26,12 @@ CSV_HEADERS = [
 
 
 def empty_stat():
-    return {"orders": 0, "gross": 0.0, "refund": 0.0, "net": 0.0}
+    return {"gross": 0.0, "refund": 0.0, "net": 0.0, "_orderUsers": set()}
 
 
-def add_stat(stat, gross, refund, net):
-    stat["orders"] += 1
+def add_stat(stat, gross, refund, net, converted_user=""):
+    if converted_user:
+        stat["_orderUsers"].add(converted_user)
     stat["gross"] += gross
     stat["refund"] += refund
     stat["net"] += net
@@ -54,13 +55,14 @@ def amount(value):
 
 
 def round_stat(stat):
+    orders = len(stat["_orderUsers"])
     return {
-        "orders": int(stat["orders"]),
+        "orders": orders,
         "gross": round(stat["gross"], 2),
         "refund": round(stat["refund"], 2),
         "net": round(stat["net"], 2),
         "refundRate": round(stat["refund"] / stat["gross"], 4) if stat["gross"] else 0,
-        "avgNet": round(stat["net"] / stat["orders"], 2) if stat["orders"] else 0,
+        "avgNet": round(stat["net"] / orders, 2) if orders else 0,
     }
 
 
@@ -125,8 +127,8 @@ def parse_csv_stats():
     months = set()
     repaired_rows = 0
     unassigned_rows = 0
-    refunded_orders = 0
-    incentive_orders = 0
+    refunded_order_users = set()
+    incentive_order_users = set()
     filtered_rows = 0
     converted_users = set()
 
@@ -145,25 +147,27 @@ def parse_csv_stats():
         day = date_text(row["支付时间"])
         subject = clean_name(row["科目"] or row["课程一级科目名称"], "未知科目")
 
-        add_stat(total, gross, refund, net)
-        add_stat(group_stats[group], gross, refund, net)
+        add_stat(total, gross, refund, net, converted_user)
+        add_stat(group_stats[group], gross, refund, net, converted_user)
         if converted_user:
             converted_users.add(converted_user)
             group_converted_users[group].add(converted_user)
-        add_stat(group_contributor_stats[group][contributor], gross, refund, net)
+        add_stat(group_contributor_stats[group][contributor], gross, refund, net, converted_user)
         group_meta[group]["n2"][clean_name(row["大组长_来自人员架构表"], "未知N2")] += 1
         group_meta[group]["manager"][clean_name(row["经理_来自人员架构表"], "未知管理者")] += 1
-        add_stat(subject_stats[subject], gross, refund, net)
+        add_stat(subject_stats[subject], gross, refund, net, converted_user)
         if day:
-            add_stat(daily_stats[day], gross, refund, net)
+            add_stat(daily_stats[day], gross, refund, net, converted_user)
         if row["支付月份"]:
             months.add(month_text(row["支付月份"]))
         if group == "未归属":
             unassigned_rows += 1
         if str(row["是否退款"]) == "1":
-            refunded_orders += 1
+            if converted_user:
+                refunded_order_users.add(converted_user)
         if row["是否激励"] == "是":
-            incentive_orders += 1
+            if converted_user:
+                incentive_order_users.add(converted_user)
 
     return {
         "groupStats": group_stats,
@@ -176,8 +180,8 @@ def parse_csv_stats():
         "months": months,
         "repairedRows": repaired_rows,
         "unassignedRows": unassigned_rows,
-        "refundedOrders": refunded_orders,
-        "incentiveOrders": incentive_orders,
+        "refundedOrders": len(refunded_order_users),
+        "incentiveOrders": len(incentive_order_users),
         "filteredRows": filtered_rows,
         "convertedUsers": len(converted_users),
     }
@@ -215,7 +219,7 @@ def parse_arenas(group_stats, group_converted_users, group_contributor_stats, gr
             contributors = [
                 {"name": contributor_name, **round_stat(contributor_stats)}
                 for contributor_name, contributor_stats in group_contributor_stats[name].items()
-                if contributor_stats["orders"] > 0
+                if contributor_stats["_orderUsers"]
             ]
             contributors.sort(key=lambda item: (item["net"], item["orders"]), reverse=True)
             members.append({
