@@ -653,6 +653,7 @@
     linear-gradient(135deg, rgba(23, 99, 143, 0.34), rgba(4, 13, 19, 0.92));
   padding: 20px;
   clip-path: var(--glory-cut-small);
+  isolation: isolate;
 }
 
 .glory-theme .module-king-card::before {
@@ -663,11 +664,28 @@
   background:
     linear-gradient(90deg, rgba(97, 204, 245, 0.78), transparent 54%) top / 100% 2px no-repeat,
     radial-gradient(circle at 20% 86%, rgba(97, 204, 245, 0.16), transparent 32%);
+  animation: kingAuraPulse 4.8s ease-in-out infinite;
+}
+
+.glory-theme .module-king-card::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 0 34%, rgba(255, 229, 165, 0.14) 46%, transparent 58% 100%);
+  opacity: 0;
+  transform: translateX(-115%);
+  animation: kingSweep 6.2s ease-in-out infinite;
 }
 
 .glory-theme .module-king-card > * {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+}
+
+.glory-theme .module-king-card.blue-camp {
+  border-color: rgba(97, 204, 245, 0.34);
 }
 
 .glory-theme .module-king-card.red-camp {
@@ -683,6 +701,10 @@
     radial-gradient(circle at 20% 86%, rgba(255, 112, 94, 0.14), transparent 32%);
 }
 
+.glory-theme .module-king-card.red-camp::after {
+  background: linear-gradient(105deg, transparent 0 34%, rgba(255, 112, 94, 0.16) 46%, transparent 58% 100%);
+}
+
 .glory-theme .module-king-mark {
   display: grid;
   width: 62px;
@@ -694,6 +716,18 @@
   font-size: 11px;
   font-weight: 900;
   clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  background: rgba(4, 13, 19, 0.72);
+  text-shadow: 0 0 10px rgba(230, 183, 93, 0.44);
+}
+
+.glory-theme .module-king-card.blue-camp .module-king-mark {
+  border-color: rgba(97, 204, 245, 0.78);
+  color: #c9f4ff;
+}
+
+.glory-theme .module-king-card.red-camp .module-king-mark {
+  border-color: rgba(255, 112, 94, 0.78);
+  color: #ffd4cc;
 }
 
 .glory-theme .module-king-module {
@@ -1795,10 +1829,38 @@
   }
 }
 
+@keyframes kingAuraPulse {
+  0%,
+  100% {
+    opacity: 0.66;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes kingSweep {
+  0%,
+  58% {
+    opacity: 0;
+    transform: translateX(-115%);
+  }
+  68% {
+    opacity: 0.92;
+  }
+  84%,
+  100% {
+    opacity: 0;
+    transform: translateX(115%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .arena-crown b,
   .glory-theme .power-core::before,
   .glory-theme .tower-line span,
+  .glory-theme .module-king-card::before,
+  .glory-theme .module-king-card::after,
   .glory-theme .duel-side.is-winner::before,
   .glory-theme .tri-side.is-winner::before,
   .glory-theme .fighter-card.is-winner::before {

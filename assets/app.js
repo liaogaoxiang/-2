@@ -113,20 +113,37 @@ function renderMeta() {
   document.querySelector("#syncTime").textContent = `SYNC ${month}`;
 }
 
+function kingCamp(name) {
+  for (const arena of report.arenas || []) {
+    const member = arena.members.find((item) => item.name === name);
+    if (!member) continue;
+    const isBlue = member.role === "守擂方";
+    return {
+      className: isBlue ? "blue-camp" : "red-camp",
+      mark: isBlue ? "BLUE" : "RED",
+      label: isBlue ? "蓝方守塔" : "红方攻塔"
+    };
+  }
+  return { className: "blue-camp", mark: "BLUE", label: "峡谷阵营" };
+}
+
 function renderChampion() {
   const kings = report.moduleChampions || [];
   const maxGross = Math.max(...kings.map((item) => item.gross), 1);
-  document.querySelector("#moduleKings").innerHTML = kings.map((king, index) => `
-    <article class="module-king-card ${index === 0 ? "blue-camp" : "red-camp"}">
-      <div class="module-king-mark">${index === 0 ? "BLUE" : "RED"}</div>
+  document.querySelector("#moduleKings").innerHTML = kings.map((king) => {
+    const camp = kingCamp(king.name);
+    return `
+    <article class="module-king-card ${camp.className}">
+      <div class="module-king-mark">${camp.mark}</div>
       <div>
-        <span class="module-king-module">${king.module}</span>
+        <span class="module-king-module">${king.module} · ${camp.label}</span>
         <strong>${teamName(king.name)}</strong>
         <small>${number.format(king.orders)}单火力 · 成就${number.format(king.convertedUsers)}位学员 · 战力${king.battlePower.toFixed(1)}</small>
       </div>
       <div class="meter"><span style="--w:${Math.max(king.gross / maxGross * 100, 4)}%"></span></div>
     </article>
-  `).join("");
+  `;
+  }).join("");
 }
 
 function renderKpis() {
