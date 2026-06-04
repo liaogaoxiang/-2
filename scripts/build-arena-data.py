@@ -19,6 +19,32 @@ DATA_PATH = Path(sys.argv[1] if len(sys.argv) > 1 else os.getenv("PK_DATA_PATH",
 GROUPING_PATH = Path(sys.argv[2] if len(sys.argv) > 2 else os.getenv("PK_GROUPING_PATH", "input/工作簿14.xlsx"))
 OUTPUT_PATH = Path("data/report-data.js")
 ALLOWED_MODULES = {"学习顾问部", "学习规划部"}
+ALLOWED_ACTIVITY_IDS = {
+    "10216",
+    "10227",
+    "10240",
+    "10275",
+    "10294",
+    "10380",
+    "10390",
+    "10404",
+    "10418",
+    "10435",
+    "10496",
+    "10528",
+    "10553",
+    "10601",
+    "10628",
+    "10717",
+    "10719",
+    "10777",
+    "10819",
+    "10830",
+    "10849",
+    "10890",
+    "10896",
+    "10928",
+}
 
 CSV_HEADERS = [
     "活动ID", "邀请人ID", "被邀请人ID", "邀请时间", "是否激励", "是否违规", "订单编号", "支付时间", "支付月份", "是否退款", "退款时间", "业绩归属人姓名", "业绩归属人人才类型", "业绩归属人部门_手工", "业绩归属人部门_系统", "年级_来自人员架构表", "中心_来自人员架构表", "经理_来自人员架构表", "大组长_来自人员架构表", "小组长_来自人员架构表", "课程一级部门名称", "课程二级部门名称", "课程三级部门名称", "课程一级科目名称", "课程二级科目名称", "课程三级科目名称", "课程类别名称", "年级", "科目", "学年", "学季", "学年学季", "主讲老师", "班级业务编号", "班级名称", "辅导班业务编码", "辅导老师", "原始订单编号", "原始支付时间", "最新订单编号", "最新用户编号", "绑定人ID", "绑定人姓名", "绑定人角色", "绑定人部门全路径", "跟进人ID", "跟进人姓名", "跟进人角色", "跟进人部门全路径", "绑定类型", "绑定类型名称", "模板ID", "海报URL", "风险因子", "用户意向", "标记", "业绩归属人部门_系统_用于净收完成度", "业绩归属人部门_手工_用于收款完成度", "绑定人部门", "收款金额", "退款金额", "净收金额"
@@ -42,6 +68,14 @@ def clean_name(value, fallback="未归属"):
     if not text or text in {"null", "-"}:
         return fallback
     return text
+
+
+def clean_id(value):
+    if value is None:
+        return ""
+    if isinstance(value, float) and value.is_integer():
+        return str(int(value))
+    return str(value).strip()
 
 
 def amount(value):
@@ -130,11 +164,16 @@ def parse_csv_stats():
     refunded_order_users = set()
     incentive_order_users = set()
     filtered_rows = 0
+    activity_filtered_rows = 0
     converted_users = set()
 
     for row, repaired in data_rows():
         if repaired:
             repaired_rows += 1
+        activity_id = clean_id(row.get("活动ID"))
+        if activity_id not in ALLOWED_ACTIVITY_IDS:
+            activity_filtered_rows += 1
+            continue
         if not row_module(row):
             filtered_rows += 1
             continue
@@ -183,6 +222,7 @@ def parse_csv_stats():
         "refundedOrders": len(refunded_order_users),
         "incentiveOrders": len(incentive_order_users),
         "filteredRows": filtered_rows,
+        "activityFilteredRows": activity_filtered_rows,
         "convertedUsers": len(converted_users),
     }
 
@@ -404,6 +444,8 @@ def build_report():
             "generatedAt": datetime.now(timezone.utc).isoformat(),
             "repairedRows": csv_data["repairedRows"],
             "filteredRows": csv_data["filteredRows"],
+            "activityFilteredRows": csv_data["activityFilteredRows"],
+            "allowedActivityIds": sorted(ALLOWED_ACTIVITY_IDS, key=int),
         },
         "summary": {
             **total,
