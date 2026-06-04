@@ -106,11 +106,19 @@ function renderMeta() {
 }
 
 function renderChampion() {
-  const champion = report.champion;
-  document.querySelector("#championName").innerHTML = teamName(champion.name);
-  document.querySelector("#championLine").textContent =
-    `${number.format(champion.orders)}单火力，成就${number.format(champion.convertedUsers)}位用户，团队协同作战`;
-  document.querySelector("#championPower").textContent = champion.battlePower.toFixed(1);
+  const kings = report.moduleChampions || [];
+  const maxGross = Math.max(...kings.map((item) => item.gross), 1);
+  document.querySelector("#moduleKings").innerHTML = kings.map((king, index) => `
+    <article class="module-king-card ${index === 0 ? "blue-camp" : "red-camp"}">
+      <div class="module-king-mark">${index === 0 ? "BLUE" : "RED"}</div>
+      <div>
+        <span class="module-king-module">${king.module}</span>
+        <strong>${teamName(king.name)}</strong>
+        <small>${number.format(king.orders)}单火力 · 成就${number.format(king.convertedUsers)}位用户 · 战力${king.battlePower.toFixed(1)}</small>
+      </div>
+      <div class="meter"><span style="--w:${Math.max(king.gross / maxGross * 100, 4)}%"></span></div>
+    </article>
+  `).join("");
 }
 
 function renderKpis() {
@@ -140,15 +148,42 @@ function featuredArena() {
   return list[0];
 }
 
+function arenaOptionLabel(arena) {
+  const names = arena.members.map((member) => member.name).join(" vs ");
+  return `${arena.id} · ${arena.module} · ${arena.groupNo}号战场 · ${names}`;
+}
+
+function setupArenaPicker() {
+  const picker = document.querySelector("#arenaQuickSelect");
+  if (!picker) return;
+  const arenas = [...report.arenas].sort((a, b) => a.sourceRow - b.sourceRow);
+  picker.innerHTML = arenas.map((arena) => `
+    <option value="${arena.id}">${arenaOptionLabel(arena)}</option>
+  `).join("");
+  picker.addEventListener("change", () => {
+    state.focusedArenaId = picker.value;
+    renderFeaturedArena();
+    renderArenaCards();
+  });
+}
+
+function syncArenaPicker(arena) {
+  const picker = document.querySelector("#arenaQuickSelect");
+  if (picker && arena) picker.value = arena.id;
+}
+
 function renderFeaturedArena() {
   const arena = featuredArena();
+  if (!arena) return;
+  syncArenaPicker(arena);
   const maxGross = Math.max(...arena.members.map((member) => member.gross), 1);
+  const leadPower = Math.abs(arena.margin / 10000).toFixed(1);
 
   document.querySelector("#featuredArena").innerHTML = `
     <div class="ring-summary">
       <div class="ring-stat"><strong>${arena.id}</strong><span class="arena-meta">${arena.module}</span></div>
       <div class="ring-stat"><strong>${gloryResult(arena)}</strong><span class="arena-meta">胜利组 ${winnerNames(arena)}</span></div>
-      <div class="ring-stat"><strong>${formatNet(arena.margin)}</strong><span class="arena-meta">${arena.isThreeWay ? "晋级线领先" : "GMV领先"}</span></div>
+      <div class="ring-stat"><strong>${leadPower}</strong><span class="arena-meta">${arena.isThreeWay ? "晋级线战力差" : "战力领先"}</span></div>
     </div>
     <div class="versus-row ${arena.isThreeWay ? "is-three-way" : ""}">
       ${arena.members.map((member) => `
@@ -156,7 +191,7 @@ function renderFeaturedArena() {
           <div class="fighter-role"><span>${arena.isThreeWay ? `阵营 ${String(member.slot).padStart(2, "0")}` : (member.role === "守擂方" ? "蓝方守塔战队" : "红方攻塔战队")}</span><span>${arena.isActive ? (member.isWinner ? (member.gmvRank === 1 ? "领跑" : "晋级") : "追击") : "待开战"}</span></div>
           <strong class="fighter-name">${teamName(member.name)}</strong>
           <div class="fighter-score">${member.battlePower.toFixed(1)}</div>
-          <div class="fighter-meta">N2 ${member.n2Manager} · GMV${formatNet(member.gross)} · ${number.format(member.orders)}单</div>
+          <div class="fighter-meta">N2 ${member.n2Manager} · 成就${number.format(member.convertedUsers || member.orders)}人 · ${number.format(member.orders)}单</div>
           <div class="meter"><span style="--w:${Math.max(member.gross / maxGross * 100, 2)}%"></span></div>
         </div>
       `).join("")}
@@ -307,6 +342,33 @@ function renderSubjects() {
   `).join("");
 }
 
+function renderActivityChannels() {
+  const channels = report.activityChannels || [];
+  const totalUsers = Math.max(report.summary.convertedUsers || report.summary.orders || 0, 1);
+  const totalGross = Math.max(report.summary.gross || 0, 1);
+  const maxUsers = Math.max(...channels.map((item) => item.orders), 1);
+  document.querySelector("#activityChannels").innerHTML = channels.map((item, index) => {
+    const userShare = item.orders / totalUsers;
+    const grossShare = item.gross / totalGross;
+    return `
+      <article class="activity-channel-row ${index < 3 ? "is-major" : ""} ${item.orders ? "" : "is-empty"}">
+        <div class="activity-channel-main">
+          <span class="activity-id">${item.id}</span>
+          <strong>${item.name}</strong>
+        </div>
+        <div class="activity-channel-metrics">
+          <span><b>${ratio(userShare)}</b><small>成就用户占比</small></span>
+          <span><b>${ratio(grossShare)}</b><small>业绩权重</small></span>
+          <em>${item.orders ? `${number.format(item.orders)}人` : "暂无成就"}</em>
+        </div>
+        <div class="activity-channel-track" aria-hidden="true">
+          <i style="--w:${Math.max(item.orders / maxUsers * 100, 3)}%"></i>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
 function setupFilters() {
   const select = document.querySelector("#moduleFilter");
   const search = document.querySelector("#searchInput");
@@ -430,7 +492,7 @@ function renderArenaCards() {
       state.focusedArenaId = card.dataset.arenaId;
       renderFeaturedArena();
       renderArenaCards();
-      document.querySelector(".main-ring")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document.querySelector(".opening-duel")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
 }
@@ -508,11 +570,13 @@ function renderAll() {
   renderChampion();
   renderKpis();
   renderPlayerRankList();
+  setupArenaPicker();
   renderFeaturedArena();
   renderBattleSplit();
   renderRanks();
   renderDailyChart();
   renderSubjects();
+  renderActivityChannels();
   setupFilters();
   renderArenaCards();
   document.querySelector("#dataNotes").textContent =

@@ -80,19 +80,32 @@
         </div>
       </section>
 
+      <section class="opening-duel" aria-label="最新对决擂台">
+        <article class="panel main-ring duel-stage-panel">
+          <div class="panel-head duel-stage-head">
+            <div>
+              <p class="panel-kicker">FEATURED BATTLE / 可切换战场</p>
+              <h2>荣耀峡谷对决擂台</h2>
+            </div>
+            <label class="arena-picker" for="arenaQuickSelect">
+              <span>选择对决</span>
+              <select id="arenaQuickSelect" aria-label="选择任意一组对决战况"></select>
+            </label>
+          </div>
+          <div id="featuredArena" class="featured-arena featured-arena-hero"></div>
+        </article>
+      </section>
+
       <section class="command-grid">
-        <article class="champion-stage">
+        <article class="champion-stage module-kings-stage">
           <div class="stage-glow"></div>
           <div class="mvp-crest" aria-hidden="true"><i></i><b>◆</b><i></i></div>
           <div class="stage-copy">
-            <p class="eyebrow">TOP TEAM / 荣耀战队</p>
-            <h2 id="championName">战队加载中</h2>
-            <p id="championLine" class="subline">正在计算团队战力</p>
+            <p class="eyebrow">LATEST KING TEAM / 双部门王者</p>
+            <h2>最新王者团队</h2>
+            <p class="subline">按各部门当前战绩领跑团队展示，强调团队作战与持续贡献。</p>
           </div>
-          <div class="power-core">
-            <span id="championPower">0.0</span>
-            <small>团队战力</small>
-          </div>
+          <div id="moduleKings" class="module-kings-board"></div>
         </article>
 
         <section class="kpi-grid" id="kpiGrid" aria-label="峡谷核心战况"></section>
@@ -131,17 +144,6 @@
       </section>
 
       <section class="arena-board lower-board">
-        <article class="panel main-ring">
-          <div class="panel-head">
-            <div>
-              <p class="panel-kicker">FEATURED BATTLE</p>
-              <h2>焦点峡谷战局</h2>
-            </div>
-            <span class="chip signal-chip">ON AIR</span>
-          </div>
-          <div id="featuredArena" class="featured-arena"></div>
-        </article>
-
         <article class="panel">
           <div class="panel-head">
             <div>
@@ -193,6 +195,17 @@
           </div>
           <div id="subjectBars" class="bar-stack"></div>
         </article>
+      </section>
+
+      <section class="panel activity-channel-panel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">ACTIVITY CHANNEL MIX</p>
+            <h2>活动ID渠道占比</h2>
+          </div>
+          <span class="chip">按成就用户数 / 业绩权重</span>
+        </div>
+        <div id="activityChannels" class="activity-channel-grid"></div>
       </section>
 
       <p id="dataNotes" class="data-notes"></p>

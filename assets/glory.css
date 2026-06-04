@@ -399,6 +399,101 @@
   margin-bottom: 14px;
 }
 
+.glory-theme .opening-duel {
+  display: grid;
+  margin: 0 0 14px;
+}
+
+.glory-theme .duel-stage-panel {
+  min-height: 430px;
+  padding: 20px;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(230, 183, 93, 0.13), transparent 23%),
+    linear-gradient(118deg, rgba(23, 99, 143, 0.24), transparent 31%, rgba(230, 183, 93, 0.08) 49%, transparent 64%, rgba(141, 48, 47, 0.24)),
+    linear-gradient(135deg, rgba(16, 42, 56, 0.94), rgba(4, 9, 14, 0.98));
+}
+
+.glory-theme .duel-stage-panel::before {
+  background:
+    linear-gradient(90deg, var(--glory-blue), transparent 38%, var(--glory-gold) 50%, transparent 62%, var(--glory-red)) top / 100% 3px no-repeat,
+    linear-gradient(90deg, rgba(97, 204, 245, 0.5), transparent 44%, rgba(255, 112, 94, 0.42)) bottom / 100% 1px no-repeat;
+}
+
+.glory-theme .duel-stage-panel::after {
+  background:
+    linear-gradient(45deg, transparent 49.8%, rgba(230, 183, 93, 0.2) 50%, transparent 50.2%),
+    linear-gradient(-45deg, transparent 49.8%, rgba(230, 183, 93, 0.12) 50%, transparent 50.2%),
+    linear-gradient(var(--glory-gold), var(--glory-gold)) left top / 26px 1px no-repeat,
+    linear-gradient(var(--glory-gold), var(--glory-gold)) left top / 1px 26px no-repeat,
+    linear-gradient(var(--glory-red), var(--glory-red)) right bottom / 26px 1px no-repeat,
+    linear-gradient(var(--glory-red), var(--glory-red)) right bottom / 1px 26px no-repeat;
+  opacity: 0.34;
+}
+
+.glory-theme .duel-stage-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 520px);
+  gap: 18px;
+  align-items: end;
+}
+
+.glory-theme .arena-picker {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 7px;
+  color: var(--glory-gold);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.glory-theme .arena-picker select {
+  width: 100%;
+  min-height: 40px;
+  border-color: rgba(230, 183, 93, 0.5);
+  background:
+    linear-gradient(90deg, rgba(23, 99, 143, 0.22), rgba(4, 11, 16, 0.94) 52%, rgba(141, 48, 47, 0.2));
+  color: var(--glory-gold-pale);
+}
+
+.glory-theme .featured-arena-hero {
+  gap: 18px;
+}
+
+.glory-theme .featured-arena-hero .ring-summary {
+  grid-template-columns: 0.72fr 1.36fr 0.72fr;
+}
+
+.glory-theme .featured-arena-hero .ring-stat {
+  min-height: 90px;
+  padding: 15px;
+}
+
+.glory-theme .featured-arena-hero .ring-stat strong {
+  font-size: clamp(22px, 2.1vw, 34px);
+}
+
+.glory-theme .featured-arena-hero .versus-row {
+  gap: 14px;
+}
+
+.glory-theme .versus-row:not(.is-three-way) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.glory-theme .featured-arena-hero .fighter-card {
+  min-height: 224px;
+  padding: 18px;
+}
+
+.glory-theme .featured-arena-hero .fighter-name {
+  font-size: clamp(24px, 2.4vw, 34px);
+}
+
+.glory-theme .featured-arena-hero .fighter-score {
+  font-size: clamp(38px, 4vw, 58px);
+}
+
 .glory-theme .champion-stage,
 .glory-theme .panel,
 .glory-theme .kpi-card {
@@ -444,6 +539,8 @@
 .glory-theme .panel-head,
 .glory-theme .stage-copy,
 .glory-theme .power-core,
+.glory-theme .module-kings-board,
+.glory-theme .activity-channel-grid,
 .glory-theme .kpi-card > *,
 .glory-theme .featured-arena,
 .glory-theme .battle-split,
@@ -523,6 +620,72 @@
   font-family: "Arial Black", "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: clamp(42px, 5vw, 74px);
   letter-spacing: -0.04em;
+}
+
+.glory-theme .module-kings-stage {
+  grid-template-columns: minmax(0, 0.86fr) minmax(280px, 1.14fr);
+}
+
+.glory-theme .module-kings-stage .stage-copy h2 {
+  font-size: clamp(34px, 3.8vw, 56px);
+  letter-spacing: -0.035em;
+}
+
+.glory-theme .module-kings-board {
+  display: grid;
+  gap: 10px;
+}
+
+.glory-theme .module-king-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  border: 1px solid rgba(97, 204, 245, 0.26);
+  background: linear-gradient(135deg, rgba(23, 99, 143, 0.24), rgba(4, 13, 19, 0.88));
+  padding: 13px;
+  clip-path: var(--glory-cut-small);
+}
+
+.glory-theme .module-king-card.red-camp {
+  border-color: rgba(255, 112, 94, 0.28);
+  background: linear-gradient(135deg, rgba(141, 48, 47, 0.22), rgba(4, 13, 19, 0.88));
+}
+
+.glory-theme .module-king-mark {
+  display: grid;
+  width: 46px;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgba(230, 183, 93, 0.54);
+  color: var(--glory-gold-pale);
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.glory-theme .module-king-module {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--glory-gold);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.glory-theme .module-king-card strong {
+  display: block;
+  color: var(--glory-ink);
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.glory-theme .module-king-card small {
+  display: block;
+  margin: 5px 0 9px;
+  color: var(--glory-muted);
+  font-size: 12px;
 }
 
 .glory-theme .power-core {
@@ -656,6 +819,10 @@
 .glory-theme .arena-board,
 .glory-theme .content-grid {
   gap: 14px;
+}
+
+.glory-theme .lower-board {
+  grid-template-columns: 1fr;
 }
 
 .glory-theme .panel {
@@ -1279,6 +1446,127 @@
   font-family: "Arial Narrow", Arial, sans-serif;
 }
 
+.glory-theme .activity-channel-panel {
+  margin-top: 14px;
+}
+
+.glory-theme .activity-channel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 10px;
+}
+
+.glory-theme .activity-channel-row {
+  position: relative;
+  display: grid;
+  gap: 11px;
+  min-height: 118px;
+  border: 1px solid rgba(230, 183, 93, 0.18);
+  background:
+    linear-gradient(110deg, rgba(23, 99, 143, 0.16), rgba(4, 12, 18, 0.88) 54%, rgba(141, 48, 47, 0.12));
+  padding: 13px;
+  clip-path: var(--glory-cut-small);
+}
+
+.glory-theme .activity-channel-row::after {
+  content: "";
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  right: 10px;
+  top: 10px;
+  border: 1px solid rgba(230, 183, 93, 0.15);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.glory-theme .activity-channel-row.is-major {
+  border-color: rgba(230, 183, 93, 0.42);
+  background:
+    radial-gradient(circle at 88% 18%, rgba(230, 183, 93, 0.13), transparent 26%),
+    linear-gradient(110deg, rgba(23, 99, 143, 0.22), rgba(4, 12, 18, 0.9) 54%, rgba(141, 48, 47, 0.18));
+}
+
+.glory-theme .activity-channel-row.is-empty {
+  border-color: rgba(157, 177, 185, 0.12);
+  background: rgba(4, 12, 18, 0.72);
+  opacity: 0.62;
+}
+
+.glory-theme .activity-channel-main,
+.glory-theme .activity-channel-metrics,
+.glory-theme .activity-channel-track {
+  position: relative;
+  z-index: 1;
+}
+
+.glory-theme .activity-channel-main {
+  display: grid;
+  gap: 6px;
+  padding-right: 46px;
+}
+
+.glory-theme .activity-id {
+  width: max-content;
+  border: 1px solid rgba(230, 183, 93, 0.44);
+  color: var(--glory-gold);
+  padding: 3px 7px;
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.glory-theme .activity-channel-main strong {
+  color: var(--glory-ink);
+  font-size: 15px;
+  line-height: 1.28;
+}
+
+.glory-theme .activity-channel-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.glory-theme .activity-channel-metrics span {
+  display: grid;
+  gap: 2px;
+}
+
+.glory-theme .activity-channel-metrics b {
+  color: var(--glory-gold-pale);
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: 23px;
+  line-height: 1;
+}
+
+.glory-theme .activity-channel-metrics small {
+  color: var(--glory-muted);
+  font-size: 11px;
+}
+
+.glory-theme .activity-channel-metrics em {
+  color: var(--glory-blue);
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.glory-theme .activity-channel-track {
+  height: 6px;
+  border: 1px solid rgba(230, 183, 93, 0.18);
+  background: rgba(157, 177, 185, 0.1);
+}
+
+.glory-theme .activity-channel-track i {
+  display: block;
+  width: var(--w);
+  height: 100%;
+  background: linear-gradient(90deg, var(--glory-blue), var(--glory-gold));
+}
+
 .canyon-footer {
   position: relative;
   z-index: 1;
@@ -1405,6 +1693,10 @@
 }
 
 @media (max-width: 1180px) {
+  .glory-theme .duel-stage-head {
+    grid-template-columns: 1fr;
+  }
+
   .glory-theme .live-grid {
     grid-template-columns: 0.82fr 1.32fr;
   }
@@ -1419,9 +1711,26 @@
     width: min(100% - 28px, 980px);
   }
 
+  .glory-theme .duel-stage-panel {
+    min-height: auto;
+  }
+
+  .glory-theme .featured-arena-hero .ring-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .glory-theme .featured-arena-hero .versus-row,
+  .glory-theme .versus-row:not(.is-three-way) {
+    grid-template-columns: 1fr;
+  }
+
   .glory-theme .champion-stage {
     grid-template-columns: minmax(0, 1fr) 150px;
     min-height: 238px;
+  }
+
+  .glory-theme .module-kings-stage {
+    grid-template-columns: 1fr;
   }
 
   .mvp-crest {
@@ -1490,6 +1799,26 @@
   }
 
   .glory-theme .command-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .glory-theme .duel-stage-panel {
+    padding: 14px;
+  }
+
+  .glory-theme .duel-stage-head {
+    gap: 12px;
+  }
+
+  .glory-theme .arena-picker {
+    min-width: 0;
+  }
+
+  .glory-theme .featured-arena-hero .fighter-card {
+    min-height: 178px;
+  }
+
+  .glory-theme .activity-channel-grid {
     grid-template-columns: 1fr;
   }
 

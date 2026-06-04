@@ -18,33 +18,35 @@ except ImportError as exc:
 DATA_PATH = Path(sys.argv[1] if len(sys.argv) > 1 else os.getenv("PK_DATA_PATH", "input/0530.csv"))
 GROUPING_PATH = Path(sys.argv[2] if len(sys.argv) > 2 else os.getenv("PK_GROUPING_PATH", "input/工作簿14.xlsx"))
 OUTPUT_PATH = Path("data/report-data.js")
-ALLOWED_MODULES = {"学习顾问部", "学习规划部"}
-ALLOWED_ACTIVITY_IDS = {
-    "10216",
-    "10227",
-    "10240",
-    "10275",
-    "10294",
-    "10380",
-    "10390",
-    "10404",
-    "10418",
-    "10435",
-    "10496",
-    "10528",
-    "10553",
-    "10601",
-    "10628",
-    "10717",
-    "10719",
-    "10777",
-    "10819",
-    "10830",
-    "10849",
-    "10890",
-    "10896",
-    "10928",
+ALLOWED_MODULE_ORDER = ["学习顾问部", "学习规划部"]
+ALLOWED_MODULES = set(ALLOWED_MODULE_ORDER)
+ACTIVITY_NAMES = {
+    "10216": "H业务线内部员工转介绍",
+    "10227": "0228高中转介绍（适用在读&已毕业）",
+    "10240": "高中体验课用户活动",
+    "10275": "1对1-转介绍活动「1对1顾问」",
+    "10390": "1对1转介绍活动【班主任】",
+    "10404": "初/高中绑定关系过期补绑专用",
+    "10418": "【H业务线】初中转介绍",
+    "10435": "【2024志愿填报一对一】课程转介绍",
+    "10496": "【H业务线】体验课用户转介绍初中",
+    "10528": "1对1-顾问转介绍【适用非在读】",
+    "10553": "1对1-班主任转介绍【非在读】",
+    "10601": "【H业务线】语文项目部小学转介绍",
+    "10628": "初中1对1-转介绍活动「1对1顾问」",
+    "10717": "H-拼团活动",
+    "10719": "清北校友会转介绍",
+    "10380": "0701综合素养正价课转介绍",
+    "10294": "高中转介绍途途小初专用",
+    "10777": "KM综合素养线索转介绍",
+    "10819": "初中1对1转介绍活动【班主任】",
+    "10849": "跨学部转介绍【TT小初】",
+    "10830": "【已停用别绑定】转介绍【青少小初】",
+    "10896": "转介绍自媒体引流",
+    "10890": "EM转介绍",
+    "10928": "名师定制学用户转介绍",
 }
+ALLOWED_ACTIVITY_IDS = set(ACTIVITY_NAMES)
 
 CSV_HEADERS = [
     "活动ID", "邀请人ID", "被邀请人ID", "邀请时间", "是否激励", "是否违规", "订单编号", "支付时间", "支付月份", "是否退款", "退款时间", "业绩归属人姓名", "业绩归属人人才类型", "业绩归属人部门_手工", "业绩归属人部门_系统", "年级_来自人员架构表", "中心_来自人员架构表", "经理_来自人员架构表", "大组长_来自人员架构表", "小组长_来自人员架构表", "课程一级部门名称", "课程二级部门名称", "课程三级部门名称", "课程一级科目名称", "课程二级科目名称", "课程三级科目名称", "课程类别名称", "年级", "科目", "学年", "学季", "学年学季", "主讲老师", "班级业务编号", "班级名称", "辅导班业务编码", "辅导老师", "原始订单编号", "原始支付时间", "最新订单编号", "最新用户编号", "绑定人ID", "绑定人姓名", "绑定人角色", "绑定人部门全路径", "跟进人ID", "跟进人姓名", "跟进人角色", "跟进人部门全路径", "绑定类型", "绑定类型名称", "模板ID", "海报URL", "风险因子", "用户意向", "标记", "业绩归属人部门_系统_用于净收完成度", "业绩归属人部门_手工_用于收款完成度", "绑定人部门", "收款金额", "退款金额", "净收金额"
@@ -157,6 +159,7 @@ def parse_csv_stats():
     group_meta = defaultdict(lambda: {"n2": Counter(), "manager": Counter()})
     daily_stats = defaultdict(empty_stat)
     subject_stats = defaultdict(empty_stat)
+    activity_stats = defaultdict(empty_stat)
     total = empty_stat()
     months = set()
     repaired_rows = 0
@@ -195,6 +198,7 @@ def parse_csv_stats():
         group_meta[group]["n2"][clean_name(row["大组长_来自人员架构表"], "未知N2")] += 1
         group_meta[group]["manager"][clean_name(row["经理_来自人员架构表"], "未知管理者")] += 1
         add_stat(subject_stats[subject], gross, refund, net, converted_user)
+        add_stat(activity_stats[activity_id], gross, refund, net, converted_user)
         if day:
             add_stat(daily_stats[day], gross, refund, net, converted_user)
         if row["支付月份"]:
@@ -215,6 +219,7 @@ def parse_csv_stats():
         "groupMeta": group_meta,
         "dailyStats": daily_stats,
         "subjectStats": subject_stats,
+        "activityStats": activity_stats,
         "total": total,
         "months": months,
         "repairedRows": repaired_rows,
@@ -366,6 +371,17 @@ def build_report():
         })
     member_rank.sort(key=lambda item: (-item["gross"], -item["net"], -item["orders"], item["name"]))
 
+    member_modules = {}
+    for arena in arenas:
+        for member in arena["members"]:
+            member_modules[member["name"]] = arena["module"]
+
+    module_champions = []
+    for module_name in ALLOWED_MODULE_ORDER:
+        candidates = [item for item in member_rank if member_modules.get(item["name"]) == module_name]
+        if candidates:
+            module_champions.append({"module": module_name, **candidates[0]})
+
     module_map = defaultdict(lambda: {"arenas": 0, "defenderWins": 0, "challengerWins": 0, "gross": 0.0, "net": 0.0, "orders": 0})
     commander_map = defaultdict(lambda: {"arenas": 0, "wins": 0, "gross": 0.0, "net": 0.0, "orders": 0})
     for arena in arenas:
@@ -428,6 +444,16 @@ def build_report():
     subjects.sort(key=lambda item: item["net"], reverse=True)
 
     total = round_stat(csv_data["total"])
+    activity_channels = []
+    for activity_id in sorted(ALLOWED_ACTIVITY_IDS, key=int):
+        stat = round_stat(csv_data["activityStats"][activity_id])
+        activity_channels.append({
+            "id": activity_id,
+            "name": ACTIVITY_NAMES[activity_id],
+            **stat,
+        })
+    activity_channels.sort(key=lambda item: (-item["gross"], -item["orders"], int(item["id"])))
+
     defender_wins = sum(1 for arena in arenas if arena["isActive"] and arena["defenderWon"])
     challenger_wins = sum(1 for arena in arenas if arena["isActive"] and not arena["defenderWon"])
     active_arenas = sum(1 for arena in arenas if arena["totalOrders"] > 0)
@@ -464,6 +490,7 @@ def build_report():
             "convertedUsers": csv_data["convertedUsers"],
         },
         "champion": member_rank[0] if member_rank else None,
+        "moduleChampions": module_champions,
         "arenas": arenas,
         "topArenas": rank_items(arenas, lambda item: item["totalGross"], 10),
         "closeArenas": sorted([arena for arena in arenas if arena["totalOrders"] > 0], key=lambda item: item["margin"])[:8],
@@ -472,6 +499,7 @@ def build_report():
         "commanderRank": commander_rank[:12],
         "daily": daily,
         "subjects": subjects[:8],
+        "activityChannels": activity_channels,
         "missingMembers": sorted(missing_members),
     }
     return report
