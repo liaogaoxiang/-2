@@ -56,13 +56,20 @@ function teamMatchNames(arena) {
 
 function gloryResult(arena) {
   if (!arena.isActive) return "等待兵线激活";
-  if (arena.isThreeWay) return "三方混战 · GMV前二晋级";
-  return arena.defenderWon ? "蓝方守塔成功" : "红方攻破水晶";
+  if (arena.isThreeWay) return "三方混战 · 前二暂居优势";
+  return arena.defenderWon ? "蓝方占据上风" : "红方占领优势";
+}
+
+function momentumLabel(arena, member) {
+  if (!arena.isActive) return "待开战";
+  if (!member.isWinner) return "追击中";
+  if (arena.isThreeWay) return member.gmvRank === 1 ? "暂居第一" : "前二占优";
+  return member.role === "守擂方" ? "占据上风" : "占领优势";
 }
 
 function winnerNames(arena) {
   const names = (arena.winningMembers || [arena.winner]).map((member) => member.name);
-  return names.length ? names.map(teamName).join(" / ") : "待产生";
+  return names.length ? names.map(teamName).join(" / ") : "待拉开差距";
 }
 
 function renderContributionPanel(members) {
@@ -126,8 +133,8 @@ function renderKpis() {
   const cards = [
     ["荣耀战局", `${number.format(s.arenas)}场`, `${number.format(s.threeWayArenas)}场三方PK`, "BATTLE"],
     ["成就用户数", `${number.format(s.convertedUsers)}人`, "按转化用户去重统计", "USERS"],
-    ["蓝方守塔", `${number.format(s.defenderWins)}场`, `已开战守塔率${ratio(s.activeArenas ? s.defenderWins / s.activeArenas : 0)}`, "BLUE"],
-    ["红方破塔", `${number.format(s.challengerWins)}场`, `已开战破塔率${ratio(s.activeArenas ? s.challengerWins / s.activeArenas : 0)}`, "RED"]
+    ["蓝方上风", `${number.format(s.defenderWins)}场`, `已开战占优率${ratio(s.activeArenas ? s.defenderWins / s.activeArenas : 0)}`, "BLUE"],
+    ["红方优势", `${number.format(s.challengerWins)}场`, `已开战占优率${ratio(s.activeArenas ? s.challengerWins / s.activeArenas : 0)}`, "RED"]
   ];
 
   document.querySelector("#kpiGrid").innerHTML = cards.map(([label, value, note, mark]) => `
@@ -181,16 +188,16 @@ function renderFeaturedArena() {
   document.querySelector("#featuredArena").innerHTML = `
     <div class="ring-summary">
       <div class="ring-stat"><strong>${arena.id}</strong><span class="arena-meta">${arena.module}</span></div>
-      <div class="ring-stat"><strong>${gloryResult(arena)}</strong><span class="arena-meta">胜利组 ${winnerNames(arena)}</span></div>
-      <div class="ring-stat"><strong>${formatNet(arena.margin)}</strong><span class="arena-meta">${arena.isThreeWay ? "晋级线GMV差" : "双方GMV差距"}</span></div>
+      <div class="ring-stat"><strong>${gloryResult(arena)}</strong><span class="arena-meta">当前占优 ${winnerNames(arena)}</span></div>
+      <div class="ring-stat"><strong>${formatNet(arena.margin)}</strong><span class="arena-meta">${arena.isThreeWay ? "前二线GMV差" : "双方GMV差距"}</span></div>
     </div>
     <div class="versus-row ${arena.isThreeWay ? "is-three-way" : ""}">
       ${arena.members.map((member) => `
         <div class="fighter-card ${member.isWinner ? "is-winner" : ""}">
-          <div class="fighter-role"><span>${arena.isThreeWay ? `阵营 ${String(member.slot).padStart(2, "0")}` : (member.role === "守擂方" ? "蓝方守塔战队" : "红方攻塔战队")}</span><span>${arena.isActive ? (member.isWinner ? (member.gmvRank === 1 ? "领跑" : "晋级") : "追击") : "待开战"}</span></div>
+          <div class="fighter-role"><span>${arena.isThreeWay ? `阵营 ${String(member.slot).padStart(2, "0")}` : (member.role === "守擂方" ? "蓝方守塔战队" : "红方攻塔战队")}</span><span>${momentumLabel(arena, member)}</span></div>
           <strong class="fighter-name">${teamName(member.name)}</strong>
-          <div class="fighter-score">${member.battlePower.toFixed(1)}</div>
-          <div class="fighter-meta">N2 ${member.n2Manager} · GMV${formatNet(member.gross)} · 成就${number.format(member.convertedUsers || member.orders)}人 · ${number.format(member.orders)}单</div>
+          <div class="fighter-score">${formatNet(member.gross)}</div>
+          <div class="fighter-meta">N2 ${member.n2Manager} · 战力${member.battlePower.toFixed(1)} · 成就${number.format(member.convertedUsers || member.orders)}人 · ${number.format(member.orders)}单</div>
           <div class="meter"><span style="--w:${Math.max(member.gross / maxGross * 100, 2)}%"></span></div>
         </div>
       `).join("")}
@@ -220,8 +227,8 @@ function renderBattleSplit() {
   document.querySelector("#battleSplit").innerHTML = `
     <div class="split-orb" style="--defense:${defenseRatio * 100}%"><span>${ratio(defenseRatio)}</span></div>
     <div class="split-copy">
-      <div class="split-row"><strong>蓝方守塔成功</strong><span>${number.format(s.defenderWins)}场</span></div>
-      <div class="split-row"><strong>红方攻破水晶</strong><span>${number.format(s.challengerWins)}场</span></div>
+      <div class="split-row"><strong>蓝方占据上风</strong><span>${number.format(s.defenderWins)}场</span></div>
+      <div class="split-row"><strong>红方占领优势</strong><span>${number.format(s.challengerWins)}场</span></div>
       <div class="split-row"><strong>待激活小组</strong><span>${number.format(s.missingMembers)}个</span></div>
     </div>
   `;
@@ -230,7 +237,7 @@ function renderBattleSplit() {
   document.querySelector("#moduleStatus").innerHTML = report.moduleRank.map((item) => `
     <div class="module-row">
       <div class="module-line"><strong>${item.name}</strong><span class="bar-meta">GMV ${formatNet(item.gross)}</span></div>
-      <div class="bar-meta">${item.arenas}场 · 守塔${item.defenderWins} · 破塔${item.challengerWins}</div>
+      <div class="bar-meta">${item.arenas}场 · 蓝方上风${item.defenderWins} · 红方优势${item.challengerWins}</div>
       <div class="meter"><span style="--w:${Math.max(item.gross / max * 100, 2)}%"></span></div>
     </div>
   `).join("");
@@ -251,10 +258,10 @@ function rowName(item) {
 
 function rowMeta(item) {
   if (state.tab === "arenas") {
-    return `${gloryResult(item)} · 胜利组 ${winnerNames(item)} · ${item.totalOrders}单`;
+    return `${gloryResult(item)} · 当前占优 ${winnerNames(item)} · ${item.totalOrders}单`;
   }
   if (state.tab === "modules") {
-    return `${item.arenas}场 · 守塔${item.defenderWins} · 破塔${item.challengerWins}`;
+    return `${item.arenas}场 · 蓝方上风${item.defenderWins} · 红方优势${item.challengerWins}`;
   }
   if (state.tab === "commanders") {
     return `${item.arenas}场 · ${number.format(item.orders)}单`;
@@ -394,14 +401,14 @@ function renderThreeWayArenaCard(arena) {
     <button type="button" class="duel-card tri-duel-card ${arena.id === state.focusedArenaId ? "is-selected" : ""}" data-arena-id="${arena.id}">
       <div class="duel-head">
         <span class="arena-name">${arena.id} · 荣耀峡谷 ${arena.groupNo}号战场 · 三方混战</span>
-        <span class="result-tag tri-result">${arena.isActive ? "GMV前二晋级" : "等待兵线激活"}</span>
+        <span class="result-tag tri-result">${arena.isActive ? "前二暂居优势" : "等待兵线激活"}</span>
       </div>
       <div class="tri-duel-row">
         ${arena.members.map((member) => `
           <div class="tri-side slot-${member.slot} ${member.isWinner ? "is-winner" : ""}">
             <div class="tri-side-head">
               <span>阵营 ${String(member.slot).padStart(2, "0")} · ${member.role}</span>
-              <b>${arena.isActive ? (member.isWinner ? (member.gmvRank === 1 ? "领跑" : "晋级") : "追击") : "待开战"}</b>
+              <b>${momentumLabel(arena, member)}</b>
             </div>
             <strong>${teamName(member.name)}</strong>
             <small>GMV ${formatNet(member.gross)} · ${number.format(member.orders)}单火力</small>
@@ -416,7 +423,7 @@ function renderThreeWayArenaCard(arena) {
       <div class="tri-route">
         <span>三方兵线交汇</span>
         <i></i><b>◆</b><i></i>
-        <span>${arena.isActive ? `晋级线 ${formatNet(arena.cutoffGross)} · 第2/3名差 ${formatNet(arena.margin)}` : "尚未产生GMV，胜利组待产生"}</span>
+        <span>${arena.isActive ? `前二线 ${formatNet(arena.cutoffGross)} · 第2/3名差 ${formatNet(arena.margin)}` : "尚未产生GMV，优势方待拉开"}</span>
       </div>
     </button>
   `;
@@ -579,7 +586,7 @@ function renderAll() {
   setupFilters();
   renderArenaCards();
   document.querySelector("#dataNotes").textContent =
-    `数据说明：当前战报按《${report.meta.groupingFile}》生成，仅保留学习顾问部与学习规划部。数据源为《${report.meta.sourceFile}》，更新至${report.meta.dateRange.end}。三人PK场独立展示三队，按GMV前二判定胜利组；未归属明细${number.format(report.summary.unassignedRows)}条计入总盘，但不计入具体战局。`;
+    `数据说明：当前战报按《${report.meta.groupingFile}》生成，仅保留学习顾问部与学习规划部。数据源为《${report.meta.sourceFile}》，更新至${report.meta.dateRange.end}。三人PK场独立展示三队，按GMV前二标记暂居优势方；未归属明细${number.format(report.summary.unassignedRows)}条计入总盘，但不计入具体战局。`;
 }
 
 async function boot() {

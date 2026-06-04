@@ -1017,7 +1017,35 @@
 
 .glory-theme .duel-side.is-winner {
   border-color: rgba(230, 183, 93, 0.72);
-  box-shadow: inset 0 0 0 1px rgba(230, 183, 93, 0.1);
+  background:
+    radial-gradient(circle at 86% 14%, rgba(230, 183, 93, 0.18), transparent 28%),
+    linear-gradient(145deg, rgba(125, 89, 38, 0.2), rgba(4, 16, 24, 0.82));
+  box-shadow:
+    inset 0 0 0 1px rgba(230, 183, 93, 0.2),
+    inset 0 0 28px rgba(230, 183, 93, 0.12);
+}
+
+.glory-theme .duel-side.is-winner::before,
+.glory-theme .tri-side.is-winner::before,
+.glory-theme .fighter-card.is-winner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(230, 183, 93, 0.72), transparent 42%) top / 100% 2px no-repeat,
+    radial-gradient(circle at 84% 16%, rgba(230, 183, 93, 0.18), transparent 30%);
+  opacity: 0.92;
+  animation: advantagePulse 3.2s ease-in-out infinite;
+}
+
+.glory-theme .duel-side.is-winner::after {
+  content: "占优";
+  color: var(--glory-gold-pale);
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
 }
 
 .glory-theme .duel-label {
@@ -1174,7 +1202,24 @@
 
 .glory-theme .tri-side.is-winner {
   border-color: var(--glory-gold);
-  box-shadow: inset 0 0 0 1px rgba(230, 183, 93, 0.16);
+  background:
+    radial-gradient(circle at 84% 14%, rgba(230, 183, 93, 0.16), transparent 28%),
+    linear-gradient(145deg, rgba(125, 89, 38, 0.22), rgba(4, 13, 19, 0.9));
+  box-shadow:
+    inset 0 0 0 1px rgba(230, 183, 93, 0.2),
+    inset 0 0 26px rgba(230, 183, 93, 0.12);
+}
+
+.glory-theme .tri-side.is-winner::after {
+  content: "占优";
+  position: absolute;
+  right: 8px;
+  bottom: 7px;
+  color: var(--glory-gold-pale);
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
 }
 
 .glory-theme .tri-side-head,
@@ -1320,7 +1365,17 @@
 
 .glory-theme .fighter-card.is-winner {
   border-color: var(--glory-gold);
-  box-shadow: inset 0 0 0 1px rgba(230, 183, 93, 0.14);
+  background:
+    radial-gradient(circle at 84% 16%, rgba(230, 183, 93, 0.18), transparent 30%),
+    linear-gradient(145deg, rgba(125, 89, 38, 0.24), rgba(4, 12, 18, 0.94));
+  box-shadow:
+    inset 0 0 0 1px rgba(230, 183, 93, 0.24),
+    inset 0 0 34px rgba(230, 183, 93, 0.14);
+}
+
+.glory-theme .fighter-card.is-winner::after {
+  content: "ADVANTAGE";
+  color: rgba(255, 229, 165, 0.76);
 }
 
 .glory-theme .fighter-role {
@@ -1330,6 +1385,12 @@
 .glory-theme .fighter-score {
   color: var(--glory-gold-pale);
   font-family: "Arial Narrow", Arial, sans-serif;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.glory-theme .fighter-card.is-winner .fighter-score {
+  color: #fff0bd;
 }
 
 .glory-theme .ring-stat {
@@ -1678,10 +1739,23 @@
   }
 }
 
+@keyframes advantagePulse {
+  0%,
+  100% {
+    opacity: 0.62;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .arena-crown b,
   .glory-theme .power-core::before,
-  .glory-theme .tower-line span {
+  .glory-theme .tower-line span,
+  .glory-theme .duel-side.is-winner::before,
+  .glory-theme .tri-side.is-winner::before,
+  .glory-theme .fighter-card.is-winner::before {
     animation: none;
   }
 }
