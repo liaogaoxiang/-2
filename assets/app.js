@@ -6,7 +6,8 @@ const state = {
   tab: "arenas",
   module: "全部模块",
   query: initialQuery,
-  focusedArenaId: null
+  focusedArenaId: null,
+  contributorModule: "学习顾问部"
 };
 
 const money = new Intl.NumberFormat("zh-CN", {
@@ -206,19 +207,21 @@ function renderFeaturedArena() {
 }
 
 function renderPlayerRankList() {
-  const rows = report.memberRank.slice(0, 12);
+  const rows = (report.contributorRank || [])
+    .filter((item) => item.module === state.contributorModule)
+    .slice(0, 12);
   const max = Math.max(...rows.map((item) => item.gross), 1);
-  document.querySelector("#playerRankList").innerHTML = rows.map((item, index) => `
+  document.querySelector("#playerRankList").innerHTML = rows.length ? rows.map((item, index) => `
     <div class="rank-row">
       <span class="rank-index">${String(index + 1).padStart(2, "0")}</span>
       <div>
-        <strong class="rank-name">${teamName(item.name)}</strong>
-        <div class="rank-meta">${number.format(item.orders)}单 · 战力${item.battlePower.toFixed(1)} · GMV${formatNet(item.gross)}</div>
+        <strong class="rank-name">${item.name}</strong>
+        <div class="rank-meta">${item.group}团队 · ${number.format(item.orders)}单 · 成就${number.format(item.orders)}位学员 · GMV${formatNet(item.gross)}</div>
       </div>
-      <strong class="rank-value">${index === 0 ? "TOP TEAM" : formatNet(item.gross)}</strong>
+      <strong class="rank-value">${index === 0 ? "TOP" : formatNet(item.gross)}</strong>
       <div class="meter rank-meter"><span style="--w:${Math.max(item.gross / max * 100, 2)}%"></span></div>
     </div>
-  `).join("");
+  `).join("") : `<div class="rank-row empty-row"><div><strong class="rank-name">暂无个人业绩</strong><div class="rank-meta">${state.contributorModule}当前暂无可展示数据</div></div></div>`;
 }
 
 function renderBattleSplit() {
@@ -520,6 +523,14 @@ function setupInteractions() {
       state.tab = button.dataset.tab;
       document.querySelectorAll("[data-tab]").forEach((item) => item.classList.toggle("is-active", item === button));
       renderRanks();
+    });
+  });
+
+  document.querySelectorAll("[data-contributor-module]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.contributorModule = button.dataset.contributorModule;
+      document.querySelectorAll("[data-contributor-module]").forEach((item) => item.classList.toggle("is-active", item === button));
+      renderPlayerRankList();
     });
   });
 }

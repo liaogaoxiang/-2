@@ -894,11 +894,13 @@
 
 .glory-theme .mode-switch,
 .glory-theme .tabs,
+.glory-theme .rank-toggle,
 .glory-theme .table-tools {
   gap: 6px;
 }
 
 .glory-theme .mode-switch button,
+.glory-theme .rank-toggle button,
 .glory-theme .tab,
 .glory-theme select,
 .glory-theme input {
@@ -912,17 +914,26 @@
 }
 
 .glory-theme .mode-switch button:hover,
+.glory-theme .rank-toggle button:hover,
 .glory-theme .tab:hover {
   border-color: rgba(230, 183, 93, 0.58);
   color: var(--glory-gold-pale);
 }
 
 .glory-theme .mode-switch button.is-active,
+.glory-theme .rank-toggle button.is-active,
 .glory-theme .tab.is-active {
   border-color: var(--glory-gold);
   background: rgba(125, 89, 38, 0.25);
   color: #fff2c7;
   box-shadow: none;
+}
+
+.glory-theme .rank-toggle {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  flex-wrap: wrap;
 }
 
 .glory-theme input::placeholder {

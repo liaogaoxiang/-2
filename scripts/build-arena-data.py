@@ -157,6 +157,9 @@ def parse_csv_stats():
     group_converted_users = defaultdict(set)
     group_contributor_stats = defaultdict(lambda: defaultdict(empty_stat))
     group_meta = defaultdict(lambda: {"n2": Counter(), "manager": Counter()})
+    contributor_rank_stats = defaultdict(empty_stat)
+    contributor_modules = defaultdict(Counter)
+    contributor_groups = defaultdict(Counter)
     daily_stats = defaultdict(empty_stat)
     subject_stats = defaultdict(empty_stat)
     activity_stats = defaultdict(empty_stat)
@@ -177,7 +180,8 @@ def parse_csv_stats():
         if activity_id not in ALLOWED_ACTIVITY_IDS:
             activity_filtered_rows += 1
             continue
-        if not row_module(row):
+        module = row_module(row)
+        if not module:
             filtered_rows += 1
             continue
         gross = amount(row["收款金额"])
@@ -195,6 +199,9 @@ def parse_csv_stats():
             converted_users.add(converted_user)
             group_converted_users[group].add(converted_user)
         add_stat(group_contributor_stats[group][contributor], gross, refund, net, converted_user)
+        add_stat(contributor_rank_stats[contributor], gross, refund, net, converted_user)
+        contributor_modules[contributor][module] += 1
+        contributor_groups[contributor][group] += 1
         group_meta[group]["n2"][clean_name(row["大组长_来自人员架构表"], "未知N2")] += 1
         group_meta[group]["manager"][clean_name(row["经理_来自人员架构表"], "未知管理者")] += 1
         add_stat(subject_stats[subject], gross, refund, net, converted_user)
@@ -217,6 +224,9 @@ def parse_csv_stats():
         "groupConvertedUsers": group_converted_users,
         "groupContributorStats": group_contributor_stats,
         "groupMeta": group_meta,
+        "contributorRankStats": contributor_rank_stats,
+        "contributorModules": contributor_modules,
+        "contributorGroups": contributor_groups,
         "dailyStats": daily_stats,
         "subjectStats": subject_stats,
         "activityStats": activity_stats,
@@ -430,6 +440,22 @@ def build_report():
     ]
     commander_rank.sort(key=lambda item: item["gross"], reverse=True)
 
+    contributor_rank = []
+    for name, stat in csv_data["contributorRankStats"].items():
+        rounded = round_stat(stat)
+        if not rounded["orders"]:
+            continue
+        module = csv_data["contributorModules"][name].most_common(1)[0][0] if csv_data["contributorModules"][name] else "未知模块"
+        group = csv_data["contributorGroups"][name].most_common(1)[0][0] if csv_data["contributorGroups"][name] else "未归属"
+        contributor_rank.append({
+            "name": name,
+            "module": module,
+            "group": group,
+            "battlePower": round(rounded["gross"] / 10000, 1),
+            **rounded,
+        })
+    contributor_rank.sort(key=lambda item: (-item["gross"], -item["net"], -item["orders"], item["name"]))
+
     daily = []
     cumulative = 0.0
     for date, stat in sorted(csv_data["dailyStats"].items()):
@@ -495,6 +521,7 @@ def build_report():
         "topArenas": rank_items(arenas, lambda item: item["totalGross"], 10),
         "closeArenas": sorted([arena for arena in arenas if arena["totalOrders"] > 0], key=lambda item: item["margin"])[:8],
         "memberRank": member_rank[:30],
+        "contributorRank": contributor_rank,
         "moduleRank": module_rank,
         "commanderRank": commander_rank[:12],
         "daily": daily,
