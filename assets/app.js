@@ -121,7 +121,7 @@ function renderChampion() {
       <div>
         <span class="module-king-module">${king.module}</span>
         <strong>${teamName(king.name)}</strong>
-        <small>${number.format(king.orders)}单火力 · 成就${number.format(king.convertedUsers)}位用户 · 战力${king.battlePower.toFixed(1)}</small>
+        <small>${number.format(king.orders)}单火力 · 成就${number.format(king.convertedUsers)}位学员 · 战力${king.battlePower.toFixed(1)}</small>
       </div>
       <div class="meter"><span style="--w:${Math.max(king.gross / maxGross * 100, 4)}%"></span></div>
     </article>
@@ -132,9 +132,9 @@ function renderKpis() {
   const s = report.summary;
   const cards = [
     ["荣耀战局", `${number.format(s.arenas)}场`, `${number.format(s.threeWayArenas)}场三方PK`, "BATTLE"],
-    ["成就用户数", `${number.format(s.convertedUsers)}人`, "按转化用户去重统计", "USERS"],
-    ["蓝方上风", `${number.format(s.defenderWins)}场`, `已开战占优率${ratio(s.activeArenas ? s.defenderWins / s.activeArenas : 0)}`, "BLUE"],
-    ["红方优势", `${number.format(s.challengerWins)}场`, `已开战占优率${ratio(s.activeArenas ? s.challengerWins / s.activeArenas : 0)}`, "RED"]
+    ["成就用户数", `${number.format(s.convertedUsers)}位学员`, "按转化学员去重统计", "USERS"],
+    ["红方优势", `${number.format(s.challengerWins)}场`, `已开战占优率${ratio(s.activeArenas ? s.challengerWins / s.activeArenas : 0)}`, "RED"],
+    ["蓝方上风", `${number.format(s.defenderWins)}场`, `已开战占优率${ratio(s.activeArenas ? s.defenderWins / s.activeArenas : 0)}`, "BLUE"]
   ];
 
   document.querySelector("#kpiGrid").innerHTML = cards.map(([label, value, note, mark]) => `
@@ -197,7 +197,7 @@ function renderFeaturedArena() {
           <div class="fighter-role"><span>${arena.isThreeWay ? `阵营 ${String(member.slot).padStart(2, "0")}` : (member.role === "守擂方" ? "蓝方守塔战队" : "红方攻塔战队")}</span><span>${momentumLabel(arena, member)}</span></div>
           <strong class="fighter-name">${teamName(member.name)}</strong>
           <div class="fighter-score">${formatNet(member.gross)}</div>
-          <div class="fighter-meta">N2 ${member.n2Manager} · 战力${member.battlePower.toFixed(1)} · 成就${number.format(member.convertedUsers || member.orders)}人 · ${number.format(member.orders)}单</div>
+          <div class="fighter-meta">N2 ${member.n2Manager} · 战力${member.battlePower.toFixed(1)} · 成就${number.format(member.convertedUsers || member.orders)}位学员 · ${number.format(member.orders)}单</div>
           <div class="meter"><span style="--w:${Math.max(member.gross / maxGross * 100, 2)}%"></span></div>
         </div>
       `).join("")}
@@ -363,9 +363,9 @@ function renderActivityChannels() {
           <strong>${item.name}</strong>
         </div>
         <div class="activity-channel-metrics">
-          <span><b>${ratio(userShare)}</b><small>成就用户占比</small></span>
+          <span><b>${ratio(userShare)}</b><small>成就学员占比</small></span>
           <span><b>${ratio(grossShare)}</b><small>GMV占比</small></span>
-          <em>${number.format(item.orders)}人</em>
+          <em>${number.format(item.orders)}位学员</em>
         </div>
         <div class="activity-channel-track" aria-hidden="true">
           <i style="--w:${Math.max(item.orders / maxUsers * 100, 3)}%"></i>
@@ -585,8 +585,6 @@ function renderAll() {
   renderActivityChannels();
   setupFilters();
   renderArenaCards();
-  document.querySelector("#dataNotes").textContent =
-    `数据说明：当前战报按《${report.meta.groupingFile}》生成，仅保留学习顾问部与学习规划部。数据源为《${report.meta.sourceFile}》，更新至${report.meta.dateRange.end}。三人PK场独立展示三队，按GMV前二标记暂居优势方；未归属明细${number.format(report.summary.unassignedRows)}条计入总盘，但不计入具体战局。`;
 }
 
 async function boot() {
@@ -599,5 +597,6 @@ async function boot() {
 
 boot().catch((error) => {
   console.error("Unable to load arena report", error);
-  document.querySelector("#dataNotes").textContent = "战报数据加载失败，请刷新页面重试。";
+  const dataNotes = document.querySelector("#dataNotes");
+  if (dataNotes) dataNotes.textContent = "战报数据加载失败，请刷新页面重试。";
 });

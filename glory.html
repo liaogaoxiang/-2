@@ -80,23 +80,7 @@
         </div>
       </section>
 
-      <section class="opening-duel" aria-label="最新对决擂台">
-        <article class="panel main-ring duel-stage-panel">
-          <div class="panel-head duel-stage-head">
-            <div>
-              <p class="panel-kicker">FEATURED BATTLE / 可切换战场</p>
-              <h2>荣耀峡谷对决擂台</h2>
-            </div>
-            <label class="arena-picker" for="arenaQuickSelect">
-              <span>选择对决</span>
-              <select id="arenaQuickSelect" aria-label="选择任意一组对决战况"></select>
-            </label>
-          </div>
-          <div id="featuredArena" class="featured-arena featured-arena-hero"></div>
-        </article>
-      </section>
-
-      <section class="command-grid">
+      <section class="module-kings-row" aria-label="最新王者团队">
         <article class="champion-stage module-kings-stage">
           <div class="stage-glow"></div>
           <div class="mvp-crest" aria-hidden="true"><i></i><b>◆</b><i></i></div>
@@ -107,16 +91,16 @@
           </div>
           <div id="moduleKings" class="module-kings-board"></div>
         </article>
-
-        <section class="kpi-grid" id="kpiGrid" aria-label="峡谷核心战况"></section>
       </section>
+
+      <section class="kpi-grid macro-kpi-row" id="kpiGrid" aria-label="峡谷核心战况"></section>
 
       <section class="live-grid">
         <article class="panel leaderboard-panel">
           <div class="panel-head">
             <div>
               <p class="panel-kicker">TEAM RANK</p>
-              <h2>团队战力排行榜</h2>
+              <h2>个人TOP排行榜</h2>
             </div>
             <span class="chip">Top 12</span>
           </div>
@@ -140,6 +124,22 @@
             </div>
           </div>
           <div id="arenaCards" class="duel-feed"></div>
+        </article>
+      </section>
+
+      <section class="opening-duel" aria-label="最新对决擂台">
+        <article class="panel main-ring duel-stage-panel">
+          <div class="panel-head duel-stage-head">
+            <div>
+              <p class="panel-kicker">FEATURED BATTLE / 可切换战场</p>
+              <h2>荣耀峡谷对决擂台</h2>
+            </div>
+            <label class="arena-picker" for="arenaQuickSelect">
+              <span>选择对决</span>
+              <select id="arenaQuickSelect" aria-label="选择任意一组对决战况"></select>
+            </label>
+          </div>
+          <div id="featuredArena" class="featured-arena featured-arena-hero"></div>
         </article>
       </section>
 
@@ -203,12 +203,11 @@
             <p class="panel-kicker">ACTIVITY CHANNEL MIX</p>
             <h2>活动ID渠道占比</h2>
           </div>
-          <span class="chip">按成就用户数 / GMV</span>
+          <span class="chip">按成就学员数 / GMV</span>
         </div>
         <div id="activityChannels" class="activity-channel-grid"></div>
       </section>
 
-      <p id="dataNotes" class="data-notes"></p>
       <footer class="canyon-footer" aria-label="峡谷战场图例">
         <span class="footer-title">HONOR CANYON / 荣耀峡谷</span>
         <div class="footer-legend">
