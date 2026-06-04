@@ -177,13 +177,12 @@ function renderFeaturedArena() {
   if (!arena) return;
   syncArenaPicker(arena);
   const maxGross = Math.max(...arena.members.map((member) => member.gross), 1);
-  const leadPower = Math.abs(arena.margin / 10000).toFixed(1);
 
   document.querySelector("#featuredArena").innerHTML = `
     <div class="ring-summary">
       <div class="ring-stat"><strong>${arena.id}</strong><span class="arena-meta">${arena.module}</span></div>
       <div class="ring-stat"><strong>${gloryResult(arena)}</strong><span class="arena-meta">胜利组 ${winnerNames(arena)}</span></div>
-      <div class="ring-stat"><strong>${leadPower}</strong><span class="arena-meta">${arena.isThreeWay ? "晋级线战力差" : "战力领先"}</span></div>
+      <div class="ring-stat"><strong>${formatNet(arena.margin)}</strong><span class="arena-meta">${arena.isThreeWay ? "晋级线GMV差" : "双方GMV差距"}</span></div>
     </div>
     <div class="versus-row ${arena.isThreeWay ? "is-three-way" : ""}">
       ${arena.members.map((member) => `
@@ -191,7 +190,7 @@ function renderFeaturedArena() {
           <div class="fighter-role"><span>${arena.isThreeWay ? `阵营 ${String(member.slot).padStart(2, "0")}` : (member.role === "守擂方" ? "蓝方守塔战队" : "红方攻塔战队")}</span><span>${arena.isActive ? (member.isWinner ? (member.gmvRank === 1 ? "领跑" : "晋级") : "追击") : "待开战"}</span></div>
           <strong class="fighter-name">${teamName(member.name)}</strong>
           <div class="fighter-score">${member.battlePower.toFixed(1)}</div>
-          <div class="fighter-meta">N2 ${member.n2Manager} · 成就${number.format(member.convertedUsers || member.orders)}人 · ${number.format(member.orders)}单</div>
+          <div class="fighter-meta">N2 ${member.n2Manager} · GMV${formatNet(member.gross)} · 成就${number.format(member.convertedUsers || member.orders)}人 · ${number.format(member.orders)}单</div>
           <div class="meter"><span style="--w:${Math.max(member.gross / maxGross * 100, 2)}%"></span></div>
         </div>
       `).join("")}
@@ -343,7 +342,7 @@ function renderSubjects() {
 }
 
 function renderActivityChannels() {
-  const channels = report.activityChannels || [];
+  const channels = (report.activityChannels || []).filter((item) => item.orders || item.gross);
   const totalUsers = Math.max(report.summary.convertedUsers || report.summary.orders || 0, 1);
   const totalGross = Math.max(report.summary.gross || 0, 1);
   const maxUsers = Math.max(...channels.map((item) => item.orders), 1);
@@ -351,15 +350,15 @@ function renderActivityChannels() {
     const userShare = item.orders / totalUsers;
     const grossShare = item.gross / totalGross;
     return `
-      <article class="activity-channel-row ${index < 3 ? "is-major" : ""} ${item.orders ? "" : "is-empty"}">
+      <article class="activity-channel-row ${index < 3 ? "is-major" : ""}">
         <div class="activity-channel-main">
           <span class="activity-id">${item.id}</span>
           <strong>${item.name}</strong>
         </div>
         <div class="activity-channel-metrics">
           <span><b>${ratio(userShare)}</b><small>成就用户占比</small></span>
-          <span><b>${ratio(grossShare)}</b><small>业绩权重</small></span>
-          <em>${item.orders ? `${number.format(item.orders)}人` : "暂无成就"}</em>
+          <span><b>${ratio(grossShare)}</b><small>GMV占比</small></span>
+          <em>${number.format(item.orders)}人</em>
         </div>
         <div class="activity-channel-track" aria-hidden="true">
           <i style="--w:${Math.max(item.orders / maxUsers * 100, 3)}%"></i>

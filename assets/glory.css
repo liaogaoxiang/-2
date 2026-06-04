@@ -1487,12 +1487,6 @@
     linear-gradient(110deg, rgba(23, 99, 143, 0.22), rgba(4, 12, 18, 0.9) 54%, rgba(141, 48, 47, 0.18));
 }
 
-.glory-theme .activity-channel-row.is-empty {
-  border-color: rgba(157, 177, 185, 0.12);
-  background: rgba(4, 12, 18, 0.72);
-  opacity: 0.62;
-}
-
 .glory-theme .activity-channel-main,
 .glory-theme .activity-channel-metrics,
 .glory-theme .activity-channel-track {
