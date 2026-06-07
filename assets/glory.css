@@ -11,6 +11,9 @@
   --glory-red: #ff705e;
   --glory-red-deep: #8d302f;
   --glory-green: #8bcc9d;
+  --glory-fire: #ff9b38;
+  --glory-fire-hot: #fff1aa;
+  --glory-ember: #ff4d2f;
   --glory-ink: #f4f1e7;
   --glory-muted: #9db1b9;
   --glory-dim: #718691;
@@ -654,29 +657,50 @@
   padding: 20px;
   clip-path: var(--glory-cut-small);
   isolation: isolate;
+  overflow: hidden;
+  transition:
+    border-color 220ms var(--ease-out-quart, cubic-bezier(0.25, 1, 0.5, 1)),
+    transform 220ms var(--ease-out-quart, cubic-bezier(0.25, 1, 0.5, 1));
 }
 
 .glory-theme .module-king-card::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -1px;
+  z-index: 1;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(97, 204, 245, 0.78), transparent 54%) top / 100% 2px no-repeat,
-    radial-gradient(circle at 20% 86%, rgba(97, 204, 245, 0.16), transparent 32%);
-  animation: kingAuraPulse 4.8s ease-in-out infinite;
+    radial-gradient(circle at 20% 16%, rgba(255, 244, 188, 0.26), transparent 28%),
+    radial-gradient(circle at 78% 74%, rgba(255, 198, 84, 0.2), transparent 30%),
+    conic-gradient(from 45deg at 15% 20%, transparent 0 16%, rgba(255, 232, 151, 0.28) 17% 20%, transparent 21% 100%),
+    conic-gradient(from 45deg at 78% 58%, transparent 0 14%, rgba(255, 232, 151, 0.22) 15% 18%, transparent 19% 100%),
+    linear-gradient(125deg, transparent 0 32%, rgba(255, 244, 188, 0.2) 42%, transparent 52% 100%),
+    linear-gradient(90deg, rgba(255, 218, 118, 0.94), rgba(255, 246, 189, 0.72), transparent 58%) top / 100% 2px no-repeat,
+    linear-gradient(90deg, transparent, rgba(255, 218, 118, 0.9), rgba(255, 246, 189, 0.72), transparent) bottom / 100% 2px no-repeat,
+    linear-gradient(180deg, rgba(255, 218, 118, 0.56), transparent 74%) left / 2px 100% no-repeat,
+    linear-gradient(180deg, rgba(255, 218, 118, 0.5), transparent 74%) right / 2px 100% no-repeat;
+  opacity: 0.95;
+  animation: crownDiamondGlint 4.4s ease-in-out infinite;
 }
 
 .glory-theme .module-king-card::after {
   content: "";
   position: absolute;
-  inset: 1px;
-  z-index: 0;
+  inset: 10px 16px;
+  z-index: 1;
   pointer-events: none;
-  background: linear-gradient(105deg, transparent 0 34%, rgba(255, 229, 165, 0.14) 46%, transparent 58% 100%);
-  opacity: 0;
-  transform: translateX(-115%);
-  animation: kingSweep 6.2s ease-in-out infinite;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 247, 199, 0.95) 0 1px, transparent 3px),
+    radial-gradient(circle at 31% 78%, rgba(255, 218, 118, 0.8) 0 1px, transparent 3px),
+    radial-gradient(circle at 72% 18%, rgba(255, 247, 199, 0.9) 0 1px, transparent 3px),
+    radial-gradient(circle at 89% 62%, rgba(255, 218, 118, 0.72) 0 1px, transparent 3px),
+    linear-gradient(135deg, transparent 0 46%, rgba(255, 247, 199, 0.42) 49%, transparent 52% 100%);
+  opacity: 0.86;
+  animation: crownSparkleDrift 5.2s ease-in-out infinite;
+}
+
+.glory-theme .module-king-card:hover {
+  transform: translateY(-2px);
 }
 
 .glory-theme .module-king-card > * {
@@ -697,27 +721,65 @@
 
 .glory-theme .module-king-card.red-camp::before {
   background:
-    linear-gradient(90deg, rgba(255, 112, 94, 0.78), transparent 54%) top / 100% 2px no-repeat,
-    radial-gradient(circle at 20% 86%, rgba(255, 112, 94, 0.14), transparent 32%);
+    radial-gradient(circle at 20% 16%, rgba(255, 244, 188, 0.26), transparent 28%),
+    radial-gradient(circle at 78% 74%, rgba(255, 198, 84, 0.2), transparent 30%),
+    conic-gradient(from 45deg at 15% 20%, transparent 0 16%, rgba(255, 232, 151, 0.28) 17% 20%, transparent 21% 100%),
+    conic-gradient(from 45deg at 78% 58%, transparent 0 14%, rgba(255, 232, 151, 0.22) 15% 18%, transparent 19% 100%),
+    linear-gradient(125deg, transparent 0 32%, rgba(255, 244, 188, 0.2) 42%, transparent 52% 100%),
+    linear-gradient(90deg, rgba(255, 218, 118, 0.94), rgba(255, 246, 189, 0.72), transparent 58%) top / 100% 2px no-repeat,
+    linear-gradient(90deg, transparent, rgba(255, 218, 118, 0.9), rgba(255, 246, 189, 0.72), transparent) bottom / 100% 2px no-repeat,
+    linear-gradient(180deg, rgba(255, 218, 118, 0.56), transparent 74%) left / 2px 100% no-repeat,
+    linear-gradient(180deg, rgba(255, 218, 118, 0.5), transparent 74%) right / 2px 100% no-repeat;
 }
 
 .glory-theme .module-king-card.red-camp::after {
-  background: linear-gradient(105deg, transparent 0 34%, rgba(255, 112, 94, 0.16) 46%, transparent 58% 100%);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 247, 199, 0.95) 0 1px, transparent 3px),
+    radial-gradient(circle at 31% 78%, rgba(255, 218, 118, 0.8) 0 1px, transparent 3px),
+    radial-gradient(circle at 72% 18%, rgba(255, 247, 199, 0.9) 0 1px, transparent 3px),
+    radial-gradient(circle at 89% 62%, rgba(255, 218, 118, 0.72) 0 1px, transparent 3px),
+    linear-gradient(135deg, transparent 0 46%, rgba(255, 247, 199, 0.42) 49%, transparent 52% 100%);
 }
 
 .glory-theme .module-king-mark {
+  position: relative;
   display: grid;
   width: 62px;
   aspect-ratio: 1;
   place-items: center;
-  border: 1px solid rgba(230, 183, 93, 0.54);
+  border: 1px solid rgba(255, 218, 118, 0.78);
   color: var(--glory-gold-pale);
   font-family: "Arial Narrow", Arial, sans-serif;
   font-size: 11px;
   font-weight: 900;
   clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
-  background: rgba(4, 13, 19, 0.72);
-  text-shadow: 0 0 10px rgba(230, 183, 93, 0.44);
+  background:
+    linear-gradient(135deg, rgba(255, 246, 189, 0.14), rgba(255, 218, 118, 0.04)),
+    rgba(4, 13, 19, 0.72);
+  box-shadow:
+    inset 0 0 18px rgba(255, 218, 118, 0.16),
+    0 0 18px rgba(255, 218, 118, 0.18);
+  text-shadow: 0 0 10px rgba(255, 218, 118, 0.58);
+}
+
+.glory-theme .module-king-mark::before {
+  content: "冠";
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  width: 34px;
+  height: 18px;
+  border: 1px solid rgba(255, 218, 118, 0.72);
+  border-bottom: 0;
+  color: var(--glory-gold-pale);
+  background:
+    linear-gradient(135deg, rgba(255, 246, 189, 0.2), rgba(255, 218, 118, 0.08)),
+    rgba(4, 13, 19, 0.86);
+  clip-path: polygon(0 100%, 0 48%, 20% 48%, 30% 0, 50% 46%, 70% 0, 80% 48%, 100% 48%, 100% 100%);
+  font-size: 0;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 0 8px rgba(255, 218, 118, 0.48));
+  animation: crownLift 3.4s ease-in-out infinite;
 }
 
 .glory-theme .module-king-card.blue-camp .module-king-mark {
@@ -743,6 +805,23 @@
   color: var(--glory-ink);
   font-size: clamp(28px, 2.6vw, 40px);
   font-weight: 900;
+}
+
+.glory-theme .module-king-card strong::after {
+  content: "王者加冕";
+  display: inline-grid;
+  margin-left: 10px;
+  padding: 3px 7px 4px;
+  vertical-align: 0.18em;
+  border: 1px solid rgba(255, 218, 118, 0.72);
+  color: var(--glory-gold-pale);
+  background: rgba(118, 81, 24, 0.38);
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 10px rgba(255, 218, 118, 0.72);
+  animation: crownBadgePulse 2.8s ease-in-out infinite;
 }
 
 .glory-theme .module-king-card small {
@@ -1071,6 +1150,7 @@
   border-radius: 0;
   padding: 10px;
   clip-path: var(--glory-cut-small);
+  overflow: hidden;
 }
 
 .glory-theme .duel-side::after {
@@ -1110,22 +1190,53 @@
 .glory-theme .fighter-card.is-winner::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -1px;
+  z-index: 1;
   pointer-events: none;
   background:
+    radial-gradient(20px 58px at 12% 112%, rgba(255, 246, 186, 0.92) 0 8%, rgba(255, 155, 56, 0.72) 23%, rgba(255, 72, 32, 0.38) 52%, transparent 78%),
+    radial-gradient(32px 76px at 32% 118%, rgba(255, 239, 160, 0.84) 0 8%, rgba(255, 133, 35, 0.68) 24%, rgba(255, 58, 30, 0.36) 54%, transparent 80%),
+    radial-gradient(24px 66px at 57% 112%, rgba(255, 250, 205, 0.86) 0 8%, rgba(255, 154, 44, 0.7) 22%, rgba(255, 74, 31, 0.36) 52%, transparent 78%),
+    radial-gradient(28px 72px at 81% 116%, rgba(255, 237, 152, 0.84) 0 7%, rgba(255, 126, 32, 0.7) 23%, rgba(255, 54, 27, 0.36) 54%, transparent 80%),
+    linear-gradient(0deg, rgba(255, 69, 31, 0.38), rgba(255, 155, 56, 0.2) 38%, transparent 76%),
     linear-gradient(90deg, rgba(230, 183, 93, 0.72), transparent 42%) top / 100% 2px no-repeat,
-    radial-gradient(circle at 84% 16%, rgba(230, 183, 93, 0.18), transparent 30%);
-  opacity: 0.92;
-  animation: advantagePulse 3.2s ease-in-out infinite;
+    linear-gradient(90deg, transparent, rgba(255, 77, 47, 0.74), rgba(255, 241, 170, 0.8), rgba(255, 155, 56, 0.7), transparent) bottom / 100% 4px no-repeat,
+    linear-gradient(180deg, rgba(255, 155, 56, 0.5), transparent 66%) left / 3px 100% no-repeat,
+    linear-gradient(180deg, rgba(255, 155, 56, 0.46), transparent 66%) right / 3px 100% no-repeat;
+  background-position: 12% 112%, 32% 118%, 57% 112%, 81% 116%, bottom, top, bottom, left, right;
+  opacity: 0.84;
+  -webkit-mask-image: linear-gradient(to top, #000 0 48%, rgba(0, 0, 0, 0.72) 62%, transparent 84%);
+  mask-image: linear-gradient(to top, #000 0 48%, rgba(0, 0, 0, 0.72) 62%, transparent 84%);
+  animation:
+    advantagePulse 3.2s ease-in-out infinite,
+    flameWallRoar 1.9s ease-in-out infinite;
 }
 
 .glory-theme .duel-side.is-winner::after {
-  content: "占优";
+  content: "火力全开";
+  z-index: 3;
   color: var(--glory-gold-pale);
+  text-shadow: 0 0 10px rgba(255, 155, 56, 0.72);
   font-family: "Arial Narrow", Arial, sans-serif;
   font-size: 10px;
   font-weight: 900;
   letter-spacing: 0.08em;
+}
+
+.glory-theme .duel-side > *,
+.glory-theme .tri-side > *,
+.glory-theme .fighter-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.glory-theme .duel-side.is-winner strong,
+.glory-theme .tri-side.is-winner strong,
+.glory-theme .fighter-card.is-winner .fighter-name,
+.glory-theme .fighter-card.is-winner .fighter-score {
+  text-shadow:
+    0 0 12px rgba(255, 155, 56, 0.34),
+    0 0 22px rgba(230, 183, 93, 0.18);
 }
 
 .glory-theme .duel-label {
@@ -1291,11 +1402,13 @@
 }
 
 .glory-theme .tri-side.is-winner::after {
-  content: "占优";
+  content: "火力全开";
   position: absolute;
+  z-index: 3;
   right: 8px;
   bottom: 7px;
   color: var(--glory-gold-pale);
+  text-shadow: 0 0 10px rgba(255, 155, 56, 0.68);
   font-family: "Arial Narrow", Arial, sans-serif;
   font-size: 9px;
   font-weight: 900;
@@ -1434,6 +1547,7 @@
 .glory-theme .fighter-card::after {
   content: "HERO";
   position: absolute;
+  z-index: 3;
   right: 9px;
   bottom: 8px;
   color: rgba(230, 183, 93, 0.34);
@@ -1454,8 +1568,9 @@
 }
 
 .glory-theme .fighter-card.is-winner::after {
-  content: "ADVANTAGE";
+  content: "火力全开";
   color: rgba(255, 229, 165, 0.76);
+  text-shadow: 0 0 12px rgba(255, 155, 56, 0.58);
 }
 
 .glory-theme .fighter-role {
@@ -1823,35 +1938,100 @@
   0%,
   100% {
     opacity: 0.62;
+    filter: saturate(1);
   }
   50% {
     opacity: 1;
+    filter: saturate(1.18);
   }
 }
 
-@keyframes kingAuraPulse {
+@keyframes flameWallRoar {
   0%,
   100% {
+    background-position: 12% 112%, 32% 118%, 57% 112%, 81% 116%, bottom, top, bottom, left, right;
+    opacity: 0.74;
+    filter: saturate(1.04);
+  }
+  34% {
+    background-position: 10% 104%, 35% 110%, 54% 104%, 84% 108%, bottom, top, bottom, left, right;
+    opacity: 0.96;
+    filter: saturate(1.18);
+  }
+  66% {
+    background-position: 15% 119%, 28% 106%, 61% 116%, 76% 102%, bottom, top, bottom, left, right;
+    opacity: 0.84;
+    filter: saturate(1.1);
+  }
+}
+
+@keyframes crownDiamondGlint {
+  0%,
+  100% {
+    opacity: 0.72;
+    filter: saturate(1) brightness(1);
+    transform: translateX(-8px);
+  }
+  48% {
+    opacity: 1;
+    filter: saturate(1.15) brightness(1.18);
+    transform: translateX(8px);
+  }
+}
+
+@keyframes crownSparkleDrift {
+  0%,
+  100% {
+    opacity: 0.48;
+    transform: translate3d(0, 2px, 0);
+  }
+  42% {
+    opacity: 1;
+    transform: translate3d(-6px, -3px, 0);
+  }
+  72% {
     opacity: 0.66;
+    transform: translate3d(8px, -6px, 0);
+  }
+}
+
+@keyframes crownLift {
+  0%,
+  100% {
+    opacity: 0.78;
+    transform: translateX(-50%) translateY(1px);
   }
   50% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-2px);
+  }
+}
+
+@keyframes crownBadgePulse {
+  0%,
+  100% {
+    border-color: rgba(255, 218, 118, 0.58);
+    opacity: 0.82;
+  }
+  50% {
+    border-color: rgba(255, 247, 199, 0.92);
     opacity: 1;
   }
 }
 
-@keyframes kingSweep {
+@keyframes emberDrift {
   0%,
-  58% {
-    opacity: 0;
-    transform: translateX(-115%);
-  }
-  68% {
-    opacity: 0.92;
-  }
-  84%,
   100% {
-    opacity: 0;
-    transform: translateX(115%);
+    opacity: 0.34;
+    transform: translate3d(0, 2px, 0);
+  }
+  45% {
+    opacity: 0.86;
+    transform: translate3d(-8px, -5px, 0);
+  }
+  72% {
+    opacity: 0.56;
+    transform: translate3d(7px, -9px, 0);
   }
 }
 
@@ -1861,10 +2041,16 @@
   .glory-theme .tower-line span,
   .glory-theme .module-king-card::before,
   .glory-theme .module-king-card::after,
+  .glory-theme .module-king-mark::before,
+  .glory-theme .module-king-card strong::after,
   .glory-theme .duel-side.is-winner::before,
   .glory-theme .tri-side.is-winner::before,
   .glory-theme .fighter-card.is-winner::before {
     animation: none;
+  }
+
+  .glory-theme .module-king-card:hover {
+    transform: none;
   }
 }
 

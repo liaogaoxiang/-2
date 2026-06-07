@@ -215,7 +215,7 @@ function renderFeaturedArena() {
           <div class="fighter-role"><span>${arena.isThreeWay ? `阵营 ${String(member.slot).padStart(2, "0")}` : (member.role === "守擂方" ? "蓝方守塔战队" : "红方攻塔战队")}</span><span>${momentumLabel(arena, member)}</span></div>
           <strong class="fighter-name">${teamName(member.name)}</strong>
           <div class="fighter-score">${formatNet(member.gross)}</div>
-          <div class="fighter-meta">N2 ${member.n2Manager} · 战力${member.battlePower.toFixed(1)} · 成就${number.format(member.convertedUsers || member.orders)}位学员 · ${number.format(member.orders)}单</div>
+          <div class="fighter-meta">${member.n2Manager} 大组 · 战力${member.battlePower.toFixed(1)} · 成就${number.format(member.convertedUsers || member.orders)}位学员 · ${number.format(member.orders)}单</div>
           <div class="meter"><span style="--w:${Math.max(member.gross / maxGross * 100, 2)}%"></span></div>
         </div>
       `).join("")}
@@ -294,7 +294,7 @@ function renderRanks() {
     arenas: "荣耀战局GMV榜",
     members: "团队战力榜",
     modules: "阵营火力榜",
-    commanders: "N2战队榜"
+    commanders: "大组战队榜"
   };
   const rows = currentRows();
   const max = Math.max(...rows.map(modeValue), 1);
@@ -478,7 +478,7 @@ function renderArenaCards() {
         </div>
         <div class="duel-row">
           <div class="duel-side defense ${arena.isActive && arena.defenderWon ? "is-winner" : ""}">
-            <span class="duel-label"><i class="side-emblem">◇</i> 蓝方守塔 · N2 ${defender.n2Manager}</span>
+            <span class="duel-label"><i class="side-emblem">◇</i> 蓝方守塔 · ${defender.n2Manager} 大组</span>
             <strong>${teamName(defender.name)}</strong>
             <small>GMV${formatNet(defender.gross)} · ${number.format(defender.orders)}单火力</small>
             ${renderContributionPanel([defender])}
@@ -499,7 +499,7 @@ function renderArenaCards() {
             <div class="duel-subline">${arena.module} · GMV差${formatNet(arena.margin)}</div>
           </div>
           <div class="duel-side attack ${arena.isActive && !arena.defenderWon ? "is-winner" : ""}">
-            <span class="duel-label"><i class="side-emblem">◇</i> 红方攻塔 · N2 ${challenger.n2Manager}</span>
+            <span class="duel-label"><i class="side-emblem">◇</i> 红方攻塔 · ${challenger.n2Manager} 大组</span>
             <strong>${teamName(challenger.name)}</strong>
             <small>GMV${formatNet(challenger.gross)} · ${number.format(challenger.orders)}单火力</small>
             ${renderContributionPanel(attackMembers)}
