@@ -51,6 +51,30 @@ ALLOWED_ACTIVITY_IDS = set(ACTIVITY_NAMES)
 CSV_HEADERS = [
     "活动ID", "邀请人ID", "被邀请人ID", "邀请时间", "是否激励", "是否违规", "订单编号", "支付时间", "支付月份", "是否退款", "退款时间", "业绩归属人姓名", "业绩归属人人才类型", "业绩归属人部门_手工", "业绩归属人部门_系统", "年级_来自人员架构表", "中心_来自人员架构表", "经理_来自人员架构表", "大组长_来自人员架构表", "小组长_来自人员架构表", "课程一级部门名称", "课程二级部门名称", "课程三级部门名称", "课程一级科目名称", "课程二级科目名称", "课程三级科目名称", "课程类别名称", "年级", "科目", "学年", "学季", "学年学季", "主讲老师", "班级业务编号", "班级名称", "辅导班业务编码", "辅导老师", "原始订单编号", "原始支付时间", "最新订单编号", "最新用户编号", "绑定人ID", "绑定人姓名", "绑定人角色", "绑定人部门全路径", "跟进人ID", "跟进人姓名", "跟进人角色", "跟进人部门全路径", "绑定类型", "绑定类型名称", "模板ID", "海报URL", "风险因子", "用户意向", "标记", "业绩归属人部门_系统_用于净收完成度", "业绩归属人部门_手工_用于收款完成度", "绑定人部门", "收款金额", "退款金额", "净收金额"
 ]
+FIELD_ALIASES = {
+    "活动ID": ["活动id"],
+    "被邀请人ID": ["用户id"],
+    "邀请时间": ["邀请成功时间"],
+    "是否激励": ["是否激励活动id"],
+    "是否违规": ["is_violate"],
+    "支付时间": ["转化时间"],
+    "退款时间": ["最终退款时间"],
+    "业绩归属人姓名": ["业绩归属人"],
+    "经理_来自人员架构表": ["经理"],
+    "大组长_来自人员架构表": ["大组长"],
+    "小组长_来自人员架构表": ["小组长"],
+    "课程二级部门名称": ["课程二级部门"],
+    "课程三级部门名称": ["课程三级部门"],
+    "课程一级科目名称": ["学科"],
+    "科目": ["学科"],
+    "主讲老师": ["主讲"],
+    "班级业务编号": ["班级id"],
+    "业绩归属人部门_系统": ["业绩归属人部门_系统"],
+    "业绩归属人部门_手工": ["业绩归属人部门_手工"],
+    "收款金额": ["收入", "订单金额"],
+    "退款金额": ["退款"],
+    "净收金额": ["净收"],
+}
 
 
 def empty_stat():
@@ -110,6 +134,28 @@ def normalize_csv_row(row):
     return row + [""] * (len(CSV_HEADERS) - len(row))
 
 
+def normalize_record(record):
+    normalized = dict(record)
+    for canonical, aliases in FIELD_ALIASES.items():
+        if normalized.get(canonical) not in (None, ""):
+            continue
+        for alias in aliases:
+            if record.get(alias) not in (None, ""):
+                normalized[canonical] = record.get(alias)
+                break
+
+    if not normalized.get("支付月份") and normalized.get("支付时间"):
+        normalized["支付月份"] = month_text(normalized.get("支付时间"))
+
+    incentive_flag = str(normalized.get("是否激励") or "").strip().lower()
+    if incentive_flag in {"1", "true", "yes"}:
+        normalized["是否激励"] = "是"
+
+    for header in CSV_HEADERS:
+        normalized.setdefault(header, "")
+    return normalized
+
+
 def data_rows():
     if DATA_PATH.suffix.lower() == ".xlsx":
         wb = load_workbook(DATA_PATH, read_only=True, data_only=True)
@@ -117,7 +163,7 @@ def data_rows():
         headers = [cell.value for cell in ws[1]]
         for values in ws.iter_rows(min_row=2, values_only=True):
             if any(value not in (None, "") for value in values):
-                yield dict(zip(headers, values)), False
+                yield normalize_record(dict(zip(headers, values))), False
         return
 
     with DATA_PATH.open(newline="", encoding="utf-8-sig") as handle:
@@ -129,7 +175,7 @@ def data_rows():
             if len(raw) == 1 and not raw[0]:
                 continue
             repaired = len(raw) != len(CSV_HEADERS)
-            yield dict(zip(CSV_HEADERS, normalize_csv_row(raw))), repaired
+            yield normalize_record(dict(zip(CSV_HEADERS, normalize_csv_row(raw)))), repaired
 
 
 def date_text(value):
