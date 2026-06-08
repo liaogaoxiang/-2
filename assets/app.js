@@ -223,6 +223,93 @@ function renderFeaturedArena() {
   `;
 }
 
+const rewardTiers = [
+  {
+    className: "bronze-loot",
+    title: "破阵宝箱",
+    threshold: 60000,
+    reward: 50,
+    mark: "6万+",
+    note: "团队GMV突破6万，PK获胜小组每人50元京东卡",
+    sprintMin: 36000
+  },
+  {
+    className: "gold-loot",
+    title: "荣耀宝箱",
+    threshold: 80000,
+    reward: 100,
+    mark: "8万+",
+    note: "团队GMV突破8万，PK获胜小组每人100元京东卡",
+    sprintMin: 60000
+  },
+  {
+    className: "crown-loot",
+    title: "王者宝箱",
+    threshold: 150000,
+    reward: 300,
+    mark: "15万+",
+    note: "团队GMV突破15万，PK获胜小组每人300元京东卡",
+    sprintMin: 80000
+  }
+];
+
+function winningTeamRows() {
+  const teams = new Map();
+  (report.arenas || []).forEach((arena) => {
+    if (!arena.isActive) return;
+    (arena.members || []).forEach((member) => {
+      if (!member.isWinner) return;
+      const current = teams.get(member.name);
+      if (!current || member.gross > current.gross) {
+        teams.set(member.name, {
+          name: member.name,
+          gross: member.gross || 0,
+          module: arena.module,
+          arenaId: arena.id
+        });
+      }
+    });
+  });
+  return [...teams.values()];
+}
+
+function tierSprintTeams(tier, teams) {
+  return teams
+    .filter((team) => team.gross >= tier.sprintMin && team.gross < tier.threshold)
+    .sort((a, b) => b.gross - a.gross);
+}
+
+function renderRewardTiers() {
+  const container = document.querySelector("#rewardTiers");
+  if (!container) return;
+  const winners = winningTeamRows();
+  container.innerHTML = rewardTiers.map((tier) => {
+    const sprintTeams = tierSprintTeams(tier, winners);
+    const closest = sprintTeams[0];
+    const gap = closest ? tier.threshold - closest.gross : 0;
+    return `
+      <article class="reward-tier-card ${tier.className}">
+        <div class="reward-tier-aura" aria-hidden="true"></div>
+        <div class="reward-tier-main">
+          <span class="reward-tier-title">${tier.title}</span>
+          <span class="reward-condition">${tier.mark} · PK获胜解锁</span>
+        </div>
+        <div class="reward-prize">
+          <span>京东卡</span>
+          <b>${number.format(tier.reward)}元</b>
+          <em>/ 人</em>
+        </div>
+        <p class="reward-rule">${tier.note}</p>
+        <div class="reward-sprint">
+          <span>冲刺中</span>
+          <strong>${number.format(sprintTeams.length)}组</strong>
+          <small>${closest ? `${teamName(closest.name)} 距离本档还差${formatNet(gap)}` : "暂无胜方小组进入冲刺区间"}</small>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
 function renderPlayerRankList() {
   const rows = (report.contributorRank || [])
     .filter((item) => item.module === state.contributorModule)
@@ -606,6 +693,7 @@ function renderAll() {
   renderPlayerRankList();
   setupArenaPicker();
   renderFeaturedArena();
+  renderRewardTiers();
   renderBattleSplit();
   renderRanks();
   renderDailyChart();
