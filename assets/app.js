@@ -164,6 +164,83 @@ function renderKpis() {
   `).join("");
 }
 
+function battleMapTeams() {
+  const teams = new Map();
+  (report.arenas || []).forEach((arena) => {
+    (arena.members || []).forEach((member) => {
+      if (!member.gross) return;
+      const camp = member.role === "守擂方" ? "blue" : "red";
+      const current = teams.get(member.name);
+      if (!current || member.gross > current.gross) {
+        teams.set(member.name, {
+          name: member.name,
+          camp,
+          role: member.role,
+          module: arena.module,
+          arenaId: arena.id,
+          gross: member.gross || 0,
+          orders: member.orders || 0,
+          convertedUsers: member.convertedUsers || member.orders || 0,
+          isWinner: Boolean(member.isWinner)
+        });
+      }
+    });
+  });
+  return [...teams.values()].sort((a, b) => b.gross - a.gross);
+}
+
+function renderBattleMap() {
+  const nodes = document.querySelector("#battleMapNodes");
+  const runners = document.querySelector("#battleMapRunners");
+  const count = document.querySelector("#battleMapCount");
+  if (!nodes || !runners) return;
+
+  const teams = battleMapTeams();
+  const maxGross = Math.max(...teams.map((team) => team.gross), 1);
+  const byCampIndex = { blue: 0, red: 0 };
+  const topNames = new Set(teams.slice(0, 10).map((team) => team.name));
+
+  count.textContent = `${number.format(teams.length)}个参战小组`;
+  nodes.innerHTML = teams.map((team) => {
+    const progress = Math.min(team.gross / maxGross, 1);
+    const index = byCampIndex[team.camp]++;
+    const lane = (index * 37) % 100;
+    const y = 12 + lane / 100 * 76;
+    const push = progress * 39;
+    const x = team.camp === "blue" ? 8 + push : 92 - push;
+    const level = progress >= 0.72 ? "is-frontline" : progress >= 0.42 ? "is-midline" : "is-base";
+    const title = `${team.name}团队 · GMV${formatNet(team.gross)} · ${number.format(team.orders)}单 · ${team.module} · ${team.arenaId}`;
+    return `
+      <span
+        class="battle-map-node ${team.camp}-node ${level} ${team.isWinner ? "is-advantage" : ""} ${topNames.has(team.name) ? "is-top" : ""}"
+        style="--x:${x.toFixed(2)}%; --y:${y.toFixed(2)}%; --power:${Math.max(progress * 100, 8).toFixed(2)}%"
+        title="${title}"
+      >
+        <i></i><b>${team.name}</b>
+      </span>
+    `;
+  }).join("");
+
+  const runnerGroups = ["学习顾问部", "学习规划部"].map((moduleName) => ({
+    moduleName,
+    teams: teams.filter((team) => team.module === moduleName).slice(0, 5)
+  }));
+  runners.innerHTML = runnerGroups.map((group) => `
+    <div class="battle-map-runner-group">
+      <h3>${group.moduleName}前五</h3>
+      <div>
+        ${group.teams.map((team, index) => `
+          <span class="${team.camp}-runner">
+            <em>${String(index + 1).padStart(2, "0")}</em>
+            <strong>${team.name}</strong>
+            <small>${formatNet(team.gross)}</small>
+          </span>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+}
+
 function featuredArena() {
   const focused = report.arenas.find((arena) => arena.id === state.focusedArenaId);
   if (focused) return focused;
@@ -690,6 +767,7 @@ function renderAll() {
   renderMeta();
   renderChampion();
   renderKpis();
+  renderBattleMap();
   renderPlayerRankList();
   setupArenaPicker();
   renderFeaturedArena();
