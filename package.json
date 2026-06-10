@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build:data": "python3 scripts/build-arena-data.py",
+    "build:supply": "python3 scripts/build-supply-data.py",
     "serve": "python3 -m http.server 4173"
   }
 }

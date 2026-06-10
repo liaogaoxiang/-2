@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#05080d" />
+    <title>荣耀擂台赛补给包</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="stylesheet" href="assets/glory.css?v=map-0609" />
+    <link rel="stylesheet" href="assets/supply.css" />
+  </head>
+  <body class="moba-theme glory-theme supply-page">
+    <div class="arena-architecture" aria-hidden="true">
+      <div class="arena-crown">
+        <span></span><i></i><b></b><i></i><span></span>
+      </div>
+      <div class="base-standard blue-standard"><i></i><b>BLUE BUFF</b></div>
+      <div class="base-standard red-standard"><i></i><b>GOLD LOADOUT</b></div>
+      <div class="bottom-battlement"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+
+    <main class="arena-shell supply-shell">
+      <section class="supply-hero" aria-label="荣耀擂台赛补给包">
+        <div class="supply-hero-copy">
+          <p class="eyebrow">HONOR SUPPLY KIT / LEARNING PLANNER</p>
+          <h1>荣耀擂台赛<span>补给包</span></h1>
+          <p id="supplyMeta" class="subline">正在装载补给战局...</p>
+        </div>
+        <div class="status-strip supply-actions" aria-label="页面导航">
+          <a class="home-return" href="index.html">返回激励主页</a>
+          <a class="poster-link" href="glory.html">返回荣耀擂台</a>
+          <span id="supplySync">SYNC</span>
+        </div>
+        <div class="supply-hero-visual" aria-hidden="true">
+          <div class="treasure-chest">
+            <span class="chest-shine"></span>
+            <i class="chest-lid"></i>
+            <b class="chest-body"></b>
+            <em class="chest-lock"></em>
+            <span class="chest-ray ray-one"></span>
+            <span class="chest-ray ray-two"></span>
+          </div>
+          <div class="skill-dock">
+            <span class="skill-slot">Q</span>
+            <span class="skill-slot">W</span>
+            <span class="skill-slot ultimate">R</span>
+            <span class="coin-slot">¥</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="supply-kpis" id="supplyKpis" aria-label="补给包核心数据"></section>
+
+      <section class="panel loadout-panel" aria-label="装备升级阶梯">
+        <div class="panel-head loadout-head">
+          <div>
+            <p class="panel-kicker">ITEM LADDER / 装备升级</p>
+            <h2>出单覆盖率补给阶梯</h2>
+          </div>
+          <span class="chip">按小组最高覆盖率发放</span>
+        </div>
+        <div id="tierTrack" class="tier-track"></div>
+      </section>
+
+      <section class="supply-board">
+        <article class="panel leaderboard-panel supply-rank-panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">COMMANDER LOADOUT</p>
+              <h2>小组长覆盖进度</h2>
+            </div>
+            <span class="chip" id="leaderCount">参赛组长装载中</span>
+          </div>
+          <div id="leaderRows" class="leader-rows"></div>
+        </article>
+
+        <aside class="panel rules-panel" aria-label="活动规则">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">BUFF RULES</p>
+              <h2>补给发放口径</h2>
+            </div>
+          </div>
+          <div class="boss-card">
+            <span>活动时间</span>
+            <strong id="activityTime">6月11日-6月25日</strong>
+            <p id="slogan">装备升上去，战斗赢下来！</p>
+          </div>
+          <dl class="rule-list">
+            <div><dt>统计对象</dt><dd>以PK队伍匹配表内学习规划部小组长为参赛名单</dd></div>
+            <div><dt>补给发放口径</dt><dd>6月11日-6月25日有效出单伙伴数 / 小组有效伙伴数</dd></div>
+            <div><dt>当前数据</dt><dd id="latestPayment">最新支付时间装载中</dd></div>
+          </dl>
+          <p class="fine-print">
+            注:仅统计活动期内有效出单伙伴，6月11日前出单不计入本次活动。按小组活动期间最高出单占比发放京东卡至小组长本人。
+          </p>
+        </aside>
+      </section>
+    </main>
+
+    <script src="data/supply-data.js"></script>
+    <script src="assets/supply.js"></script>
+  </body>
+</html>
