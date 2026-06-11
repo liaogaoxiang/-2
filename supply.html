@@ -70,7 +70,14 @@
               <p class="panel-kicker">COMMANDER LOADOUT</p>
               <h2>小组长覆盖进度</h2>
             </div>
-            <span class="chip" id="leaderCount">参赛组长装载中</span>
+            <div class="leader-tools">
+              <label class="leader-search" for="leaderSearch">
+                <span>搜索组长</span>
+                <input id="leaderSearch" type="search" placeholder="输入小组长姓名" autocomplete="off" />
+              </label>
+              <button id="leaderSearchButton" type="button">定位</button>
+              <span class="chip" id="leaderCount">参赛组长装载中</span>
+            </div>
           </div>
           <div id="leaderRows" class="leader-rows"></div>
         </article>
