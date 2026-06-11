@@ -92,7 +92,7 @@ function tierState(tier, coverage) {
 
 function renderMeta() {
   document.querySelector("#supplyMeta").textContent =
-    `${supply.meta.activityTime} | 学习规划部 ${count.format(supply.summary.leaders)} 位小组长 | 最新支付 ${supply.meta.latestPaymentTime || "暂无"}`;
+    `6月11日-6月25日 | 学习规划部 ${count.format(supply.summary.leaders)} 位小组长 | 最新支付 ${supply.meta.latestPaymentTime || "暂无"}`;
   document.querySelector("#supplySync").textContent = `SYNC ${supply.meta.generatedAt.slice(5, 16)}`;
   document.querySelector("#activityTime").textContent = "6月11日-6月25日";
   document.querySelector("#slogan").textContent = supply.meta.slogan;
