@@ -132,15 +132,17 @@ function renderChampion() {
   const maxGross = Math.max(...kings.map((item) => item.gross), 1);
   document.querySelector("#moduleKings").innerHTML = kings.map((king) => {
     const camp = kingCamp(king.name);
+    const moduleClass = king.module.includes("顾问") ? "advisor-royal" : "planning-royal";
     return `
-    <article class="module-king-card ${camp.className}">
-      <div class="module-king-mark">${camp.mark}</div>
-      <div>
+    <article class="module-king-card ${camp.className} ${moduleClass}">
+      <span class="royal-card-art" aria-hidden="true"></span>
+      <div class="module-king-copy">
+        <div class="module-king-mark">${camp.mark}</div>
         <span class="module-king-module">${king.module} · ${camp.label}</span>
         <strong>${teamName(king.name)}</strong>
         <small>${number.format(king.orders)}单火力 · 成就${number.format(king.convertedUsers)}位学员 · 战力${king.battlePower.toFixed(1)}</small>
+        <div class="meter"><span style="--w:${Math.max(king.gross / maxGross * 100, 4)}%"></span></div>
       </div>
-      <div class="meter"><span style="--w:${Math.max(king.gross / maxGross * 100, 4)}%"></span></div>
     </article>
   `;
   }).join("");
@@ -223,11 +225,11 @@ function renderBattleMap() {
 
   const runnerGroups = ["学习顾问部", "学习规划部"].map((moduleName) => ({
     moduleName,
-    teams: teams.filter((team) => team.module === moduleName).slice(0, 5)
+    teams: teams.filter((team) => team.module === moduleName).slice(0, 10)
   }));
   runners.innerHTML = runnerGroups.map((group) => `
     <div class="battle-map-runner-group">
-      <h3>${group.moduleName}前五</h3>
+      <h3>${group.moduleName}前十团队</h3>
       <div>
         ${group.teams.map((team, index) => `
           <span class="${team.camp}-runner">
