@@ -534,6 +534,34 @@ function renderSubjects() {
   `).join("");
 }
 
+function renderPendingTeams() {
+  const target = document.querySelector("#pendingTeams");
+  if (!target) return;
+  const groups = report.pendingTeams || [];
+  const total = groups.reduce((sum, group) => sum + (group.count || group.names?.length || 0), 0);
+  target.innerHTML = groups.map((group) => {
+    const names = group.names || [];
+    return `
+      <article class="pending-team-card">
+        <div class="pending-team-title">
+          <strong>${group.module}</strong>
+          <span>${number.format(names.length)}支团队待出征</span>
+        </div>
+        <div class="pending-name-cloud">
+          ${names.length ? names.map((name) => `<span>${name}</span>`).join("") : `<em>本部门已全员点燃首单火力</em>`}
+        </div>
+      </article>
+    `;
+  }).join("") || `
+    <article class="pending-team-card">
+      <div class="pending-team-title"><strong>待出征团队</strong><span>0支团队</span></div>
+      <div class="pending-name-cloud"><em>当前暂无待出征团队</em></div>
+    </article>
+  `;
+  const panel = document.querySelector(".pending-team-panel .chip");
+  if (panel) panel.textContent = `${number.format(total)}支团队待出征`;
+}
+
 function renderActivityChannels() {
   const channels = (report.activityChannels || []).filter((item) => item.orders || item.gross);
   const totalUsers = Math.max(report.summary.convertedUsers || report.summary.orders || 0, 1);
@@ -778,6 +806,7 @@ function renderAll() {
   renderRanks();
   renderDailyChart();
   renderSubjects();
+  renderPendingTeams();
   renderActivityChannels();
   setupFilters();
   renderArenaCards();

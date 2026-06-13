@@ -438,6 +438,23 @@ def build_report():
         if candidates:
             module_champions.append({"module": module_name, **candidates[0]})
 
+    pending_teams = []
+    for module_name in ALLOWED_MODULE_ORDER:
+        names = sorted(
+            {
+                member["name"]
+                for arena in arenas
+                if arena["module"] == module_name
+                for member in arena["members"]
+                if member["orders"] == 0
+            }
+        )
+        pending_teams.append({
+            "module": module_name,
+            "count": len(names),
+            "names": names,
+        })
+
     module_map = defaultdict(lambda: {"arenas": 0, "defenderWins": 0, "challengerWins": 0, "gross": 0.0, "net": 0.0, "orders": 0})
     commander_map = defaultdict(lambda: {"arenas": 0, "wins": 0, "gross": 0.0, "net": 0.0, "orders": 0})
     for arena in arenas:
@@ -563,6 +580,7 @@ def build_report():
         },
         "champion": member_rank[0] if member_rank else None,
         "moduleChampions": module_champions,
+        "pendingTeams": pending_teams,
         "arenas": arenas,
         "topArenas": rank_items(arenas, lambda item: item["totalGross"], 10),
         "closeArenas": sorted([arena for arena in arenas if arena["totalOrders"] > 0], key=lambda item: item["margin"])[:8],
