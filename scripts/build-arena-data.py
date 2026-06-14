@@ -45,6 +45,7 @@ ACTIVITY_NAMES = {
     "10896": "转介绍自媒体引流",
     "10890": "EM转介绍",
     "10928": "名师定制学用户转介绍",
+    "10990": "活动ID 10990",
 }
 ALLOWED_ACTIVITY_IDS = set(ACTIVITY_NAMES)
 
