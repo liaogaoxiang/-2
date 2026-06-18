@@ -302,6 +302,144 @@ function renderFeaturedArena() {
   `;
 }
 
+function myBattleOptions() {
+  return (report.arenas || [])
+    .flatMap((arena) => (arena.members || []).map((member) => ({
+      arena,
+      member
+    })))
+    .sort((a, b) => a.member.name.localeCompare(b.member.name, "zh-Hans-CN"));
+}
+
+function findMyBattle(teamName) {
+  for (const arena of report.arenas || []) {
+    const member = (arena.members || []).find((item) => item.name === teamName);
+    if (member) return { arena, member };
+  }
+  return null;
+}
+
+function battleSidePayload(arena, side, selectedName) {
+  const members = side === "blue"
+    ? (arena.members || []).filter((member) => member.role === "守擂方")
+    : (arena.members || []).filter((member) => member.role !== "守擂方");
+  const totalGross = members.reduce((sum, member) => sum + (member.gross || 0), 0);
+  const totalOrders = members.reduce((sum, member) => sum + (member.orders || 0), 0);
+  const totalUsers = members.reduce((sum, member) => sum + (member.convertedUsers || member.orders || 0), 0);
+  const isMine = members.some((member) => member.name === selectedName);
+  const isAdvantage = members.some((member) => member.isWinner);
+  return {
+    side,
+    label: side === "blue" ? "蓝方守塔" : "红方攻塔",
+    members,
+    totalGross,
+    totalOrders,
+    totalUsers,
+    isMine,
+    isAdvantage
+  };
+}
+
+function renderMyBattleCard(payload, arena) {
+  const topMembers = [...payload.members].sort((a, b) => b.gross - a.gross).slice(0, 4);
+  const sideLabel = payload.isMine ? "我的战队" : "对手战队";
+  return `
+    <article class="my-battle-card ${payload.side}-battle ${payload.isMine ? "is-mine" : ""} ${payload.isAdvantage ? "is-advantage" : ""}">
+      <div class="my-battle-card-inner">
+        <div class="my-battle-card-face my-battle-front">
+          <span>${payload.label}</span>
+          <strong>${sideLabel}</strong>
+          <em>${payload.isAdvantage ? "占据上风" : "追击中"}</em>
+        </div>
+        <div class="my-battle-card-face my-battle-back">
+          <div class="my-battle-side-head">
+            <span>${payload.label}</span>
+            <b>${sideLabel}</b>
+          </div>
+          <strong>${payload.members.map((member) => teamName(member.name)).join(" / ") || "待出征"}</strong>
+          <div class="my-battle-metrics">
+            <span><b>${formatNet(payload.totalGross)}</b><small>GMV</small></span>
+            <span><b>${number.format(payload.totalUsers)}位</b><small>成就学员</small></span>
+            <span><b>${number.format(payload.totalOrders)}单</b><small>火力</small></span>
+          </div>
+          <div class="my-battle-roster">
+            ${topMembers.length ? topMembers.map((member) => `
+              <span><i>${member.name}</i><b>${formatNet(member.gross)}</b></span>
+            `).join("") : `<span><i>暂无出单</i><b>${arena.module}</b></span>`}
+          </div>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderMyBattle(selectedTeamName) {
+  const stage = document.querySelector("#myBattleStage");
+  if (!stage) return;
+  const found = findMyBattle(selectedTeamName);
+  if (!found) {
+    stage.innerHTML = `<div class="my-battle-empty"><strong>未找到该小组战场</strong><span>请重新选择所在小组。</span></div>`;
+    return;
+  }
+  const { arena, member } = found;
+  const blue = battleSidePayload(arena, "blue", member.name);
+  const red = battleSidePayload(arena, "red", member.name);
+  stage.classList.remove("is-clashing");
+  stage.innerHTML = `
+    <div class="my-battle-summary">
+      <span>${arena.id} · ${arena.module} · ${arena.groupNo}号战场</span>
+      <strong>${teamName(member.name)} 已锁定</strong>
+      <em>${gloryResult(arena)} · GMV差${formatNet(arena.margin)}</em>
+    </div>
+    <div class="my-battle-versus">
+      ${renderMyBattleCard(blue, arena)}
+      <div class="my-battle-impact" aria-hidden="true"><span>VS</span></div>
+      ${renderMyBattleCard(red, arena)}
+    </div>
+  `;
+  stage.offsetHeight;
+  stage.classList.add("is-clashing");
+}
+
+function setupMyBattle() {
+  const modal = document.querySelector("#myBattleModal");
+  const open = document.querySelector("#openMyBattle");
+  const close = document.querySelector("#closeMyBattle");
+  const select = document.querySelector("#myBattleSelect");
+  if (!modal || !open || !close || !select) return;
+
+  const options = myBattleOptions();
+  select.innerHTML = `<option value="">请选择所在小组</option>` + options.map(({ arena, member }) => `
+    <option value="${member.name}">${member.name}团队 · ${arena.module} · ${arena.groupNo}号战场</option>
+  `).join("");
+
+  function openModal() {
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("has-my-battle-modal");
+    select.focus();
+  }
+
+  function closeModal() {
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("has-my-battle-modal");
+    open.focus();
+  }
+
+  open.addEventListener("click", openModal);
+  close.addEventListener("click", closeModal);
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) closeModal();
+  });
+  select.addEventListener("change", () => {
+    if (select.value) renderMyBattle(select.value);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modal.classList.contains("is-open")) closeModal();
+  });
+}
+
 const rewardTiers = [
   {
     className: "bronze-loot",
@@ -817,6 +955,7 @@ async function boot() {
   state.focusedArenaId = report.topArenas[0]?.id;
   setupInteractions();
   renderAll();
+  setupMyBattle();
   drawArenaCanvas();
 }
 

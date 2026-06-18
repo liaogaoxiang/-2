@@ -1,4 +1,7 @@
 const supply = window.PK_SUPPLY_DATA;
+const supplyState = {
+  leaderSort: "coverage"
+};
 
 const yuan = new Intl.NumberFormat("zh-CN", {
   style: "currency",
@@ -162,11 +165,59 @@ function partnerNames(leader) {
   `;
 }
 
+function sortByName(a, b) {
+  return a.name.localeCompare(b.name, "zh-Hans-CN");
+}
+
+function nextGapValue(leader) {
+  if (!leader.nextTier) return Number.POSITIVE_INFINITY;
+  const explicitGap = Number(leader.partnersNeeded);
+  if (Number.isFinite(explicitGap) && explicitGap > 0) return explicitGap;
+  const teamSize = Number(leader.teamSize);
+  const covered = Number(leader.coveredPartners);
+  const threshold = Number(leader.nextTier.threshold);
+  if (!Number.isFinite(teamSize) || teamSize <= 0 || !Number.isFinite(covered) || !Number.isFinite(threshold)) {
+    return Number.POSITIVE_INFINITY;
+  }
+  return Math.max(1, Math.ceil((threshold / 100) * teamSize) - covered);
+}
+
+function gapBadgeText(leader) {
+  const gap = nextGapValue(leader);
+  if (!Number.isFinite(gap)) return "待校准";
+  return `差${gap}人`;
+}
+
+function sortedLeaders() {
+  const rows = [...supply.leaders];
+  if (supplyState.leaderSort === "gap") {
+    return rows.sort((a, b) => {
+      const aGap = nextGapValue(a);
+      const bGap = nextGapValue(b);
+      if (aGap !== bGap) return aGap - bGap;
+      return (a.nextTier?.threshold || 999) - (b.nextTier?.threshold || 999)
+        || (b.coverage || 0) - (a.coverage || 0)
+        || (b.coveredPartners || 0) - (a.coveredPartners || 0)
+        || (b.gross || 0) - (a.gross || 0)
+        || sortByName(a, b);
+    });
+  }
+  return rows.sort((a, b) =>
+    (b.coverage || 0) - (a.coverage || 0)
+    || (b.coveredPartners || 0) - (a.coveredPartners || 0)
+    || (b.gross || 0) - (a.gross || 0)
+    || sortByName(a, b)
+  );
+}
+
 function renderLeaders() {
-  document.querySelector("#leaderCount").textContent = `${count.format(supply.leaders.length)}位小组长`;
-  document.querySelector("#leaderRows").innerHTML = supply.leaders.map((leader, index) => {
+  const leaders = sortedLeaders();
+  const sortLabel = supplyState.leaderSort === "gap" ? "按冲档差距排序" : "按覆盖占比排序";
+  document.querySelector("#leaderCount").textContent = `${count.format(leaders.length)}位小组长 · ${sortLabel}`;
+  document.querySelector("#leaderRows").innerHTML = leaders.map((leader, index) => {
     const level = leader.currentTier ? "is-earned" : leader.coverage > 0 ? "is-fighting" : "is-idle";
     const currentThreshold = leader.currentTier?.threshold || 0;
+    const isGapMode = supplyState.leaderSort === "gap";
     return `
       <article class="leader-row ${level}" data-leader-name="${leader.name}">
         <div class="leader-rank">${String(index + 1).padStart(2, "0")}</div>
@@ -186,12 +237,22 @@ function renderLeaders() {
           </div>
         </div>
         <div class="coverage-badge">
-          <strong>${leader.coverage.toFixed(1)}%</strong>
-          <small>LV ${currentThreshold || 0}</small>
+          <strong>${isGapMode ? gapBadgeText(leader) : `${leader.coverage.toFixed(1)}%`}</strong>
+          <small>${isGapMode ? `${leader.coverage.toFixed(1)}% · LV ${currentThreshold || 0}` : `LV ${currentThreshold || 0}`}</small>
         </div>
       </article>
     `;
   }).join("");
+}
+
+function setupLeaderSort() {
+  const select = document.querySelector("#leaderSort");
+  if (!select) return;
+  select.value = supplyState.leaderSort;
+  select.addEventListener("change", () => {
+    supplyState.leaderSort = select.value;
+    renderLeaders();
+  });
 }
 
 function setupLeaderSearch() {
@@ -229,5 +290,6 @@ if (supply) {
   renderKpis();
   renderTiers();
   renderLeaders();
+  setupLeaderSort();
   setupLeaderSearch();
 }

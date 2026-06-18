@@ -71,6 +71,13 @@
               <h2>小组长覆盖进度</h2>
             </div>
             <div class="leader-tools">
+              <label class="leader-sort" for="leaderSort">
+                <span>排序</span>
+                <select id="leaderSort" aria-label="小组长覆盖进度排序">
+                  <option value="coverage">出单伙伴占比降序</option>
+                  <option value="gap">距离下一档差距升序</option>
+                </select>
+              </label>
               <label class="leader-search" for="leaderSearch">
                 <span>搜索组长</span>
                 <input id="leaderSearch" type="search" placeholder="输入小组长姓名" autocomplete="off" />

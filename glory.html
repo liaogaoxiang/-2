@@ -7,7 +7,7 @@
     <title>转介绍荣耀擂台战</title>
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="stylesheet" href="assets/styles.css" />
-    <link rel="stylesheet" href="assets/glory.css?v=map-0609" />
+    <link rel="stylesheet" href="assets/glory.css?v=my-battle-0617" />
   </head>
   <body class="moba-theme glory-theme">
     <div class="arena-architecture" aria-hidden="true">
@@ -107,7 +107,10 @@
             <p class="panel-kicker">TACTICAL MAP / 全员战位</p>
             <h2>荣耀峡谷战术地图</h2>
           </div>
-          <span class="chip" id="battleMapCount">参战小组装载中</span>
+          <div class="battle-map-actions">
+            <button type="button" class="my-battle-trigger" id="openMyBattle">查看我的战局</button>
+            <span class="chip" id="battleMapCount">参战小组装载中</span>
+          </div>
         </div>
         <div class="battle-map">
           <div class="battle-map-base blue-base-node"><strong>蓝方守塔</strong></div>
@@ -274,7 +277,29 @@
       </footer>
     </main>
 
+    <div class="my-battle-modal" id="myBattleModal" aria-hidden="true">
+      <div class="my-battle-shell" role="dialog" aria-modal="true" aria-labelledby="myBattleTitle">
+        <button type="button" class="my-battle-close" id="closeMyBattle" aria-label="关闭我的战局">×</button>
+        <div class="my-battle-head">
+          <div>
+            <p class="panel-kicker">MY BATTLE / 锁定小组战场</p>
+            <h2 id="myBattleTitle">查看我的战局</h2>
+          </div>
+          <label class="my-battle-picker" for="myBattleSelect">
+            <span>选择所在小组</span>
+            <select id="myBattleSelect" aria-label="选择所在小组"></select>
+          </label>
+        </div>
+        <div id="myBattleStage" class="my-battle-stage">
+          <div class="my-battle-empty">
+            <strong>选择一个小组，战局即刻开场</strong>
+            <span>红蓝卡牌会先碰撞，再翻面展示敌我战况。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="data/report-data.js"></script>
-    <script src="assets/app.js?v=map-0609"></script>
+    <script src="assets/app.js?v=my-battle-0617"></script>
   </body>
 </html>
