@@ -1,0 +1,437 @@
+:root {
+  color-scheme: dark;
+  --bg: oklch(0.075 0.032 34);
+  --ink: oklch(0.98 0.012 67);
+  --muted: oklch(0.78 0.062 64);
+  --faint: oklch(0.66 0.055 52);
+  --team: oklch(0.72 0.18 37);
+  --team-bright: oklch(0.88 0.15 76);
+  --panel: oklch(0.17 0.044 34 / 0.9);
+  --panel-deep: oklch(0.115 0.035 34 / 0.92);
+  --line: oklch(0.78 0.13 66 / 0.34);
+  --line-strong: oklch(0.88 0.15 76 / 0.7);
+  --green: oklch(0.76 0.18 143);
+  --red: oklch(0.66 0.21 28);
+}
+
+.theme-planning {
+  --bg: oklch(0.08 0.036 240);
+  --muted: oklch(0.78 0.055 232);
+  --faint: oklch(0.66 0.052 232);
+  --team: oklch(0.66 0.17 235);
+  --team-bright: oklch(0.83 0.13 218);
+  --panel: oklch(0.17 0.046 239 / 0.9);
+  --panel-deep: oklch(0.11 0.037 240 / 0.92);
+  --line: oklch(0.78 0.11 222 / 0.34);
+  --line-strong: oklch(0.84 0.13 218 / 0.7);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-width: 320px;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 18% 13%, color-mix(in oklch, var(--team) 32%, transparent), transparent 27%),
+    radial-gradient(circle at 88% 15%, color-mix(in oklch, var(--team-bright) 22%, transparent), transparent 25%),
+    linear-gradient(135deg, oklch(0.045 0.025 34), var(--bg) 54%, oklch(0.035 0.018 34));
+  color: var(--ink);
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+.team-poster {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 20px;
+}
+
+.poster-plate {
+  position: relative;
+  width: min(1600px, calc(100vw - 40px));
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  background:
+    linear-gradient(90deg, color-mix(in oklch, var(--team-bright) 14%, transparent) 1px, transparent 1px) 0 0 / 64px 64px,
+    linear-gradient(0deg, color-mix(in oklch, var(--team-bright) 11%, transparent) 1px, transparent 1px) 0 0 / 64px 64px,
+    radial-gradient(circle at 73% 43%, color-mix(in oklch, var(--team) 30%, transparent), transparent 32%),
+    linear-gradient(145deg, color-mix(in oklch, var(--bg) 78%, black), color-mix(in oklch, var(--bg) 54%, black));
+}
+
+.poster-plate::before,
+.poster-plate::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.poster-plate::before {
+  inset: 22px;
+  border: 1px solid color-mix(in oklch, var(--team-bright) 25%, transparent);
+}
+
+.poster-plate::after {
+  width: 540px;
+  height: 540px;
+  right: -120px;
+  top: -180px;
+  border: 1px solid color-mix(in oklch, var(--team-bright) 38%, transparent);
+  transform: rotate(18deg);
+  box-shadow: 0 0 0 38px color-mix(in oklch, var(--team-bright) 5%, transparent);
+}
+
+.poster-head,
+.hero-board,
+.battle-wall,
+.poster-foot {
+  position: relative;
+  z-index: 1;
+}
+
+.poster-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 28px 52px 12px;
+}
+
+.season-mark,
+.date-lockup,
+.total-score span,
+.mvp-card span,
+.kpi span,
+.loot-board span,
+.wall-title,
+.poster-foot {
+  font-family: "Arial Narrow", "DIN Condensed", Arial, sans-serif;
+  font-weight: 800;
+}
+
+.season-mark {
+  margin: 0 0 8px;
+  color: var(--team-bright);
+  font-size: clamp(13px, 1.05vw, 18px);
+}
+
+h1 {
+  margin: 0;
+  max-width: 760px;
+  font-size: clamp(42px, 4.55vw, 68px);
+  line-height: 0.96;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+h1 > span:last-child {
+  color: var(--team-bright);
+}
+
+.date-lockup {
+  display: grid;
+  min-width: 250px;
+  justify-items: end;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 16px;
+  text-align: right;
+}
+
+.date-lockup strong {
+  border: 1px solid var(--line-strong);
+  background: color-mix(in oklch, var(--team) 18%, transparent);
+  padding: 8px 14px;
+  color: var(--team-bright);
+  font-size: 19px;
+}
+
+.hero-board {
+  display: grid;
+  grid-template-columns: 1.08fr 1.35fr 0.82fr 0.9fr;
+  gap: 10px;
+  padding: 0 52px 12px;
+}
+
+.total-score,
+.mvp-card,
+.kpi,
+.loot-board {
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg, var(--panel), var(--panel-deep));
+}
+
+.total-score,
+.mvp-card,
+.loot-board {
+  display: grid;
+  align-content: center;
+  min-height: 108px;
+  padding: 14px 18px;
+}
+
+.total-score span,
+.mvp-card span,
+.kpi span,
+.loot-board > span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.total-score strong {
+  color: var(--team-bright);
+  font-size: clamp(38px, 3.8vw, 58px);
+  line-height: 1;
+}
+
+.total-score small,
+.mvp-card small,
+.kpi small {
+  color: var(--faint);
+  font-size: 12px;
+}
+
+.mini-kpis,
+.loot-levels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.kpi {
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  min-height: 108px;
+  padding: 12px;
+}
+
+.kpi strong {
+  font-size: clamp(22px, 2vw, 31px);
+  line-height: 1;
+}
+
+.loot-board {
+  gap: 8px;
+}
+
+.loot-level {
+  display: grid;
+  align-content: center;
+  min-width: 0;
+  min-height: 56px;
+  border: 1px solid color-mix(in oklch, var(--team-bright) 30%, transparent);
+  background: color-mix(in oklch, var(--team) 16%, black);
+  padding: 7px;
+}
+
+.loot-level strong {
+  color: var(--team-bright);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.loot-level span {
+  margin-top: 4px;
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.mvp-card strong {
+  color: var(--ink);
+  font-size: clamp(27px, 2.8vw, 43px);
+  line-height: 1.05;
+}
+
+.battle-wall {
+  padding: 0 52px;
+}
+
+.wall-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  background: color-mix(in oklch, var(--bg) 78%, black);
+  padding: 8px 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.wall-title strong {
+  color: var(--team-bright);
+  font-size: 18px;
+}
+
+.battle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+  height: 704px;
+  border: 1px solid var(--line);
+  background: color-mix(in oklch, var(--bg) 72%, black);
+  padding: 8px;
+}
+
+.battle-card {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  min-height: 28px;
+  border: 1px solid color-mix(in oklch, var(--team-bright) 20%, transparent);
+  background: color-mix(in oklch, var(--bg) 82%, black);
+}
+
+.battle-code {
+  display: grid;
+  place-items: center;
+  border-right: 1px solid color-mix(in oklch, var(--team-bright) 18%, transparent);
+  color: var(--team-bright);
+  line-height: 1;
+  text-align: center;
+}
+
+.battle-code strong {
+  font-size: 14px;
+}
+
+.battle-code small {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.fighters {
+  display: grid;
+  grid-template-columns: repeat(var(--slots), minmax(0, 1fr));
+}
+
+.fighter {
+  position: relative;
+  display: grid;
+  align-content: center;
+  min-width: 0;
+  padding: 4px 7px 4px 8px;
+  border-right: 1px solid color-mix(in oklch, var(--team-bright) 12%, transparent);
+}
+
+.fighter:last-child {
+  border-right: 0;
+}
+
+.fighter.is-leading {
+  background: linear-gradient(90deg, color-mix(in oklch, var(--team-bright) 19%, transparent), transparent);
+}
+
+.fighter.is-empty {
+  opacity: 0.38;
+}
+
+.fighter-top,
+.fighter-meta {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.fighter-name {
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fighter-tag {
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.fighter:not(.is-leading) .fighter-tag {
+  color: var(--red);
+}
+
+.fighter-meta {
+  margin-top: 2px;
+  color: var(--faint);
+  font-size: 10px;
+  line-height: 1;
+}
+
+.fighter-money {
+  color: var(--team-bright);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.loot-tag {
+  max-width: 66%;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklch, var(--team-bright) 28%, transparent);
+  padding: 2px 4px;
+  color: var(--team-bright);
+  font-size: 9px;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.loot-tag.is-muted {
+  border-color: color-mix(in oklch, var(--muted) 18%, transparent);
+  color: var(--muted);
+}
+
+.poster-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 52px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.poster-foot strong {
+  color: var(--team-bright);
+}
+
+@media (max-width: 900px) {
+  .team-poster {
+    display: block;
+    padding: 0;
+    overflow: auto;
+  }
+
+  .poster-plate {
+    width: 1600px;
+    height: 1200px;
+  }
+}
+
+@media print {
+  body {
+    background: #080302;
+  }
+
+  .team-poster {
+    min-height: auto;
+    padding: 0;
+  }
+
+  .poster-plate {
+    width: 1600px;
+    height: 1200px;
+  }
+}

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#051322" />
+    <title>学习规划部每日PK战报</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="assets/team-poster.css" />
+  </head>
+  <body class="theme-planning" data-module="学习规划部" data-team-label="规划" data-team-en="PLANNING TEAM">
+    <main class="team-poster" aria-label="学习规划部每日PK战报">
+      <div class="poster-plate">
+        <header class="poster-head">
+          <div>
+            <p class="season-mark" id="seasonMark">JUNE PK ARENA / PLANNING TEAM</p>
+            <h1><span id="teamTitle">学习规划部</span><br /><span>每日擂台战报</span></h1>
+          </div>
+          <div class="date-lockup">
+            <span id="posterDate">数据同步中</span>
+            <strong id="teamBadge">规划专属</strong>
+          </div>
+        </header>
+
+        <section class="hero-board" aria-label="规划部核心战况">
+          <article class="total-score">
+            <span>累计金额</span>
+            <strong id="totalGross">--</strong>
+            <small id="totalSubline">-- 场战局</small>
+          </article>
+          <div class="mini-kpis" id="miniKpis"></div>
+          <article class="loot-board">
+            <span>全组战利品</span>
+            <div id="lootBoard" class="loot-levels"></div>
+          </article>
+          <article class="mvp-card">
+            <span>今日主将</span>
+            <strong id="mvpName">--</strong>
+            <small id="mvpDetail">--</small>
+          </article>
+        </section>
+
+        <section class="battle-wall" aria-label="规划部所有战局">
+          <div class="wall-title">
+            <strong>全部战局播报</strong>
+            <span id="wallMeta">2人PK左右对战，3人PK同排展示</span>
+          </div>
+          <div id="battleGrid" class="battle-grid"></div>
+        </section>
+
+        <footer class="poster-foot">
+          <span>小组长金额按GMV统计</span>
+          <strong id="posterNote">数据来自当前战报</strong>
+        </footer>
+      </div>
+    </main>
+    <script src="data/report-data.js"></script>
+    <script src="assets/team-poster.js"></script>
+  </body>
+</html>
