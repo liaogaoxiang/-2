@@ -61,8 +61,11 @@ function lootTag(member) {
 function renderBattle(arena) {
   const members = normalizeMembers(arena);
   const slots = arena.isThreeWay ? 3 : 2;
-  const rows = members.map((member) => `
-    <div class="fighter ${member.isWinner ? "is-leading" : ""}">
+  const rows = members.map((member) => {
+    const rankClass = member.gmvRank === 1 ? "is-first" : "";
+    const leadingClass = member.isWinner ? "is-leading" : "";
+    return `
+    <div class="fighter ${leadingClass} ${rankClass}">
       <div class="fighter-top">
         <span class="fighter-name">${member.name}</span>
         <span class="fighter-tag">${memberStatus(member, arena)}</span>
@@ -72,7 +75,8 @@ function renderBattle(arena) {
         ${lootTag(member)}
       </div>
     </div>
-  `).join("");
+  `;
+  }).join("");
   const placeholders = Array.from({ length: Math.max(slots - members.length, 0) }, () => `
     <div class="fighter is-empty">
       <div class="fighter-top"><span class="fighter-name">待匹配</span><span class="fighter-tag">待战</span></div>
