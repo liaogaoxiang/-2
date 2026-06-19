@@ -90,6 +90,25 @@ function renderLootBoard(members) {
   }).join("");
 }
 
+function moduleGrowth(list) {
+  return (list || [])
+    .filter((item) => item.module === PAGE_CONFIG.module && (item.gross || 0) > 0)
+    .slice(0, 5);
+}
+
+function renderGrowthList(list, emptyText) {
+  if (!list.length) {
+    return `<span class="growth-empty">${emptyText}</span>`;
+  }
+  return list.map((item, index) => `
+    <span class="growth-item">
+      <em>${index + 1}</em>
+      <b>${item.name}</b>
+      <i>${compactMoney(item.gross)}</i>
+    </span>
+  `).join("");
+}
+
 function renderPoster(report) {
   const arenas = (report.arenas || []).filter((arena) => arena.module === PAGE_CONFIG.module);
   const activeArenas = arenas.filter((arena) => arena.isActive);
@@ -113,6 +132,14 @@ function renderPoster(report) {
     ? `${formatMoney(topMember.gross)} · ${number.format(topMember.orders || 0)}单 · ${PAGE_CONFIG.teamLabel}部最高火力`
     : "暂无出单数据";
   document.querySelector("#lootBoard").innerHTML = renderLootBoard(members);
+  document.querySelector("#groupGrowthList").innerHTML = renderGrowthList(
+    moduleGrowth(report.dailyGroupRank),
+    "暂无当日小组增长"
+  );
+  document.querySelector("#partnerGrowthList").innerHTML = renderGrowthList(
+    moduleGrowth(report.dailyContributorRank),
+    "暂无当日伙伴增长"
+  );
 
   document.querySelector("#miniKpis").innerHTML = [
     ["开战战局", `${number.format(activeArenas.length)} / ${number.format(arenas.length)}`, "已有金额的PK局"],

@@ -208,6 +208,8 @@ def parse_csv_stats():
     contributor_modules = defaultdict(Counter)
     contributor_groups = defaultdict(Counter)
     daily_stats = defaultdict(empty_stat)
+    daily_group_stats = defaultdict(lambda: defaultdict(empty_stat))
+    daily_contributor_stats = defaultdict(lambda: defaultdict(empty_stat))
     subject_stats = defaultdict(empty_stat)
     activity_stats = defaultdict(empty_stat)
     total = empty_stat()
@@ -255,6 +257,8 @@ def parse_csv_stats():
         add_stat(activity_stats[activity_id], gross, refund, net, converted_user)
         if day:
             add_stat(daily_stats[day], gross, refund, net, converted_user)
+            add_stat(daily_group_stats[day][(group, module)], gross, refund, net, converted_user)
+            add_stat(daily_contributor_stats[day][(contributor, module, group)], gross, refund, net, converted_user)
         if row["支付月份"]:
             months.add(month_text(row["支付月份"]))
         if group == "未归属":
@@ -275,6 +279,8 @@ def parse_csv_stats():
         "contributorModules": contributor_modules,
         "contributorGroups": contributor_groups,
         "dailyStats": daily_stats,
+        "dailyGroupStats": daily_group_stats,
+        "dailyContributorStats": daily_contributor_stats,
         "subjectStats": subject_stats,
         "activityStats": activity_stats,
         "total": total,
@@ -527,6 +533,23 @@ def build_report():
         cumulative += rounded["net"]
         daily.append({"date": date, **rounded, "cumulativeNet": round(cumulative, 2)})
 
+    latest_day = daily[-1]["date"] if daily else ""
+    daily_group_rank = []
+    if latest_day:
+        for (name, module), stat in csv_data["dailyGroupStats"][latest_day].items():
+            rounded = round_stat(stat)
+            if rounded["orders"]:
+                daily_group_rank.append({"date": latest_day, "name": name, "module": module, **rounded})
+    daily_group_rank.sort(key=lambda item: (-item["gross"], -item["net"], -item["orders"], item["name"]))
+
+    daily_contributor_rank = []
+    if latest_day:
+        for (name, module, group), stat in csv_data["dailyContributorStats"][latest_day].items():
+            rounded = round_stat(stat)
+            if rounded["orders"]:
+                daily_contributor_rank.append({"date": latest_day, "name": name, "module": module, "group": group, **rounded})
+    daily_contributor_rank.sort(key=lambda item: (-item["gross"], -item["net"], -item["orders"], item["name"]))
+
     subjects = [
         {"name": name, **round_stat(stat)}
         for name, stat in csv_data["subjectStats"].items()
@@ -590,6 +613,8 @@ def build_report():
         "moduleRank": module_rank,
         "commanderRank": commander_rank[:12],
         "daily": daily,
+        "dailyGroupRank": daily_group_rank,
+        "dailyContributorRank": daily_contributor_rank,
         "subjects": subjects[:8],
         "activityChannels": activity_channels,
         "missingMembers": sorted(missing_members),
