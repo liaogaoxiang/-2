@@ -40,22 +40,10 @@ function memberStatus(member, arena) {
   return member.gross ? "追赶" : "待出单";
 }
 
-function lootLevel(value) {
-  return LOOT_LEVELS.find((level) => value >= level.threshold) || null;
-}
-
 function normalizeMembers(arena) {
   const members = [...(arena.members || [])].sort((a, b) => a.slot - b.slot);
   if (arena.isThreeWay) return members.slice(0, 3);
   return members.slice(0, 2);
-}
-
-function lootTag(member) {
-  const achieved = lootLevel(member.gross || 0);
-  if (achieved) {
-    return `<span class="loot-tag ${achieved.className}">${achieved.label}战利品</span>`;
-  }
-  return "";
 }
 
 function renderBattle(arena) {
@@ -66,21 +54,17 @@ function renderBattle(arena) {
     const leadingClass = member.isWinner ? "is-leading" : "";
     return `
     <div class="fighter ${leadingClass} ${rankClass}">
-      <div class="fighter-top">
+      <div class="fighter-line">
         <span class="fighter-name">${member.name}</span>
-        <span class="fighter-tag">${memberStatus(member, arena)}</span>
-      </div>
-      <div class="fighter-meta">
         <span class="fighter-money">${compactMoney(member.gross)}</span>
-        ${lootTag(member)}
+        <span class="fighter-tag">${memberStatus(member, arena)}</span>
       </div>
     </div>
   `;
   }).join("");
   const placeholders = Array.from({ length: Math.max(slots - members.length, 0) }, () => `
     <div class="fighter is-empty">
-      <div class="fighter-top"><span class="fighter-name">待匹配</span><span class="fighter-tag">待战</span></div>
-      <div class="fighter-meta"><span class="fighter-money">¥0</span></div>
+      <div class="fighter-line"><span class="fighter-name">待匹配</span><span class="fighter-money">¥0</span><span class="fighter-tag">待战</span></div>
     </div>
   `).join("");
 
