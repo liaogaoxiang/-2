@@ -57,14 +57,14 @@ function teamMatchNames(arena) {
 
 function gloryResult(arena) {
   if (!arena.isActive) return "等待兵线激活";
-  if (arena.isThreeWay) return "三方混战 · 前二暂居优势";
+  if (arena.isThreeWay) return "三方混战 · 当前前二占优";
   return arena.defenderWon ? "蓝方占据上风" : "红方占领优势";
 }
 
 function momentumLabel(arena, member) {
   if (!arena.isActive) return "待开战";
   if (!member.isWinner) return "追击中";
-  if (arena.isThreeWay) return member.gmvRank === 1 ? "暂居第一" : "前二占优";
+  if (arena.isThreeWay) return member.gmvRank === 1 ? "当前第一" : "前二占优";
   return member.role === "守擂方" ? "占据上风" : "占领优势";
 }
 
@@ -753,7 +753,7 @@ function renderThreeWayArenaCard(arena) {
     <button type="button" class="duel-card tri-duel-card ${arena.id === state.focusedArenaId ? "is-selected" : ""}" data-arena-id="${arena.id}">
       <div class="duel-head">
         <span class="arena-name">${arena.id} · 荣耀峡谷 ${arena.groupNo}号战场 · 三方混战</span>
-        <span class="result-tag tri-result">${arena.isActive ? "前二暂居优势" : "等待兵线激活"}</span>
+        <span class="result-tag tri-result">${arena.isActive ? "当前前二占优" : "等待兵线激活"}</span>
       </div>
       <div class="tri-duel-row">
         ${arena.members.map((member) => `

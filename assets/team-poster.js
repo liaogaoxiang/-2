@@ -34,10 +34,19 @@ function formatDate(dateText) {
   return `${year}.${month}.${day} 数据`;
 }
 
-function memberStatus(member, arena) {
-  if (!arena.isActive) return "待战";
-  if (member.isWinner) return arena.isThreeWay ? "前二" : "领先";
-  return member.gross ? "追赶" : "待出单";
+function battleStatus(arena) {
+  if (!arena.isActive) return "等待首单点火";
+  const sorted = [...(arena.members || [])].sort((a, b) => (b.gross || 0) - (a.gross || 0));
+  const first = sorted[0];
+  const second = sorted[1];
+  const margin = Math.max((first?.gross || 0) - (second?.gross || 0), 0);
+  if (arena.isThreeWay) {
+    const winners = sorted.slice(0, 2).filter((member) => (member.gross || 0) > 0);
+    if (!winners.length) return "前三同台待开火";
+    return `当前前二：${winners.map((member) => member.name).join(" / ")} · 前二线 ${compactMoney(arena.cutoffGross)}`;
+  }
+  if (!first?.gross) return "双方同台待开火";
+  return `当前占优：${first.name} · 领先 ${compactMoney(margin)}`;
 }
 
 function normalizeMembers(arena) {
@@ -54,26 +63,32 @@ function renderBattle(arena) {
     const leadingClass = member.isWinner ? "is-leading" : "";
     return `
     <div class="fighter ${leadingClass} ${rankClass}">
+      <span class="fighter-role">${member.role}</span>
       <div class="fighter-line">
         <span class="fighter-name">${member.name}</span>
         <span class="fighter-money">${compactMoney(member.gross)}</span>
-        <span class="fighter-tag">${memberStatus(member, arena)}</span>
       </div>
+      ${member.isWinner ? `<span class="fighter-crown" aria-hidden="true"></span>` : ""}
     </div>
   `;
   }).join("");
   const placeholders = Array.from({ length: Math.max(slots - members.length, 0) }, () => `
     <div class="fighter is-empty">
-      <div class="fighter-line"><span class="fighter-name">待匹配</span><span class="fighter-money">¥0</span><span class="fighter-tag">待战</span></div>
+      <span class="fighter-role">待定</span>
+      <div class="fighter-line"><span class="fighter-name">待匹配</span><span class="fighter-money">¥0</span></div>
     </div>
   `).join("");
 
   return `
     <article class="battle-card">
-      <div class="battle-code"><strong>${arena.groupNo}</strong><small>号</small></div>
+      <div class="battle-head">
+        <div class="battle-code"><strong>${arena.groupNo}</strong><small>号战场</small></div>
+        <span>${arena.isThreeWay ? "三方同擂" : "双方对阵"}</span>
+      </div>
       <div class="fighters" style="--slots:${slots}">
         ${rows}${placeholders}
       </div>
+      <div class="battle-verdict">${battleStatus(arena)}</div>
     </article>
   `;
 }

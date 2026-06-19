@@ -403,7 +403,7 @@ def parse_arenas(group_stats, group_converted_users, group_contributor_stats, gr
             "defender": defender,
             "challengerSide": challenger_stat,
             "defenderWon": defender_won,
-            "resultLabel": "待开战" if not is_active else ("GMV前二晋级" if is_three_way else ("守擂成功" if defender_won else "攻擂成功")),
+            "resultLabel": "待开战" if not is_active else ("当前前二" if is_three_way else "当前占优"),
             "intensity": round(sum(item["gross"] for item in members) / 10000, 1),
         })
 
