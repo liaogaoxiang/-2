@@ -173,7 +173,7 @@ function nextGapValue(leader) {
   if (!leader.nextTier) return Number.POSITIVE_INFINITY;
   const explicitGap = Number(leader.partnersNeeded);
   if (Number.isFinite(explicitGap) && explicitGap > 0) return explicitGap;
-  const teamSize = Number(leader.teamSize);
+  const teamSize = Number(leader.teamSize) || Number(leader.declaredTeamSize);
   const covered = Number(leader.coveredPartners);
   const threshold = Number(leader.nextTier.threshold);
   if (!Number.isFinite(teamSize) || teamSize <= 0 || !Number.isFinite(covered) || !Number.isFinite(threshold)) {
@@ -218,13 +218,14 @@ function renderLeaders() {
     const level = leader.currentTier ? "is-earned" : leader.coverage > 0 ? "is-fighting" : "is-idle";
     const currentThreshold = leader.currentTier?.threshold || 0;
     const isGapMode = supplyState.leaderSort === "gap";
+    const displayTeamSize = leader.teamSize || leader.declaredTeamSize || 0;
     return `
       <article class="leader-row ${level}" data-leader-name="${leader.name}">
         <div class="leader-rank">${String(index + 1).padStart(2, "0")}</div>
         <div class="leader-main">
           <div class="leader-title">
             <strong>${leader.name}</strong>
-            <span>${leader.manager}战队 · ${leader.groupNo}号战场 · ${leader.coveredPartners}/${leader.teamSize}位伙伴已出单</span>
+            <span>${leader.manager}战队 · ${leader.groupNo}号战场 · ${leader.coveredPartners}/${displayTeamSize}位伙伴已出单</span>
           </div>
           <div class="hp-bar" role="img" aria-label="${leader.name}出单覆盖率${leader.coverage}%">
             <i style="--coverage:${leader.coverage}%"></i>

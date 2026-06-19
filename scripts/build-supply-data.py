@@ -200,7 +200,7 @@ def build_payload():
 
     for leader, meta in match_leaders.items():
         hit = hits[leader]
-        denominator = team_sizes.get(leader, 0)
+        denominator = team_sizes.get(leader, 0) or meta["declaredTeamSize"]
         covered = len(hit["partners"])
         coverage = round(covered / denominator * 100, 1) if denominator else 0
         current = reached_tier(coverage)
