@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#050608" />
+    <title>管理层荣耀补给战报</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="stylesheet" href="assets/glory.css?v=my-battle-0617" />
+    <link rel="stylesheet" href="assets/management.css" />
+  </head>
+  <body class="moba-theme glory-theme management-page">
+    <div class="arena-architecture" aria-hidden="true">
+      <div class="arena-crown">
+        <span></span><i></i><b></b><i></i><span></span>
+      </div>
+      <div class="base-standard blue-standard"><i></i><b>N2 COMMAND</b></div>
+      <div class="base-standard red-standard"><i></i><b>MANAGER CORE</b></div>
+      <div class="bottom-battlement"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+
+    <main class="arena-shell management-shell">
+      <section class="management-hero" aria-label="管理层荣耀补给战报">
+        <div class="management-hero-copy">
+          <p class="eyebrow">COMMAND REWARD REPORT / 管理层激励</p>
+          <h1 id="managementTitle">管理层荣耀<span>补给战报</span></h1>
+          <p id="managementMeta" class="subline">正在装载管理层激励进度...</p>
+        </div>
+        <div class="status-strip management-actions" aria-label="页面导航">
+          <a class="home-return" href="index.html">返回激励主页</a>
+          <a class="poster-link" href="glory.html">返回荣耀擂台</a>
+          <span id="managementSync">SYNC</span>
+        </div>
+      </section>
+
+      <section class="management-kpis" id="managementKpis" aria-label="管理层激励核心进度"></section>
+
+      <section class="management-board-grid" id="managementBoards" aria-label="管理层四大战区进度看板"></section>
+
+      <section class="panel command-rules-panel" aria-label="奖励规则说明">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">REWARD RULES</p>
+            <h2>当前计算口径</h2>
+          </div>
+        </div>
+        <div class="rule-broadcast">
+          <span>小组GMV达到6万即计入管理层达标小组</span>
+          <span>不核验PK获胜</span>
+          <span>n1为小组长，n2为大组长，manager为经理</span>
+          <span>各档礼品均为任选其一</span>
+        </div>
+        <div id="missingNotice" class="missing-notice"></div>
+      </section>
+    </main>
+
+    <script src="data/management-data.js"></script>
+    <script src="assets/management.js"></script>
+  </body>
+</html>

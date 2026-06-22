@@ -152,6 +152,16 @@ footer {
   box-shadow: 0 0 14px rgba(67, 246, 166, 0.82);
 }
 
+.status-gift {
+  width: 24px;
+  height: 24px;
+  stroke: var(--amber);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+  filter: drop-shadow(0 0 9px rgba(255, 188, 74, 0.42));
+}
+
 .home-shell {
   padding: 54px 0 28px;
 }
@@ -736,6 +746,11 @@ h3 {
 
 .entry-card:hover .card-footer b {
   transform: translate(4px, -4px);
+}
+
+.business-entry .card-icon {
+  border-radius: 16px;
+  transform: rotate(-2deg);
 }
 
 .bottom-grid {
