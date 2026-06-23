@@ -95,8 +95,17 @@ def load_match_leaders(path):
 
 def load_planning_architecture(path):
     wb = load_workbook(path, read_only=True, data_only=True)
-    ws = wb.active
-    headers = [cell.value for cell in next(ws.iter_rows(min_row=1, max_row=1))]
+    ws = None
+    headers = []
+    required_headers = {"employee_name", "n1", "department_1", "department_2", "department_3"}
+    for sheet in wb.worksheets:
+        sheet_headers = [cell.value for cell in next(sheet.iter_rows(min_row=1, max_row=1))]
+        if required_headers.issubset(set(sheet_headers)):
+            ws = sheet
+            headers = sheet_headers
+            break
+    if ws is None:
+        raise SystemExit(f"Cannot find architecture sheet with headers: {', '.join(sorted(required_headers))}")
     index = {name: pos for pos, name in enumerate(headers)}
     team_sizes = defaultdict(int)
     planning_rows = 0
