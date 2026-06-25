@@ -17,7 +17,7 @@ OUTPUT_PATH = Path("data/supply-data.js")
 
 OFFICIAL_VALID_FROM = datetime(2026, 6, 11, 0, 0, 0)
 VALID_FROM = OFFICIAL_VALID_FROM
-VALID_TO = datetime(2026, 6, 25, 23, 59, 59)
+VALID_TO = datetime(2026, 6, 28, 23, 59, 59)
 
 ALLOWED_ACTIVITY_IDS = {
     "10216", "10227", "10240", "10275", "10390", "10404", "10418", "10435",
@@ -253,9 +253,9 @@ def build_payload():
         "meta": {
             "title": "荣耀擂台赛补给包",
             "slogan": "装备升上去，战斗赢下来！",
-            "activityTime": "6月1日-6月25日",
-            "officialValidRule": "仅统计支付时间为2026-06-11至2026-06-25的有效出单伙伴",
-            "currentStatRule": "正式口径: 当前页面按2026-06-11至2026-06-25统计",
+            "activityTime": "6月11日-6月28日24点",
+            "officialValidRule": "仅统计支付时间为2026-06-11至2026-06-28 24:00的有效出单伙伴",
+            "currentStatRule": "加时赛口径: 当前页面按2026-06-11至2026-06-28 24:00统计",
             "sourceFile": DATA_PATH.name,
             "architectureFile": ARCH_PATH.name,
             "matchFile": MATCH_PATH.name,

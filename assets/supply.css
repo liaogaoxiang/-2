@@ -55,6 +55,67 @@
   text-shadow: 0 0 26px rgba(230, 183, 93, 0.42);
 }
 
+.overtime-banner {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+  margin: 0 0 18px;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 211, 108, 0.68);
+  background:
+    radial-gradient(circle at 8% 50%, rgba(255, 211, 108, 0.3), transparent 30%),
+    linear-gradient(90deg, rgba(141, 48, 47, 0.72), rgba(125, 89, 38, 0.52) 48%, rgba(7, 18, 29, 0.72));
+  color: #fff8d6;
+  box-shadow: 0 0 28px rgba(230, 183, 93, 0.2);
+  clip-path: var(--glory-cut-small);
+  overflow: hidden;
+}
+
+.overtime-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent, rgba(255, 248, 214, 0.32), transparent 58%);
+  transform: translateX(-110%);
+  animation: overtimeSweep 3.4s ease-in-out infinite;
+}
+
+.overtime-banner span,
+.overtime-banner strong,
+.overtime-banner em {
+  position: relative;
+  z-index: 1;
+}
+
+.overtime-banner span {
+  padding: 5px 9px;
+  background: rgba(255, 248, 214, 0.12);
+  color: #fff1aa;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.overtime-banner strong {
+  color: #ffffff;
+  font-family: "Arial Black", "PingFang SC", sans-serif;
+  font-size: clamp(19px, 2.1vw, 28px);
+  line-height: 1;
+  text-shadow: 0 0 18px rgba(255, 211, 108, 0.56);
+}
+
+.overtime-banner em {
+  color: #f5f4df;
+  font-style: normal;
+  font-size: 16px;
+  font-weight: 800;
+}
+
 .supply-actions {
   z-index: 3;
 }
@@ -1199,6 +1260,11 @@
   70%, 100% { left: 118%; }
 }
 
+@keyframes overtimeSweep {
+  0%, 45% { transform: translateX(-110%); }
+  75%, 100% { transform: translateX(110%); }
+}
+
 @keyframes searchMiss {
   0%, 100% { background: rgba(7, 18, 29, 0.72); }
   50% { background: rgba(141, 48, 47, 0.36); }
@@ -1212,6 +1278,7 @@
   .gift-prize,
   .gift-prize::after,
   .leader-reward::after,
+  .overtime-banner::before,
   .tier-particles i {
     animation: none;
   }
@@ -1244,6 +1311,10 @@
     bottom: auto;
     transform: none;
     margin: 20px auto 0;
+  }
+
+  .overtime-banner {
+    width: 100%;
   }
 
   .treasure-chest {
