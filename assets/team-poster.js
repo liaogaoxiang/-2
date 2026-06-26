@@ -67,7 +67,6 @@ function renderBattle(arena) {
       : "";
     return `
     <div class="fighter ${leadingClass} ${rankClass} ${sixWanClass}">
-      <span class="fighter-role">${member.role}</span>
       <div class="fighter-line">
         <span class="fighter-name">${member.name}</span>
         <span class="fighter-money">${compactMoney(member.gross)}</span>
@@ -83,7 +82,6 @@ function renderBattle(arena) {
   }).join("");
   const placeholders = Array.from({ length: Math.max(slots - members.length, 0) }, () => `
     <div class="fighter is-empty">
-      <span class="fighter-role">待定</span>
       <div class="fighter-line"><span class="fighter-name">待匹配</span><span class="fighter-money">¥0</span></div>
     </div>
   `).join("");
