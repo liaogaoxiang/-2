@@ -625,6 +625,94 @@ h1 {
   color: var(--victory);
 }
 
+.fighter.is-six-advantage {
+  background:
+    radial-gradient(circle at 24% 20%, color-mix(in oklch, var(--victory) 32%, transparent), transparent 38%),
+    linear-gradient(90deg, color-mix(in oklch, var(--victory) 32%, transparent), transparent 72%),
+    linear-gradient(180deg, color-mix(in oklch, var(--victory) 18%, transparent), transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklch, var(--victory) 48%, transparent),
+    inset 0 0 18px color-mix(in oklch, var(--victory) 18%, transparent);
+}
+
+.fighter.is-six-advantage::before {
+  background:
+    linear-gradient(90deg, color-mix(in oklch, var(--victory) 86%, transparent) 0 2px, transparent 2px),
+    radial-gradient(circle at 18% 0%, color-mix(in oklch, var(--victory) 42%, transparent), transparent 42%),
+    linear-gradient(120deg, transparent 0 38%, color-mix(in oklch, var(--victory) 34%, transparent) 48%, transparent 58%);
+  animation: sixFighterPulse 2.6s ease-in-out infinite;
+}
+
+.fighter.is-six-advantage .fighter-name,
+.fighter.is-six-advantage .fighter-money {
+  color: oklch(0.98 0.05 86);
+  text-shadow:
+    0 0 8px color-mix(in oklch, var(--victory) 58%, transparent),
+    0 0 14px color-mix(in oklch, var(--victory-deep) 34%, transparent);
+}
+
+.fighter.is-six-advantage .fighter-crown {
+  right: 6px;
+}
+
+.red-packet-rain {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.red-packet-rain i {
+  position: absolute;
+  top: -20px;
+  width: 15px;
+  height: 18px;
+  border: 1px solid color-mix(in oklch, var(--victory) 56%, transparent);
+  background:
+    radial-gradient(circle at 50% 48%, oklch(0.93 0.09 86) 0 16%, transparent 18%),
+    linear-gradient(180deg, oklch(0.72 0.21 35), oklch(0.42 0.17 29));
+  clip-path: polygon(8% 0, 92% 0, 100% 86%, 50% 100%, 0 86%);
+  opacity: 0.82;
+  filter:
+    drop-shadow(0 0 4px color-mix(in oklch, var(--red) 42%, transparent))
+    drop-shadow(0 0 5px color-mix(in oklch, var(--victory) 18%, transparent));
+  animation: redPacketRain 3.8s linear infinite;
+}
+
+.red-packet-rain i::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 2px;
+  width: 10px;
+  height: 4px;
+  border-bottom: 1px solid color-mix(in oklch, var(--victory) 68%, transparent);
+  background: linear-gradient(180deg, oklch(0.78 0.18 42), oklch(0.54 0.17 29));
+  clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+}
+
+.red-packet-rain i:nth-child(1) {
+  left: 18%;
+  animation-delay: -0.4s;
+  animation-duration: 3.9s;
+}
+
+.red-packet-rain i:nth-child(2) {
+  left: 48%;
+  width: 13px;
+  height: 16px;
+  opacity: 0.68;
+  animation-delay: -1.8s;
+  animation-duration: 4.4s;
+}
+
+.red-packet-rain i:nth-child(3) {
+  left: 74%;
+  animation-delay: -2.7s;
+  animation-duration: 4.1s;
+}
+
 .battle-verdict {
   overflow: hidden;
   border-top: 1px solid color-mix(in oklch, var(--team-bright) 12%, transparent);
@@ -674,6 +762,43 @@ h1 {
 
 .poster-foot strong {
   color: var(--team-bright);
+}
+
+@keyframes sixFighterPulse {
+  0%,
+  100% {
+    opacity: 0.58;
+    filter: saturate(1);
+  }
+  50% {
+    opacity: 1;
+    filter: saturate(1.18);
+  }
+}
+
+@keyframes redPacketRain {
+  0%,
+  8% {
+    transform: translate3d(0, -18px, 0) rotate(-8deg);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.86;
+  }
+  72% {
+    opacity: 0.72;
+  }
+  100% {
+    transform: translate3d(8px, 58px, 0) rotate(12deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fighter.is-six-advantage::before,
+  .red-packet-rain i {
+    animation: none;
+  }
 }
 
 @media (max-width: 900px) {

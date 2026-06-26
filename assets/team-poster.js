@@ -9,6 +9,7 @@ const LOOT_LEVELS = [
   { threshold: 80000, label: "8万", className: "loot-elite" },
   { threshold: 60000, label: "6万", className: "loot-ready" }
 ];
+const ADVANTAGE_HIGHLIGHT_GMV = 60000;
 
 const money = new Intl.NumberFormat("zh-CN", {
   style: "currency",
@@ -61,13 +62,21 @@ function renderBattle(arena) {
   const rows = members.map((member) => {
     const rankClass = member.gmvRank === 1 ? "is-first" : "";
     const leadingClass = member.isWinner ? "is-leading" : "";
+    const sixWanClass = member.isWinner && (member.gross || 0) >= ADVANTAGE_HIGHLIGHT_GMV
+      ? "is-six-advantage"
+      : "";
     return `
-    <div class="fighter ${leadingClass} ${rankClass}">
+    <div class="fighter ${leadingClass} ${rankClass} ${sixWanClass}">
       <span class="fighter-role">${member.role}</span>
       <div class="fighter-line">
         <span class="fighter-name">${member.name}</span>
         <span class="fighter-money">${compactMoney(member.gross)}</span>
       </div>
+      ${sixWanClass ? `
+        <span class="red-packet-rain" aria-hidden="true">
+          <i></i><i></i><i></i>
+        </span>
+      ` : ""}
       ${member.isWinner ? `<span class="fighter-crown" aria-hidden="true"></span>` : ""}
     </div>
   `;
