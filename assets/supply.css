@@ -116,6 +116,23 @@
   font-weight: 800;
 }
 
+.overtime-banner.is-settled {
+  border-color: rgba(147, 231, 194, 0.72);
+  background:
+    radial-gradient(circle at 8% 50%, rgba(147, 231, 194, 0.24), transparent 30%),
+    linear-gradient(90deg, rgba(16, 91, 79, 0.82), rgba(83, 77, 34, 0.58) 52%, rgba(7, 18, 29, 0.78));
+  box-shadow: 0 0 24px rgba(147, 231, 194, 0.16);
+}
+
+.overtime-banner.is-settled span {
+  background: rgba(224, 255, 238, 0.13);
+  color: #dfffea;
+}
+
+.overtime-banner.is-settled strong {
+  text-shadow: 0 0 18px rgba(147, 231, 194, 0.42);
+}
+
 .supply-actions {
   z-index: 3;
 }

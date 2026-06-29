@@ -96,12 +96,12 @@ function tierState(tier, coverage) {
 
 function renderMeta() {
   document.querySelector("#supplyMeta").textContent =
-    `${supplyActivityLabel} | 加时赛进行中 | 学习规划部 ${count.format(supply.summary.leaders)} 位小组长 | 最新支付 ${supply.meta.latestPaymentTime || "暂无"}`;
+    `${supplyActivityLabel} | 补给发放已结束 | 学习规划部 ${count.format(supply.summary.leaders)} 位小组长 | 最终支付 ${supply.meta.latestPaymentTime || "暂无"}`;
   document.querySelector("#supplySync").textContent = `SYNC ${supply.meta.generatedAt.slice(5, 16)}`;
   document.querySelector("#activityTime").textContent = supplyActivityLabel;
   document.querySelector("#slogan").textContent = supply.meta.slogan;
   document.querySelector("#latestPayment").textContent = supply.meta.latestPaymentTime
-    ? `${supply.meta.latestPaymentTime}，加时赛统计截止至2026-06-28 24:00`
+    ? `${supply.meta.latestPaymentTime}，补给包统计已于2026-06-28 24:00截止`
     : "暂无支付记录";
 }
 
