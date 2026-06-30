@@ -150,14 +150,13 @@ def load_order_hits(path, leaders):
             stats["activityFilteredRows"] += 1
             continue
         paid_at = as_datetime(row[index["支付时间"]])
-        if paid_at:
-            max_payment = paid_at if max_payment is None or paid_at > max_payment else max_payment
         if not paid_at or paid_at < VALID_FROM:
             stats["beforeWindowRows"] += 1
             continue
         if paid_at > VALID_TO:
             stats["afterWindowRows"] += 1
             continue
+        max_payment = paid_at if max_payment is None or paid_at > max_payment else max_payment
         if clean(row[index["是否违规"]]) in {"是", "1", "true", "True"}:
             stats["invalidRows"] += 1
             continue
