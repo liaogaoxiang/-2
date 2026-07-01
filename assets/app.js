@@ -109,8 +109,8 @@ function renderContributionPanel(members) {
 function renderMeta() {
   const { month, dateRange } = report.meta;
   document.querySelector("#reportMeta").textContent =
-    `6月最新战报 | 数据更新至 ${dateRange.end} | ${report.summary.arenas}场战局 | ${report.summary.threeWayArenas}场三方PK | ${report.summary.matchedMembers}/${report.summary.pkMembers}小组已出单`;
-  document.querySelector("#syncTime").textContent = `SYNC ${month}`;
+    `6月最终战报 | 最终数据截至 ${dateRange.end} | ${report.summary.arenas}场战局 | ${report.summary.threeWayArenas}场三方PK | ${report.summary.matchedMembers}/${report.summary.pkMembers}小组已出单`;
+  document.querySelector("#syncTime").textContent = `FINAL ${month}`;
 }
 
 function kingCamp(name) {

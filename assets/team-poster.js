@@ -142,7 +142,7 @@ function renderPoster(report) {
   const topMember = [...members].sort((a, b) => (b.gross || 0) - (a.gross || 0))[0];
   const threeWayCount = arenas.filter((arena) => arena.isThreeWay).length;
 
-  document.querySelector("#seasonMark").textContent = `JUNE PK ARENA / ${PAGE_CONFIG.teamEn}`;
+  document.querySelector("#seasonMark").textContent = `JUNE FINAL REPORT / ${PAGE_CONFIG.teamEn}`;
   document.querySelector("#teamTitle").textContent = PAGE_CONFIG.module;
   document.querySelector("#teamBadge").textContent = `${PAGE_CONFIG.teamLabel}专属`;
   document.querySelector("#posterDate").textContent = formatDate(report.meta?.dateRange?.end);
@@ -179,7 +179,7 @@ function renderPoster(report) {
   document.querySelector("#wallMeta").textContent =
     `${number.format(arenas.length)}场${PAGE_CONFIG.teamLabel}部战局，左侧数字为PK底表X号战场编码`;
   document.querySelector("#posterNote").textContent =
-    `生成于 ${report.meta?.generatedAt ? new Date(report.meta.generatedAt).toLocaleString("zh-CN", { hour12: false }) : "当前战报"}`;
+    `6月最终数据 · 生成于 ${report.meta?.generatedAt ? new Date(report.meta.generatedAt).toLocaleString("zh-CN", { hour12: false }) : "当前战报"}`;
 }
 
 window.PK_ARENA_DATA_READY.then(renderPoster);

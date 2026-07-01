@@ -118,6 +118,38 @@ body {
   padding: 28px 52px 12px;
 }
 
+.poster-head-meta {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.final-data-mark {
+  display: grid;
+  min-width: 174px;
+  gap: 4px;
+  border: 1px solid var(--line-strong);
+  background:
+    linear-gradient(135deg, color-mix(in oklch, var(--team) 46%, black), color-mix(in oklch, var(--bg) 82%, black));
+  padding: 10px 14px;
+  color: var(--team-bright);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  text-align: center;
+}
+
+.final-data-mark span {
+  font-family: "Arial Narrow", "DIN Condensed", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.final-data-mark strong {
+  color: var(--ink);
+  font-size: 20px;
+  line-height: 1.1;
+}
+
 .season-mark,
 .date-lockup,
 .total-score span,

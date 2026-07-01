@@ -346,6 +346,44 @@
   color: var(--glory-gold-pale);
 }
 
+.glory-theme .season-closure {
+  display: flex;
+  width: fit-content;
+  max-width: min(100%, 760px);
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px 12px;
+  margin: 0 0 13px;
+  border: 1px solid rgba(230, 183, 93, 0.54);
+  background:
+    linear-gradient(90deg, rgba(125, 89, 38, 0.32), rgba(8, 27, 36, 0.76)),
+    rgba(4, 10, 14, 0.9);
+  padding: 9px 13px;
+  color: var(--glory-gold-pale);
+  clip-path: var(--glory-cut-small);
+}
+
+.glory-theme .season-closure span {
+  color: var(--glory-gold);
+  font-family: "Arial Narrow", "DIN Condensed", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.glory-theme .season-closure strong {
+  color: #fff1ba;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.glory-theme .season-closure em {
+  color: #d3e3df;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+}
+
 .glory-theme h2 {
   color: var(--glory-ink);
 }
@@ -386,6 +424,12 @@
 .glory-theme .status-strip span:first-of-type {
   border-color: rgba(255, 112, 94, 0.58);
   color: #ffb7ac;
+}
+
+.glory-theme .status-strip .season-closed-chip {
+  border-color: rgba(230, 183, 93, 0.62);
+  background: rgba(125, 89, 38, 0.24);
+  color: #fff1ba;
 }
 
 .glory-theme .home-return:hover,
@@ -3828,6 +3872,15 @@
 
   .glory-theme h1 span {
     display: block;
+  }
+
+  .glory-theme .season-closure {
+    align-items: flex-start;
+  }
+
+  .glory-theme .season-closure strong,
+  .glory-theme .season-closure em {
+    flex-basis: 100%;
   }
 
   .glory-theme .status-strip {
